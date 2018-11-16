@@ -1,4 +1,4 @@
-package drone_simulator_G2;
+package dronesSwarmSimulation;
 
 import repast.simphony.context.Context;
 import repast.simphony.context.space.continuous.ContinuousSpaceFactory;

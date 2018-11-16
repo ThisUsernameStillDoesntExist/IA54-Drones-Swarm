@@ -1,7 +1,7 @@
 /**
  * 
  */
-package drone_simulator_G2;
+package dronesSwarmSimulation;
 
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.grid.Grid;

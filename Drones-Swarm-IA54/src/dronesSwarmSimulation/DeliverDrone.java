@@ -1,4 +1,4 @@
-package drone_simulator_G2;
+package dronesSwarmSimulation;
 
 import java.util.ArrayList;
 import java.util.List;
