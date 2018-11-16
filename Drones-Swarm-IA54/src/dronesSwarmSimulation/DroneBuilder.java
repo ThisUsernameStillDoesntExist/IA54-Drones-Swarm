@@ -34,7 +34,7 @@ public class DroneBuilder implements ContextBuilder<Object> {
 		
 		//-------------------------------Creation of the Agents setup on the Screen-----------------------------------------------\\
 		
-		int nombreDrone = 5
+		int nombreDrone = 5;
 		int charge = 200;
 
 		/*Define the number of DeliverDrone */

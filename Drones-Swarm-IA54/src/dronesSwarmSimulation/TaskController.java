@@ -26,7 +26,7 @@ public class TaskController
 	protected Grid<Object> grid;
 	ArrayList<Package> lisOfPackage;
 	ArrayList<Building> lisOfBuilding;
-	ArrayList<Intruder> lisOfIntruder;
+	//ArrayList<Intruder> lisOfIntruder;
 	
 	private Context<Object> context;
 	
