@@ -21,7 +21,7 @@ public class DroneBuilder implements ContextBuilder<Object> {
 
 	@Override
 	public Context build(Context<Object> context) {
-		context.setId("drone_simulator_G2");
+		context.setId("Drones-Swarm-IA54");
 		
 		//-------------------------------Creation and limitation of the Screen(Scene) space(Infinite coordinates system) -----------------------------------------------\\
 		ContinuousSpaceFactory spaceFactory = ContinuousSpaceFactoryFinder.createContinuousSpaceFactory(null);
