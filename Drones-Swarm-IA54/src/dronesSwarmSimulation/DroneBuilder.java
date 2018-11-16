@@ -33,9 +33,9 @@ public class DroneBuilder implements ContextBuilder<Object> {
 				new WrapAroundBorders(), new SimpleGridAdder<Object>(), true, 150, 100));
 		
 		//-------------------------------Creation of the Agents setup on the Screen-----------------------------------------------\\
-		Parameters params = RunEnvironment.getInstance().getParameters();
-		int nombreDrone = (Integer) params.getValue("deliver_drone");
-		int charge = (Integer) params.getValue("charge");
+		
+		int nombreDrone = 5
+		int charge = 200;
 
 		/*Define the number of DeliverDrone */
 		for(int i = 0; i < nombreDrone; i++){
@@ -52,19 +52,6 @@ public class DroneBuilder implements ContextBuilder<Object> {
 		// creation of the City/Street 
 		context = setUpTheCity(context, grid, space);
 		
-		// creation of Surveillance drone : oversight drone
-		int surveillanceDrone = 1;
-		/*Define the number of SurveillanceDrone (OversightDrone) */
-		for (int i = 0; i < surveillanceDrone; i++) {
-			context.add(new SurveillanceDrone(space, grid,charge));
-		} 
-		//creation of intruder
-		int intruder = (Integer) params.getValue("intruder");
-		/*Define the number of intruder */
-		for (int i = 0; i < intruder; i++) {
-			context.add(new Intruder(space, grid));
-		}  
-		
 		//-------------------------------- Positioning of the Agents on the grid system ( Finite system )---------------\\
 		// counter to allow the package/drone to take the location of just one building at time
 		//int nbBuildingToDeliver = 0; 
@@ -74,18 +61,7 @@ public class DroneBuilder implements ContextBuilder<Object> {
 			grid.moveTo(obj,(int)pt.getX(),(int)pt.getY());
 
 		 }
-		// the TaskDeliverController register all the building and package created on the scene, and randomly 
-		// attach each package per building
-		TaskController taskController = new TaskController(space, grid,context);
-		// put the taskController on the scene
-		context.add(taskController);
-		// Create a list of building and package on the scene and share between the drones.
-		taskController.registerTask();
-		context = taskController.getContext();
 		
-		NegociatorController negociator = new NegociatorController(space, grid,context);
-		negociator.registerDockStations();
-		context = negociator.getContext();
 		return context;
 	}
 	
