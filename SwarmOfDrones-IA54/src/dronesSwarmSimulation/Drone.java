@@ -22,6 +22,7 @@ public class Drone {
 	protected DockStation dock;
 	protected boolean charging;
 	protected ArrayList<DockStation> docks;
+	protected CentralController centralController;
 	
 	// All drone to be create and set on the scene( visual system ) need to receive the space and grid
 	public Drone(ContinuousSpace<Object> space, Grid<Object> grid, int charge) {
@@ -106,5 +107,15 @@ public class Drone {
 		/*return the drone's position*/
 		return new GridPoint();
 	}
+
+	public CentralController getCentralController() {
+		return centralController;
+	}
+
+	public void setCentralController(CentralController centralController) {
+		this.centralController = centralController;
+	}
+	
+	
 	
 }

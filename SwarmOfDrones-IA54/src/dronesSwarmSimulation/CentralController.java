@@ -2,6 +2,7 @@ package dronesSwarmSimulation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import repast.simphony.context.Context;
 import repast.simphony.engine.watcher.Watch;
@@ -20,17 +21,20 @@ import repast.simphony.util.SimUtilities;
  	attach each package per building
  */
 
-public class TaskController 
+public class CentralController 
 {
 	protected ContinuousSpace<Object> space;
 	protected Grid<Object> grid;
-	ArrayList<Package> lisOfPackage;
-	ArrayList<Building> lisOfBuilding;
-	//ArrayList<Intruder> lisOfIntruder;
+	private ArrayList<Package> lisOfPackage;
+	private ArrayList<Building> lisOfBuilding;
+	private Map<Package,Drone> waitingDeliveringM;
+	private Map<Package,Drone> inDeliveringMode;
+	private int   RF = 1; // 1KM
+	
 	
 	private Context<Object> context;
 	
-	public TaskController(ContinuousSpace<Object> space, Grid<Object> grid,Context<Object> context) {
+	public CentralController(ContinuousSpace<Object> space, Grid<Object> grid,Context<Object> context) {
 		this.space = space;
 		this.grid = grid;		
 		this.context = context;
@@ -118,6 +122,12 @@ public class TaskController
 	public void setLisOfBuilding(ArrayList<Building> lisOfBuilding) {
 		this.lisOfBuilding = lisOfBuilding;
 	}
+
+	public int getRF() {
+		return RF;
+	}
+
+	
 
 	
 
