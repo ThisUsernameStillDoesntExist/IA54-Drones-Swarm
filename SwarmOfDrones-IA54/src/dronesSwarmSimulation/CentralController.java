@@ -18,7 +18,7 @@ import repast.simphony.space.grid.GridPoint;
 import repast.simphony.util.SimUtilities;
 
 /* 
- * This class serve as a controller of buiding and package on the city
+ * This class serve as a controller or Central Intelligence on the simulation
    He register all the building and package created on the scene, and randomly 
  	attach each package per building
  */
