@@ -18,6 +18,7 @@ public class Package {
 	private Grid<Object> grid;
 	private GridPoint destinationCoord; // destination to deliver the package
 	private Boolean isTaken;
+	private Boolean isDelivered;
 	public Package(ContinuousSpace<Object> space, Grid<Object> grid) {
 		this.space = space;
 		this.grid = grid;

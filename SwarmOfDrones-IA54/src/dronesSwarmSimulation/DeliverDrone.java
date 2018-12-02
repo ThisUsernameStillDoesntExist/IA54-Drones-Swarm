@@ -1,6 +1,7 @@
 package dronesSwarmSimulation;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
@@ -22,6 +23,7 @@ public class DeliverDrone extends Drone {
 	private boolean hasTask;
 	private Package task;
 	private Queue<Package> tasks;
+	private Queue<Package> tasksDelivered;
 	private int index = 0;
 
 	
@@ -29,6 +31,7 @@ public class DeliverDrone extends Drone {
 		super(space, grid, charge);
 	    dejaTrouvePackage = false;
 	    this.hasTask = false;
+	    tasksDelivered = new LinkedList<Package>();
 
 	}
 	

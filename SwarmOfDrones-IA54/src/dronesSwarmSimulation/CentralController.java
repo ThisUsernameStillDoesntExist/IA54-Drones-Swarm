@@ -117,8 +117,7 @@ public class CentralController
 				((DeliverDrone) obj).setTasks(new LinkedList<Package>(lisOfPackage.subList(fromIndex, toIndex)));
 				fromIndex = toIndex ;
 				toIndex = fromIndex + numberOfPackagePerDrone;
-				
-				
+
 			}
 		} 
 
