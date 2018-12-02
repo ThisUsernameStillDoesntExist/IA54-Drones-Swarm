@@ -1,6 +1,8 @@
 package dronesSwarmSimulation;
 
+
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -21,15 +23,16 @@ import repast.simphony.util.SimUtilities;
  	attach each package per building
  */
 
-public class CentralController 
+public class CentralController
 {
 	protected ContinuousSpace<Object> space;
 	protected Grid<Object> grid;
 	private ArrayList<Package> lisOfPackage;
 	private ArrayList<Building> lisOfBuilding;
-	private Map<Package,Drone> waitingDeliveringM;
-	private Map<Package,Drone> inDeliveringMode;
-	private int   RF = 1; // 1KM
+	private ArrayList<DeliverDrone> lisOfDrones;
+	//private Map<Package,Drone> waitingDeliveringM;
+	//private Map<Package,Drone> inDeliveringMode;
+	private int   RF = 1; // 1KM de distance
 	
 	
 	private Context<Object> context;
@@ -40,7 +43,7 @@ public class CentralController
 		this.context = context;
 		lisOfPackage = new ArrayList<Package>();
 		lisOfBuilding = new ArrayList<Building>();
-		
+		lisOfDrones = new  ArrayList<DeliverDrone>();
 	}
 
 	public Context<Object> getContext() {
@@ -65,6 +68,10 @@ public class CentralController
 			if(obj instanceof Building )
 			{
 				lisOfBuilding.add((Building)obj);
+			}
+			if(obj instanceof DeliverDrone )
+			{
+				lisOfDrones.add((DeliverDrone)obj);
 			}
 
 		}
@@ -94,14 +101,26 @@ public class CentralController
 			lisOfPackage.get(i).setDestinationCoord(buildingLocation);
 			countBuinding++;
 		}
-		// Give to All DeliverDrone on the scene the list of Package available,			
+		// divide the number of package to be distributed on each drone
+		int numberOfDrone = lisOfDrones.size();
+		int numberOfPackage = lisOfPackage.size();
+		int numberOfPackagePerDrone = numberOfPackage/numberOfDrone;
+		// Give to All DeliverDrone on the scene the list of Package available,	
+		int fromIndex = 0;
+		int toIndex = numberOfPackagePerDrone  ;
+		System.out.println("from = " + fromIndex + " To = " + toIndex);
 		for(Object obj : context)
 		{
 			if(obj instanceof DeliverDrone )
 			{
-				((DeliverDrone) obj).setTasks(lisOfPackage);
+				
+				((DeliverDrone) obj).setTasks(new LinkedList<Package>(lisOfPackage.subList(fromIndex, toIndex)));
+				fromIndex = toIndex ;
+				toIndex = fromIndex + numberOfPackagePerDrone;
+				
+				
 			}
-		}
+		} 
 
 
 	}

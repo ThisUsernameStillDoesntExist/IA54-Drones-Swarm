@@ -34,17 +34,17 @@ public class DroneBuilder implements ContextBuilder<Object> {
 		
 		//-------------------------------Creation of the Agents setup on the Screen-----------------------------------------------\\
 		
-		int nombreDrone = 5;
+		int nombreDrone = 2;
 		int charge = 200;
 
-		/*Define the number of DeliverDrone */
+		/*Define the number of DeliverDrone  */
 		for(int i = 0; i < nombreDrone; i++){
 			context.add(new DeliverDrone(space, grid,charge));
 		} 
 		// package
 		// creation of the packages 
-		int nombrepack = 5;
-		/*Define the number of Package*/
+		int nombrepack = 4;
+		/*Define the number of Package */
 		for (int i = 0; i < nombrepack ; i++) {
 			context.add(new Package(space, grid));
 		}
@@ -61,6 +61,9 @@ public class DroneBuilder implements ContextBuilder<Object> {
 			grid.moveTo(obj,(int)pt.getX(),(int)pt.getY());
 
 		 }
+		
+		CentralController cc = new CentralController(space, grid, context);
+		cc.registerTask();
 		
 		return context;
 	}
@@ -102,3 +105,4 @@ public class DroneBuilder implements ContextBuilder<Object> {
 				
 	}
 }
+ 

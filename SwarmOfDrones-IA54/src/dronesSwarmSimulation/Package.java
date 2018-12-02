@@ -17,7 +17,7 @@ public class Package {
 	private ContinuousSpace<Object> space;
 	private Grid<Object> grid;
 	private GridPoint destinationCoord; // destination to deliver the package
-	private boolean isTaken;
+	private Boolean isTaken;
 	public Package(ContinuousSpace<Object> space, Grid<Object> grid) {
 		this.space = space;
 		this.grid = grid;
@@ -40,10 +40,10 @@ public class Package {
 		
 	}
 	// getters and setters of the private fields
-	public boolean isTaken() {
+	public Boolean isTaken() {
 		return isTaken;
 	}
-	public void setTaken(boolean isTaken) {
+	public void setTaken(Boolean isTaken) {
 		this.isTaken = isTaken;
 	}
 	public ContinuousSpace<Object> getSpace() {

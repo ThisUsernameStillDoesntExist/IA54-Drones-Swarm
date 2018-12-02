@@ -2,6 +2,7 @@ package dronesSwarmSimulation;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Queue;
 
 import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.engine.watcher.Watch;
@@ -20,7 +21,8 @@ public class DeliverDrone extends Drone {
 	private boolean dejaTrouvePackage ;
 	private boolean hasTask;
 	private Package task;
-	private ArrayList<Package> tasks;
+	private Queue<Package> tasks;
+	private int index = 0;
 
 	
 	public DeliverDrone(ContinuousSpace<Object> space, Grid<Object> grid, int charge) {
@@ -33,37 +35,86 @@ public class DeliverDrone extends Drone {
 	// method that implement the functional behavior of the drone
 	// it is called each 1 second
 	@Override
-	@ScheduledMethod(start = 1, interval = 1)
+	@ScheduledMethod(start = 1, interval = 2)
 	public void doTask()
 	{
-		GridPoint pt = new GridPoint(12,12);
+		System.out.println("nombre de drones = " + tasks.size());
+			if(hasTask && !dejaTrouvePackage)
+			{
+				findPackage(grid.getLocation(task));
+			}
+			else
+			{	
 
-		space.moveByDisplacement(this, 1, 1);
-		//grid.moveByDisplacement(this, 1, 1);
-		
+				if(!tasks.isEmpty() && !hasTask)
+				{
+					task = tasks.remove();
+					hasTask = true;
+					System.out.println("nouveau package");
+				}
+			}
+			
+			if(dejaTrouvePackage)
+			{
 
+				if(hasArrived(task.getDestinationCoord()))
+				{
+					// communiquer la centrale pour dire que plus un package delivré
+					// trouver un autre package
+					hasTask = false;
+					dejaTrouvePackage = false;
+
+				}
+				else
+				{
+					move(task.getDestinationCoord());
+					this.getTask().move(this);
+				}
+			}
+	
 	}
 	// method that move the Drone to a desired location on the scene(screen), we just need to give in the location
 	// This method is used to move the to the building where the package will be delivered
 	@Override
 	public void move(GridPoint pt)
 	{
-		GridPoint actualLocation = grid.getLocation(this); 
-		double distance = Math.hypot(pt.getX()-actualLocation.getX(), pt.getY()-actualLocation.getY());
-		if(distance > 1)	{
-			NdPoint myPoint = space.getLocation(this);
-			NdPoint otherPoint = new NdPoint(pt.getX(),pt.getY());
-			double angle = SpatialMath.calcAngleFor2DMovement (space,myPoint , otherPoint );
-			space.moveByVector(this, 1, angle,0);
-			myPoint = space.getLocation(this);
-			grid.moveTo ( this ,( int )myPoint.getX (), ( int )myPoint.getY ());
+		if (!pt.equals(grid.getLocation(this )) ) {
 			
+			
+				//turn(pt);
+				NdPoint  myPoint = space.getLocation(this);
+				
+				NdPoint  otherPoint = new  NdPoint(pt.getX(), pt.getY ());
+				
+				double  angle = SpatialMath.calcAngleFor2DMovement(space ,
+				
+				myPoint , otherPoint );
+				
+				space.moveByVector(this , 1, angle , 0);
+				
+				myPoint = space.getLocation(this);
+				
+				grid.moveTo(this , (int)myPoint.getX(), (int)myPoint.getY ());
 			
 		}
 
 	}
+	private boolean hasArrived(GridPoint pt)
+	{
+		GridPoint actualLocation = grid.getLocation(this);
+		double distance = Math.hypot(pt.getX()-actualLocation.getX(), pt.getY()-actualLocation.getY());
+		if(distance <= 1 && distance >=0)	{
+			System.out.println("Arrivé au Building");
+			return true;
+		}
+		
+		return false;
+	}
+	
+	
 	// method that move the Drone to a desired location on the scene(screen), it used to 
-	// find the package that has been assigned to him, to be delivered.
+	// find the package that has been assigned to him, to be delivered
+	
 	public void findPackage(GridPoint pt)
 	{
 		
@@ -78,12 +129,20 @@ public class DeliverDrone extends Drone {
 			
 			// if the drone has found the package, the we change the state of the variable
 			// so that the drone stop looking for the package and start looking for the building
-			if((int)myPoint.getX() == (int)otherPoint.getX() || (int)myPoint.getY() == (int)otherPoint.getY())
+			/*if((int)myPoint.getX() == (int)otherPoint.getX() && (int)myPoint.getY() == (int)otherPoint.getY())
 			{
 				dejaTrouvePackage = true;
-			}
+			} */
 			
-			this.setCharge(this.getCharge()-1);
+		}
+		else
+		{
+			GridPoint actualLocation = grid.getLocation(this);
+			double distance = Math.hypot(pt.getX()-actualLocation.getX(), pt.getY()-actualLocation.getY());
+			if(distance < 1)	{
+				System.out.println("Arrivé au Package");
+				dejaTrouvePackage = true;
+			}
 		}
 	}
 	@Override
@@ -103,11 +162,11 @@ public class DeliverDrone extends Drone {
 		}
 	}
 
-	public ArrayList<Package> getTasks() {
+	public Queue<Package> getTasks() {
 		return tasks;
 	}
 
-	public void setTasks(ArrayList<Package> tasks) {
+	public void setTasks(Queue<Package> tasks) {
 		this.tasks = tasks;
 	}
 	
