@@ -19,12 +19,16 @@
       <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
     </entry>
     <entry>
+      <string>dronesSwarmSimulation.CentralController</string>
+      <string>repast.simphony.visualizationOGL2D.DefaultStyleOGL2D</string>
+    </entry>
+    <entry>
       <string>dronesSwarmSimulation.DeliverDrone</string>
       <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
     </entry>
     <entry>
       <string>dronesSwarmSimulation.DockStation</string>
-      <string>repast.simphony.visualizationOGL2D.DefaultStyleOGL2D</string>
+      <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
     </entry>
   </styles>
   <editedStyles>
@@ -45,12 +49,16 @@
       <string>dronesSwarmSimulation.Package.style_0.xml</string>
     </entry>
     <entry>
+      <string>dronesSwarmSimulation.CentralController</string>
+      <null/>
+    </entry>
+    <entry>
       <string>dronesSwarmSimulation.DeliverDrone</string>
       <string>dronesSwarmSimulation.DeliverDrone.style_0.xml</string>
     </entry>
     <entry>
       <string>dronesSwarmSimulation.DockStation</string>
-      <null/>
+      <string>dronesSwarmSimulation.DockStation.style_3.xml</string>
     </entry>
   </editedStyles>
   <netStyles/>
@@ -63,7 +71,7 @@
     <pType>LAST</pType>
     <duration>-1.0</duration>
     <frequency>REPEAT</frequency>
-    <hashCode>115215222</hashCode>
+    <hashCode>-408252991</hashCode>
   </schedParams>
   <layoutClassName>foo.bar.baz</layoutClassName>
   <layoutProjection>space</layoutProjection>
@@ -75,7 +83,7 @@
     </entry>
     <entry>
       <string>dronesSwarmSimulation.Tree</string>
-      <int>0</int>
+      <int>1</int>
     </entry>
     <entry>
       <string>dronesSwarmSimulation.DeliverTask</string>
@@ -83,15 +91,19 @@
     </entry>
     <entry>
       <string>dronesSwarmSimulation.Package</string>
-      <int>4</int>
-    </entry>
-    <entry>
-      <string>dronesSwarmSimulation.DeliverDrone</string>
       <int>5</int>
     </entry>
     <entry>
+      <string>dronesSwarmSimulation.CentralController</string>
+      <int>0</int>
+    </entry>
+    <entry>
+      <string>dronesSwarmSimulation.DeliverDrone</string>
+      <int>6</int>
+    </entry>
+    <entry>
       <string>dronesSwarmSimulation.DockStation</string>
-      <int>1</int>
+      <int>4</int>
     </entry>
   </layerOrder>
   <projections>

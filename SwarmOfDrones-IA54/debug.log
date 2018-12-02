@@ -1205,3 +1205,101 @@ java.lang.IndexOutOfBoundsException: toIndex = 5
 	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
 	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
 	at java.awt.EventDispatchThread.run(Unknown Source)
+ERROR [Thread-7] 2018-12-02 22:16:12,214 repast.simphony.engine.watcher.Notifier2 - Error while initializing watcher triggerScheduler
+java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
+	at repast.simphony.engine.schedule.CallBackAction.execute(CallBackAction.java:129)
+	at repast.simphony.engine.watcher.ArgMatcher$PlainTrigger.execute(ArgMatcher.java:148)
+	at repast.simphony.engine.watcher.ImmediateExecutor.scheduleExecution(ImmediateExecutor.java:31)
+	at repast.simphony.engine.watcher.Notifier2$SetupTrigger.scheduleExecution(Notifier2.java:56)
+	at repast.simphony.engine.watcher.Notifier2.triggered(Notifier2.java:150)
+	at repast.simphony.engine.watcher.WatcherTrigger.notify(WatcherTrigger.java:116)
+	at repast.simphony.engine.watcher.WatcherTrigger.triggered(WatcherTrigger.java:126)
+	at dronesSwarmSimulation.Package.setIsDelivered(Package.java:52)
+	at dronesSwarmSimulation.DeliverDrone.doTask(DeliverDrone.java:97)
+	at dronesSwarmSimulation.DeliverDrone$$FastClassByCGLIB$$30f152fd.invoke(<generated>)
+	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
+	at repast.simphony.engine.controller.ScheduledMethodControllerAction$ScheduleMethodAllAction.execute(ScheduledMethodControllerAction.java:333)
+	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
+	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
+	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
+	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
+	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.lang.reflect.InvocationTargetException
+	at dronesSwarmSimulation.CentralController$$FastClassByCGLIB$$5d1d2727.invoke(<generated>)
+	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
+	at repast.simphony.engine.schedule.CallBackAction.execute(CallBackAction.java:127)
+	... 18 more
+Caused by: java.lang.NullPointerException
+	at dronesSwarmSimulation.CentralController.controlPackage(CentralController.java:61)
+	... 21 more
+FATAL [Thread-7] 2018-12-02 22:16:12,333 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
+Current tick (305.0)
+java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
+	at repast.simphony.engine.controller.ScheduledMethodControllerAction$ScheduleMethodAllAction.execute(ScheduledMethodControllerAction.java:333)
+	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
+	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
+	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
+	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
+	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.lang.reflect.InvocationTargetException
+	at dronesSwarmSimulation.DeliverDrone$$FastClassByCGLIB$$30f152fd.invoke(<generated>)
+	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
+	... 7 more
+Caused by: java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
+	at repast.simphony.engine.schedule.CallBackAction.execute(CallBackAction.java:129)
+	at repast.simphony.engine.watcher.ArgMatcher$PlainTrigger.execute(ArgMatcher.java:148)
+	at repast.simphony.engine.watcher.ImmediateExecutor.scheduleExecution(ImmediateExecutor.java:31)
+	at repast.simphony.engine.watcher.Notifier2.triggered(Notifier2.java:150)
+	at repast.simphony.engine.watcher.WatcherTrigger.notify(WatcherTrigger.java:116)
+	at repast.simphony.engine.watcher.WatcherTrigger.triggered(WatcherTrigger.java:126)
+	at dronesSwarmSimulation.Package.setIsDelivered(Package.java:52)
+	at dronesSwarmSimulation.DeliverDrone.doTask(DeliverDrone.java:97)
+	... 10 more
+Caused by: java.lang.reflect.InvocationTargetException
+	at dronesSwarmSimulation.CentralController$$FastClassByCGLIB$$5d1d2727.invoke(<generated>)
+	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
+	at repast.simphony.engine.schedule.CallBackAction.execute(CallBackAction.java:127)
+	... 17 more
+Caused by: java.lang.NullPointerException
+	at dronesSwarmSimulation.CentralController.controlPackage(CentralController.java:61)
+	... 20 more
+FATAL [Thread-7] 2018-12-02 22:18:02,747 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
+Current tick (303.0)
+java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
+	at repast.simphony.engine.controller.ScheduledMethodControllerAction$ScheduleMethodAllAction.execute(ScheduledMethodControllerAction.java:333)
+	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
+	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
+	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
+	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
+	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.lang.reflect.InvocationTargetException
+	at dronesSwarmSimulation.DeliverDrone$$FastClassByCGLIB$$30f152fd.invoke(<generated>)
+	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
+	... 7 more
+Caused by: java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
+	at repast.simphony.engine.schedule.CallBackAction.execute(CallBackAction.java:129)
+	at repast.simphony.engine.watcher.ArgMatcher$PlainTrigger.execute(ArgMatcher.java:148)
+	at repast.simphony.engine.watcher.ImmediateExecutor.scheduleExecution(ImmediateExecutor.java:31)
+	at repast.simphony.engine.watcher.Notifier2.triggered(Notifier2.java:150)
+	at repast.simphony.engine.watcher.WatcherTrigger.notify(WatcherTrigger.java:116)
+	at repast.simphony.engine.watcher.WatcherTrigger.triggered(WatcherTrigger.java:146)
+	at dronesSwarmSimulation.Package.setIsDelivered(Package.java:52)
+	at dronesSwarmSimulation.DeliverDrone.doTask(DeliverDrone.java:97)
+	... 10 more
+Caused by: java.lang.reflect.InvocationTargetException
+	at dronesSwarmSimulation.CentralController$$FastClassByCGLIB$$5d1d2727.invoke(<generated>)
+	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
+	at repast.simphony.engine.schedule.CallBackAction.execute(CallBackAction.java:127)
+	... 17 more
+Caused by: java.lang.ArithmeticException: / by zero
+	at dronesSwarmSimulation.CentralController.assignTask(CentralController.java:149)
+	at dronesSwarmSimulation.CentralController.controlPackage(CentralController.java:81)
+	... 20 more

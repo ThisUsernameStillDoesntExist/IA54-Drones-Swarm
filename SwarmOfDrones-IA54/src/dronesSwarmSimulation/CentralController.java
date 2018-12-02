@@ -28,10 +28,9 @@ public class CentralController
 	protected ContinuousSpace<Object> space;
 	protected Grid<Object> grid;
 	private ArrayList<Package> lisOfPackage;
+	private ArrayList<Package> lisOfPackageNotDelivered;
 	private ArrayList<Building> lisOfBuilding;
 	private ArrayList<DeliverDrone> lisOfDrones;
-	//private Map<Package,Drone> waitingDeliveringM;
-	//private Map<Package,Drone> inDeliveringMode;
 	private int   RF = 1; // 1KM de distance
 	
 	
@@ -44,8 +43,43 @@ public class CentralController
 		lisOfPackage = new ArrayList<Package>();
 		lisOfBuilding = new ArrayList<Building>();
 		lisOfDrones = new  ArrayList<DeliverDrone>();
+		lisOfPackageNotDelivered = new ArrayList<Package>();
 	}
 
+	@Watch(watcheeClassName = "dronesSwarmSimulation.DeliverDrone",
+			watcheeFieldNames = "nbTaskNotDelivered",
+			query = "colocated",
+			whenToTrigger = WatcherTriggerSchedule.IMMEDIATE)
+	
+	public void controlPackage()
+	{
+		//chercher les package non delivré, et les mettres dans une liste
+		System.out.println("Queue not delivered changed");
+		ArrayList<DeliverDrone> newlisOfDrones = new  ArrayList<DeliverDrone>();
+		// System.out.println(newlisOfPackage.size() + " Drones no livré");
+		//chercher les drones without task to do
+		 for(DeliverDrone d : lisOfDrones)
+		{ 
+			
+					
+					if(d.getTasksNotDelivered().size() > 0 && d.getTasks().size() <=0)
+					{
+						newlisOfDrones.add(d);
+						for( Package p: d.getTasksNotDelivered())
+						{
+							if(!lisOfPackageNotDelivered.contains(p))
+								lisOfPackageNotDelivered.add(p);
+						}
+					}
+			
+		}
+		 //assign Task not done to drones without task to do
+		if(newlisOfDrones.size() > 0)
+		{
+			System.out.println("New list of drones = " + newlisOfDrones.size());
+			assignTask(lisOfPackageNotDelivered,newlisOfDrones);
+		}
+	}
 	public Context<Object> getContext() {
 		return context;
 	}
@@ -102,26 +136,32 @@ public class CentralController
 			countBuinding++;
 		}
 		// divide the number of package to be distributed on each drone
+		
+		assignTask(lisOfPackage,lisOfDrones);
+		
+
+	}
+	
+	void assignTask(ArrayList<Package> lisOfPackage ,ArrayList<DeliverDrone> lisOfDrones)
+	{
 		int numberOfDrone = lisOfDrones.size();
 		int numberOfPackage = lisOfPackage.size();
 		int numberOfPackagePerDrone = numberOfPackage/numberOfDrone;
 		// Give to All DeliverDrone on the scene the list of Package available,	
 		int fromIndex = 0;
 		int toIndex = numberOfPackagePerDrone  ;
-		System.out.println("from = " + fromIndex + " To = " + toIndex);
-		for(Object obj : context)
+		//System.out.println("from = " + fromIndex + " To = " + toIndex);
+		for(DeliverDrone d : lisOfDrones)
 		{
-			if(obj instanceof DeliverDrone )
-			{
+			
 				
-				((DeliverDrone) obj).setTasks(new LinkedList<Package>(lisOfPackage.subList(fromIndex, toIndex)));
+				d.setTasks(new LinkedList<Package>(lisOfPackage.subList(fromIndex, toIndex)));
 				fromIndex = toIndex ;
 				toIndex = fromIndex + numberOfPackagePerDrone;
 
-			}
+		
 		} 
-
-
+		
 	}
 	
 	// This section is the getters and setters of the private field of the class

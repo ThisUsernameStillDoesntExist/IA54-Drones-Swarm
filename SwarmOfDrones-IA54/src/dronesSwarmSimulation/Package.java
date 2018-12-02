@@ -1,5 +1,7 @@
 package dronesSwarmSimulation;
 
+import repast.simphony.engine.watcher.Watch;
+import repast.simphony.engine.watcher.WatcherTriggerSchedule;
 import repast.simphony.space.SpatialMath;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
@@ -18,7 +20,7 @@ public class Package {
 	private Grid<Object> grid;
 	private GridPoint destinationCoord; // destination to deliver the package
 	private Boolean isTaken;
-	private Boolean isDelivered;
+	private boolean isDelivered;
 	public Package(ContinuousSpace<Object> space, Grid<Object> grid) {
 		this.space = space;
 		this.grid = grid;
@@ -39,6 +41,15 @@ public class Package {
 			grid.moveTo ( this ,( int )myPoint.getX (), ( int )myPoint.getY ());	
 		}
 		
+	}
+	
+	
+	
+	public boolean getIsDelivered() {
+		return isDelivered;
+	}
+	public void setIsDelivered(boolean isDelivered) {
+		this.isDelivered = isDelivered;
 	}
 	// getters and setters of the private fields
 	public Boolean isTaken() {

@@ -23,15 +23,18 @@ public class DeliverDrone extends Drone {
 	private boolean hasTask;
 	private Package task;
 	private Queue<Package> tasks;
-	private Queue<Package> tasksDelivered;
+	private Queue<Package> tasksNotDelivered;
+	private int nbTaskNotDelivered = 0;
 	private int index = 0;
+	private int charge ;
 
 	
 	public DeliverDrone(ContinuousSpace<Object> space, Grid<Object> grid, int charge) {
 		super(space, grid, charge);
 	    dejaTrouvePackage = false;
 	    this.hasTask = false;
-	    tasksDelivered = new LinkedList<Package>();
+	    this.charge = charge;
+	    tasksNotDelivered = new LinkedList<Package>();
 
 	}
 	
@@ -41,10 +44,18 @@ public class DeliverDrone extends Drone {
 	@ScheduledMethod(start = 1, interval = 2)
 	public void doTask()
 	{
-		System.out.println("nombre de drones = " + tasks.size());
+		
+		if(charge>0)
+		{	
+			//System.out.println("nombre de drones = " + tasks.size());
+		
+		
 			if(hasTask && !dejaTrouvePackage)
 			{
-				findPackage(grid.getLocation(task));
+				
+					findPackage(grid.getLocation(task));
+					charge--;
+				
 			}
 			else
 			{	
@@ -70,10 +81,29 @@ public class DeliverDrone extends Drone {
 				}
 				else
 				{
-					move(task.getDestinationCoord());
-					this.getTask().move(this);
+					
+						move(task.getDestinationCoord());
+						this.getTask().move(this);
+						charge--;
+					
 				}
 			}
+		}
+		else
+		{
+			// notify the central
+			if(hasTask)
+			{
+				tasksNotDelivered.add(task);
+				nbTaskNotDelivered++;
+				task.setIsDelivered(false);
+				System.out.println("Triger l'evenement package");
+				task = null;
+				hasTask=false;
+				dejaTrouvePackage = false;
+			}
+			
+		}
 	
 	}
 	// method that move the Drone to a desired location on the scene(screen), we just need to give in the location
@@ -163,6 +193,15 @@ public class DeliverDrone extends Drone {
 			// if the drone has found the package, the we change the state of the variable
 			// so that the drone stop looking for the package and start looking for the building
 		}
+	}
+
+	
+	public Queue<Package> getTasksNotDelivered() {
+		return tasksNotDelivered;
+	}
+
+	public void setTasksNotDelivered(Queue<Package> tasksNotDelivered) {
+		this.tasksNotDelivered = tasksNotDelivered;
 	}
 
 	public Queue<Package> getTasks() {

@@ -35,7 +35,7 @@ public class DroneBuilder implements ContextBuilder<Object> {
 		//-------------------------------Creation of the Agents setup on the Screen-----------------------------------------------\\
 		
 		int nombreDrone = 2;
-		int charge = 200;
+		int charge = 150;
 
 		/*Define the number of DeliverDrone  */
 		for(int i = 0; i < nombreDrone; i++){
@@ -64,6 +64,7 @@ public class DroneBuilder implements ContextBuilder<Object> {
 		
 		CentralController cc = new CentralController(space, grid, context);
 		cc.registerTask();
+		context.add(cc);
 		
 		return context;
 	}
