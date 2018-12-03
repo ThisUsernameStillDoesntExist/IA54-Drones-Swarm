@@ -73,7 +73,7 @@ public class DeliverDrone extends Drone {
 
 				if(hasArrived(task.getDestinationCoord()))
 				{
-					// communiquer la centrale pour dire que plus un package delivré
+					// communiquer la centrale pour dire que plus un package delivrÃ©
 					// trouver un autre package
 					hasTask = false;
 					dejaTrouvePackage = false;
@@ -137,7 +137,7 @@ public class DeliverDrone extends Drone {
 		GridPoint actualLocation = grid.getLocation(this);
 		double distance = Math.hypot(pt.getX()-actualLocation.getX(), pt.getY()-actualLocation.getY());
 		if(distance <= 1 && distance >=0)	{
-			System.out.println("Arrivé au Building");
+			System.out.println("ArrivÃ© au Building");
 			return true;
 		}
 		
@@ -173,7 +173,7 @@ public class DeliverDrone extends Drone {
 			GridPoint actualLocation = grid.getLocation(this);
 			double distance = Math.hypot(pt.getX()-actualLocation.getX(), pt.getY()-actualLocation.getY());
 			if(distance < 1)	{
-				System.out.println("Arrivé au Package");
+				System.out.println("ArrivÃ© au Package");
 				dejaTrouvePackage = true;
 			}
 		}
@@ -181,6 +181,8 @@ public class DeliverDrone extends Drone {
 	@Override
 	public void findDockStation(GridPoint pt)
 	{
+		// TODO : 
+			// -Drone need to fin dthe nearet Dockstation -- Optimization
 		if(!pt.equals(grid.getLocation(this)) )
 		{
 			NdPoint myPoint = space.getLocation(this);
