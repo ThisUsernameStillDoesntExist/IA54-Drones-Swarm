@@ -78,6 +78,7 @@ public class CentralController
 			System.out.println("New list of drones = " + newlisOfDrones.size());
 			assignTask(lisOfPackageNotDelivered,newlisOfDrones);
 		}
+		lisOfPackageNotDelivered = new ArrayList<Package>();
 	}
 	
 	
@@ -180,6 +181,8 @@ public class CentralController
 	
 	void assignTask(ArrayList<Package> lisOfPackage ,ArrayList<DeliverDrone> lisOfDrones)
 	{
+		// Bug one package assigned to more tha 1 Drone
+			//Solution : Free the list the two queue of Package and give the new one
 		int numberOfDrone = lisOfDrones.size();
 		int numberOfPackage = lisOfPackage.size();
 		int numberOfPackagePerDrone = numberOfPackage/numberOfDrone;
@@ -193,7 +196,9 @@ public class CentralController
 				d.setTasks(new LinkedList<Package>(lisOfPackage.subList(fromIndex, toIndex)));
 				fromIndex = toIndex ;
 				toIndex = fromIndex + numberOfPackagePerDrone;
+				
 				System.out.println("Mys tasks are " + d.getTasks().size());
+			
 		} 
 		
 	}

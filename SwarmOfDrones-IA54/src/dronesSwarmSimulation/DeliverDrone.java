@@ -124,7 +124,10 @@ public class DeliverDrone extends Drone {
 		}
 		
 		if(tasks.isEmpty())
+		{
 			finishedWorkEvent = true;
+			System.out.println("Fire event task finished");
+		}
 		// Test if all the task are done
 			// Fire the finishedWorkEvent to the task controller
 		// When is that all the task are done for a particular drone
