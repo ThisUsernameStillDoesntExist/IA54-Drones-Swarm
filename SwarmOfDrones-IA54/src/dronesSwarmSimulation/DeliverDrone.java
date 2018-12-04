@@ -123,7 +123,7 @@ public class DeliverDrone extends Drone {
 			}	
 		}
 		
-		if(tasks.isEmpty())
+		if(tasks.size() <=0)
 		{
 			finishedWorkEvent = true;
 			System.out.println("Fire event task finished");

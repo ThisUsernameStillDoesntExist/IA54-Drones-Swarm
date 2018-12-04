@@ -56,14 +56,12 @@ public class CentralController
 	{
 		//chercher les package non delivré, et les mettres dans une liste
 		System.out.println("Queue not delivered changed");
-		ArrayList<DeliverDrone> newlisOfDrones = new  ArrayList<DeliverDrone>();
-		//System.out.println(newlisOfPackage.size() + "Drones no livré");
 		//Chercher les drones without task to do
 		 for(DeliverDrone d : lisOfDrones)
 		{ 
 					if(d.getTasksNotDelivered().size() > 0 && d.getTasks().size() <=0)
 					{
-						newlisOfDrones.add(d);
+						
 						for( Package p: d.getTasksNotDelivered())
 						{
 							if(!lisOfPackageNotDelivered.contains(p))
@@ -72,13 +70,7 @@ public class CentralController
 					}
 			
 		}
-		//assign Task not done to drones without task to do
-		if(newlisOfDrones.size() > 0)
-		{
-			System.out.println("New list of drones = " + newlisOfDrones.size());
-			assignTask(lisOfPackageNotDelivered,newlisOfDrones);
-		}
-		lisOfPackageNotDelivered = new ArrayList<Package>();
+		
 	}
 	
 	
@@ -99,6 +91,30 @@ public class CentralController
 		if(nbPackage > 0)
 		{
 			System.out.println("Task are not finished yet, More " + nbPackage + " Packages to be delivered");
+			ArrayList<DeliverDrone> newlisOfDrones = new  ArrayList<DeliverDrone>();
+			//System.out.println(newlisOfPackage.size() + "Drones no livré");
+			
+			 for(DeliverDrone d : lisOfDrones)
+				{ 
+							if(d.getTasksNotDelivered().size() > 0 && d.getTasks().size() <=0)
+							{
+								newlisOfDrones.add(d);
+								for( Package p: d.getTasksNotDelivered())
+								{
+									if(!lisOfPackageNotDelivered.contains(p))
+										lisOfPackageNotDelivered.add(p);
+								}
+							}
+					
+				}
+			
+			//assign Task not done to drones without task to do
+			if(newlisOfDrones.size() > 0)
+			{
+				System.out.println("New list of drones = " + newlisOfDrones.size());
+				assignTask(lisOfPackageNotDelivered,newlisOfDrones);
+			}
+			lisOfPackageNotDelivered = new ArrayList<Package>();
 		}	
 		else
 		{
@@ -196,7 +212,7 @@ public class CentralController
 				d.setTasks(new LinkedList<Package>(lisOfPackage.subList(fromIndex, toIndex)));
 				fromIndex = toIndex ;
 				toIndex = fromIndex + numberOfPackagePerDrone;
-				
+				d.setTasksNotDelivered(new LinkedList<Package>());
 				System.out.println("Mys tasks are " + d.getTasks().size());
 			
 		} 
