@@ -28,7 +28,7 @@ public class DeliverDrone extends Drone {
 	private int nbTaskNotDelivered = 0;
 	private int index = 0;
 	private int charge ;
-
+	
 	
 	public DeliverDrone(ContinuousSpace<Object> space, Grid<Object> grid, int charge) {
 		super(space, grid, charge);
@@ -48,15 +48,22 @@ public class DeliverDrone extends Drone {
 		
 		if(charge>0)
 		{	
-			//System.out.println("nombre de drones = " + tasks.size());
+			
 		
 		
 			if(hasTask && !dejaTrouvePackage)
 			{
-				
-					findPackage(grid.getLocation(task));
-					charge--;
-				
+					
+					if(hasArrived(grid.getLocation(task)))
+					{
+						dejaTrouvePackage = true;
+					}
+					else
+					{
+						move(grid.getLocation(task));
+						charge--;
+					}
+					
 			}
 			else
 			{	
@@ -171,20 +178,20 @@ public class DeliverDrone extends Drone {
 			
 			// if the drone has found the package, the we change the state of the variable
 			// so that the drone stop looking for the package and start looking for the building
-			/*if((int)myPoint.getX() == (int)otherPoint.getX() && (int)myPoint.getY() == (int)otherPoint.getY())
+			if((int)myPoint.getX() == (int)otherPoint.getX() && (int)myPoint.getY() == (int)otherPoint.getY())
 			{
 				dejaTrouvePackage = true;
-			} */
+			} 
 			
 		}
 		else
 		{
-			GridPoint actualLocation = grid.getLocation(this);
+			/*GridPoint actualLocation = grid.getLocation(this);
 			double distance = Math.hypot(pt.getX()-actualLocation.getX(), pt.getY()-actualLocation.getY());
 			if(distance < 1)	{
 				System.out.println("Arrivé au Package");
 				dejaTrouvePackage = true;
-			}
+			}*/
 		}
 	}
 	@Override
