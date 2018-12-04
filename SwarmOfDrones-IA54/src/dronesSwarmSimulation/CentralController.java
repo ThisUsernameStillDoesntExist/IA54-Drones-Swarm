@@ -30,6 +30,7 @@ public class CentralController
 	private ArrayList<Package> lisOfPackage;
 	private ArrayList<Package> lisOfPackageNotDelivered;
 	private ArrayList<Building> lisOfBuilding;
+	private ArrayList<DockStation> lisOfDockStation;
 	private ArrayList<DeliverDrone> lisOfDrones;
 	private int   RF = 1; // 1KM de distance
 	
@@ -44,24 +45,22 @@ public class CentralController
 		lisOfBuilding = new ArrayList<Building>();
 		lisOfDrones = new  ArrayList<DeliverDrone>();
 		lisOfPackageNotDelivered = new ArrayList<Package>();
+		lisOfDockStation = new ArrayList<DockStation>();
 	}
 
 	@Watch(watcheeClassName = "dronesSwarmSimulation.DeliverDrone",
 			watcheeFieldNames = "nbTaskNotDelivered",
 			query = "colocated",
 			whenToTrigger = WatcherTriggerSchedule.IMMEDIATE)
-	
 	public void controlPackage()
 	{
 		//chercher les package non delivré, et les mettres dans une liste
 		System.out.println("Queue not delivered changed");
 		ArrayList<DeliverDrone> newlisOfDrones = new  ArrayList<DeliverDrone>();
-		// System.out.println(newlisOfPackage.size() + " Drones no livré");
-		//chercher les drones without task to do
+		//System.out.println(newlisOfPackage.size() + "Drones no livré");
+		//Chercher les drones without task to do
 		 for(DeliverDrone d : lisOfDrones)
 		{ 
-			
-					
 					if(d.getTasksNotDelivered().size() > 0 && d.getTasks().size() <=0)
 					{
 						newlisOfDrones.add(d);
@@ -73,7 +72,7 @@ public class CentralController
 					}
 			
 		}
-		 //assign Task not done to drones without task to do
+		//assign Task not done to drones without task to do
 		if(newlisOfDrones.size() > 0)
 		{
 			System.out.println("New list of drones = " + newlisOfDrones.size());
@@ -98,6 +97,12 @@ public class CentralController
 			{
 				lisOfPackage.add((Package)obj);
 			}
+			
+			if(obj instanceof DockStation )
+			{
+				lisOfDockStation.add((DockStation)obj);
+			}
+			
 			// Create lists of Buildings on the scene
 			if(obj instanceof Building )
 			{
@@ -108,6 +113,12 @@ public class CentralController
 				lisOfDrones.add((DeliverDrone)obj);
 			}
 
+		}
+		
+		// Give list of DockStation to All Drones
+		for(DeliverDrone d : lisOfDrones)
+		{
+			d.setLisOfDockStation(lisOfDockStation);
 		}
 		
 		// Randomly ordered of building and package, to no be all the same task at the same building
@@ -136,10 +147,7 @@ public class CentralController
 			countBuinding++;
 		}
 		// divide the number of package to be distributed on each drone
-		
 		assignTask(lisOfPackage,lisOfDrones);
-		
-
 	}
 	
 	void assignTask(ArrayList<Package> lisOfPackage ,ArrayList<DeliverDrone> lisOfDrones)
@@ -153,13 +161,11 @@ public class CentralController
 		//System.out.println("from = " + fromIndex + " To = " + toIndex);
 		for(DeliverDrone d : lisOfDrones)
 		{
-			
-				
+
 				d.setTasks(new LinkedList<Package>(lisOfPackage.subList(fromIndex, toIndex)));
 				fromIndex = toIndex ;
 				toIndex = fromIndex + numberOfPackagePerDrone;
 
-		
 		} 
 		
 	}
@@ -179,6 +185,16 @@ public class CentralController
 
 	public void setLisOfBuilding(ArrayList<Building> lisOfBuilding) {
 		this.lisOfBuilding = lisOfBuilding;
+	}
+	
+	
+	
+	public ArrayList<DockStation> getLisOfDockStation() {
+		return lisOfDockStation;
+	}
+
+	public void setLisOfDockStation(ArrayList<DockStation> lisOfDockStation) {
+		this.lisOfDockStation = lisOfDockStation;
 	}
 
 	public int getRF() {

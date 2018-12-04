@@ -95,9 +95,10 @@ public class Drone {
 		
 	}
 	
-	public void findDockStation(GridPoint pt)
+	public GridPoint findDockStation()
 	{
 		// Derived classes will implement this method
+		return new GridPoint();
 	}
 	public void run() {
 		/*different step of drone*/

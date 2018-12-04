@@ -22,6 +22,7 @@ public class DeliverDrone extends Drone {
 	private boolean dejaTrouvePackage ;
 	private boolean hasTask;
 	private Package task;
+	private ArrayList<DockStation> lisOfDockStation;
 	private Queue<Package> tasks;
 	private Queue<Package> tasksNotDelivered;
 	private int nbTaskNotDelivered = 0;
@@ -35,7 +36,7 @@ public class DeliverDrone extends Drone {
 	    this.hasTask = false;
 	    this.charge = charge;
 	    tasksNotDelivered = new LinkedList<Package>();
-
+	    lisOfDockStation = new ArrayList<DockStation>();
 	}
 	
 	// method that implement the functional behavior of the drone
@@ -81,11 +82,9 @@ public class DeliverDrone extends Drone {
 				}
 				else
 				{
-					
 						move(task.getDestinationCoord());
 						this.getTask().move(this);
 						charge--;
-					
 				}
 			}
 		}
@@ -103,6 +102,20 @@ public class DeliverDrone extends Drone {
 				dejaTrouvePackage = false;
 			}
 			
+			// find Dockstation to charge
+			//Get the nearest dockstation position
+			GridPoint nearestDockPos = findDockStation(); 
+			// if the has arrived at the dockstation, charge the drone
+			if(hasArrived(nearestDockPos))
+			{
+				charge = 100;
+			}
+			else
+			{
+				// if not arrived at the dockstation, continue looking for the dockstation
+				move(nearestDockPos);
+			}
+			
 		}
 	
 	}
@@ -113,15 +126,12 @@ public class DeliverDrone extends Drone {
 	{
 		if (!pt.equals(grid.getLocation(this )) ) {
 			
-			
 				//turn(pt);
 				NdPoint  myPoint = space.getLocation(this);
 				
 				NdPoint  otherPoint = new  NdPoint(pt.getX(), pt.getY ());
 				
-				double  angle = SpatialMath.calcAngleFor2DMovement(space ,
-				
-				myPoint , otherPoint );
+				double  angle = SpatialMath.calcAngleFor2DMovement(space ,myPoint , otherPoint );
 				
 				space.moveByVector(this , 1, angle , 0);
 				
@@ -143,7 +153,6 @@ public class DeliverDrone extends Drone {
 		
 		return false;
 	}
-	
 	
 	// method that move the Drone to a desired location on the scene(screen), it used to 
 	// find the package that has been assigned to him, to be delivered
@@ -179,20 +188,27 @@ public class DeliverDrone extends Drone {
 		}
 	}
 	@Override
-	public void findDockStation(GridPoint pt)
+	public GridPoint findDockStation()
 	{
-		if(!pt.equals(grid.getLocation(this)) )
+		double nearest=1000.00;
+		GridPoint nearestPos = new GridPoint();
+		GridPoint actualLocation = grid.getLocation(this);
+		double distance;
+		
+		for(DockStation ds : lisOfDockStation )
 		{
-			NdPoint myPoint = space.getLocation(this);
-			NdPoint otherPoint = new NdPoint(pt.getX(),pt.getY());
-			double angle = SpatialMath.calcAngleFor2DMovement (space,myPoint , otherPoint );
-			space.moveByVector(this, 1, angle,0);
-			myPoint = space.getLocation(this);
-			grid.moveTo ( this ,( int )myPoint.getX (), ( int )myPoint.getY ());
+			GridPoint pt = grid.getLocation(ds);
+			distance =  Math.hypot(pt.getX()-actualLocation.getX(), pt.getY()-actualLocation.getY());
 			
-			// if the drone has found the package, the we change the state of the variable
-			// so that the drone stop looking for the package and start looking for the building
+			if(nearest > distance )
+			{
+				nearest = distance;
+				nearestPos = pt;
+				System.out.println("Distance " + distance);
+			}
 		}
+		
+		return nearestPos;
 	}
 
 	
@@ -241,7 +257,15 @@ public class DeliverDrone extends Drone {
 		return task;
 	}
 	
+	
+	public ArrayList<DockStation> getLisOfDockStation() {
+		return lisOfDockStation;
+	}
 
+	public void setLisOfDockStation(ArrayList<DockStation> lisOfDockStation) {
+		this.lisOfDockStation = lisOfDockStation;
+	}
+	
 	@Override
 	public ContinuousSpace<Object> getSpace() {
 		return space;
