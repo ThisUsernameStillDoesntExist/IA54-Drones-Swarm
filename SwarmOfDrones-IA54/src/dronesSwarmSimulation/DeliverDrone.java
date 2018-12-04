@@ -25,10 +25,12 @@ public class DeliverDrone extends Drone {
 	private ArrayList<DockStation> lisOfDockStation;
 	private Queue<Package> tasks;
 	private Queue<Package> tasksNotDelivered;
-	private int nbTaskNotDelivered = 0;
+	private  ArrayList<Package> tasksDelivered;
+	private int nbTaskNotDeliveredEvent = 0;
 	private int index = 0;
 	private int charge ;
-	
+	private boolean finishedWorkEvent = false;
+
 	
 	public DeliverDrone(ContinuousSpace<Object> space, Grid<Object> grid, int charge) {
 		super(space, grid, charge);
@@ -36,6 +38,7 @@ public class DeliverDrone extends Drone {
 	    this.hasTask = false;
 	    this.charge = charge;
 	    tasksNotDelivered = new LinkedList<Package>();
+	    tasksDelivered = new  ArrayList<Package>();
 	    lisOfDockStation = new ArrayList<DockStation>();
 	}
 	
@@ -45,15 +48,11 @@ public class DeliverDrone extends Drone {
 	@ScheduledMethod(start = 1, interval = 2)
 	public void doTask()
 	{
-		
 		if(charge>0)
 		{	
-			
-		
-		
+
 			if(hasTask && !dejaTrouvePackage)
 			{
-					
 					if(hasArrived(grid.getLocation(task)))
 					{
 						dejaTrouvePackage = true;
@@ -63,7 +62,6 @@ public class DeliverDrone extends Drone {
 						move(grid.getLocation(task));
 						charge--;
 					}
-					
 			}
 			else
 			{	
@@ -82,10 +80,12 @@ public class DeliverDrone extends Drone {
 				if(hasArrived(task.getDestinationCoord()))
 				{
 					// communiquer la centrale pour dire que plus un package delivré
+					task.setIsDelivered(true);
+					// add to list of task delivered
+					tasksDelivered.add(task);
 					// trouver un autre package
 					hasTask = false;
-					dejaTrouvePackage = false;
-
+					dejaTrouvePackage = false;	
 				}
 				else
 				{
@@ -101,14 +101,13 @@ public class DeliverDrone extends Drone {
 			if(hasTask)
 			{
 				tasksNotDelivered.add(task);
-				nbTaskNotDelivered++;
+				nbTaskNotDeliveredEvent++;
 				task.setIsDelivered(false);
-				System.out.println("Triger l'evenement package");
+				//System.out.println("Triger l'evenement package");
 				task = null;
 				hasTask=false;
 				dejaTrouvePackage = false;
 			}
-			
 			// find Dockstation to charge
 			//Get the nearest dockstation position
 			GridPoint nearestDockPos = findDockStation(); 
@@ -121,9 +120,14 @@ public class DeliverDrone extends Drone {
 			{
 				// if not arrived at the dockstation, continue looking for the dockstation
 				move(nearestDockPos);
-			}
-			
+			}	
 		}
+		
+		if(tasks.isEmpty())
+			finishedWorkEvent = true;
+		// Test if all the task are done
+			// Fire the finishedWorkEvent to the task controller
+		// When is that all the task are done for a particular drone
 	
 	}
 	// method that move the Drone to a desired location on the scene(screen), we just need to give in the location
@@ -154,7 +158,7 @@ public class DeliverDrone extends Drone {
 		GridPoint actualLocation = grid.getLocation(this);
 		double distance = Math.hypot(pt.getX()-actualLocation.getX(), pt.getY()-actualLocation.getY());
 		if(distance <= 1 && distance >=0)	{
-			System.out.println("Arrivé au Building");
+			//System.out.println("Arrivé au Building");
 			return true;
 		}
 		
@@ -212,7 +216,7 @@ public class DeliverDrone extends Drone {
 			{
 				nearest = distance;
 				nearestPos = pt;
-				System.out.println("Distance " + distance);
+				//System.out.println("Distance " + distance);
 			}
 		}
 		

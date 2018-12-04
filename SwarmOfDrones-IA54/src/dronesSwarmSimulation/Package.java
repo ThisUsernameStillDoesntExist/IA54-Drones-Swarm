@@ -25,6 +25,7 @@ public class Package {
 		this.space = space;
 		this.grid = grid;
 		this.isTaken = false;
+		isDelivered = false;
 	}
 	// this function is used to help the package to be deliver following   the drone
 	// and it receives the drone charged to carry the package, so that can it get the drone's position and follow him.

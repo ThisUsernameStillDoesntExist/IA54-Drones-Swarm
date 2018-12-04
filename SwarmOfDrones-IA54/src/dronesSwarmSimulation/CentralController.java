@@ -49,10 +49,10 @@ public class CentralController
 	}
 
 	@Watch(watcheeClassName = "dronesSwarmSimulation.DeliverDrone",
-			watcheeFieldNames = "nbTaskNotDelivered",
+			watcheeFieldNames = "nbTaskNotDeliveredEvent",
 			query = "colocated",
 			whenToTrigger = WatcherTriggerSchedule.IMMEDIATE)
-	public void controlPackage()
+	public void taskNotDeliveredEvent()
 	{
 		//chercher les package non delivré, et les mettres dans une liste
 		System.out.println("Queue not delivered changed");
@@ -79,6 +79,34 @@ public class CentralController
 			assignTask(lisOfPackageNotDelivered,newlisOfDrones);
 		}
 	}
+	
+	
+	@Watch(watcheeClassName = "dronesSwarmSimulation.DeliverDrone",
+			watcheeFieldNames = "finishedWorkEvent",
+			query = "colocated",
+			whenToTrigger = WatcherTriggerSchedule.IMMEDIATE)
+	public void taskFinishedEvent()
+	{
+		// test if all package are in  mode isDelivered=true
+		int nbPackage = 0;
+		for( Package p : lisOfPackage)
+		{
+			if(p.getIsDelivered()==false)
+				nbPackage++;
+		}
+		
+		if(nbPackage > 0)
+		{
+			System.out.println("Task are not finished yet, More " + nbPackage + " Packages to be delivered");
+		}	
+		else
+		{
+			System.out.println("All task Are finished, Stop The simularion");
+		}
+		
+	}
+	
+	
 	public Context<Object> getContext() {
 		return context;
 	}
@@ -165,7 +193,7 @@ public class CentralController
 				d.setTasks(new LinkedList<Package>(lisOfPackage.subList(fromIndex, toIndex)));
 				fromIndex = toIndex ;
 				toIndex = fromIndex + numberOfPackagePerDrone;
-
+				System.out.println("Mys tasks are " + d.getTasks().size());
 		} 
 		
 	}
