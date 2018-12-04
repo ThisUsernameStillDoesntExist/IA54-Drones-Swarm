@@ -43,7 +43,7 @@ public class DroneBuilder implements ContextBuilder<Object> {
 		} 
 		// package
 		// creation of the packages 
-		int nombrepack = 4;
+		int nombrepack = 7;
 		/*Define the number of Package */
 		for (int i = 0; i < nombrepack ; i++) {
 			context.add(new Package(space, grid));

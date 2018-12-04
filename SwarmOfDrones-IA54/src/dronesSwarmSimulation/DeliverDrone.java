@@ -190,18 +190,13 @@ public class DeliverDrone extends Drone {
 	@Override
 	public GridPoint findDockStation()
 	{
-<<<<<<< HEAD
+
 		double nearest=1000.00;
 		GridPoint nearestPos = new GridPoint();
 		GridPoint actualLocation = grid.getLocation(this);
 		double distance;
 		
 		for(DockStation ds : lisOfDockStation )
-=======
-		// TODO : 
-			// -Drone need to fin dthe nearet Dockstation -- Optimization
-		if(!pt.equals(grid.getLocation(this)) )
->>>>>>> 00723291711393e415242b1a6dba9390278c4046
 		{
 			GridPoint pt = grid.getLocation(ds);
 			distance =  Math.hypot(pt.getX()-actualLocation.getX(), pt.getY()-actualLocation.getY());
