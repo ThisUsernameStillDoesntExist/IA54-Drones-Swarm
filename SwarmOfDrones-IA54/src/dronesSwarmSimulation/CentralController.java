@@ -212,22 +212,7 @@ public class CentralController
 		// Give to All DeliverDrone on the scene the list of Package available,	
 		int fromIndex = 0;
 		int toIndex = numberOfPackagePerDrone  ;
-		//System.out.println("from = " + fromIndex + " To = " + toIndex);
-		/*DeliverDrone dd = new DeliverDrone();
-		for(DeliverDrone d : lisOfDrones)
-		{
-				dd= d;
-				d.setTasks(new LinkedList<Package>(lisOfPackage.subList(fromIndex, toIndex)));
-				fromIndex = toIndex ;
-				toIndex = fromIndex + numberOfPackagePerDrone;
-				d.setTasksNotDelivered(new LinkedList<Package>());
-	
-		} 
-		// if the number of packages are odd
-		if(lisOfPackage.size()%2 != 0)
-		{
-			dd.getTasks().add(lisOfPackage.get(lisOfPackage.size()-1));
-		}  */
+		
 		int countDrones = 0;
 		for(int i=0 ; i < lisOfPackage.size(); i++ )
 		{
