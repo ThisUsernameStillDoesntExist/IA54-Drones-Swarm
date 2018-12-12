@@ -38,12 +38,13 @@ public class DeliverDrone extends Drone {
 	    dejaTrouvePackage = false;
 	    this.hasTask = false;
 	    this.charge = charge;
+	    tasks = new LinkedList<Package>();
 	    tasksNotDelivered = new LinkedList<Package>();
 	    tasksDelivered = new  ArrayList<Package>();
 	    lisOfDockStation = new ArrayList<DockStation>();
 	    
 	}
-	
+	public DeliverDrone() {};
 	// method that implement the functional behavior of the drone
 	// it is called each 1 second
 	@Override

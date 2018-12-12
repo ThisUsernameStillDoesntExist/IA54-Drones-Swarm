@@ -146,7 +146,7 @@ public class CentralController
 				SimUtilities.shuffle(lisOfPriority, RandomHelper.getUniform());
 				// assign priority to the packages
 				p.setPriority(lisOfPriority.get(0));
-				// Add the package to the list
+				// Add the package to the liste
 				lisOfPackage.add(p);
 			}
 			
@@ -213,16 +213,40 @@ public class CentralController
 		int fromIndex = 0;
 		int toIndex = numberOfPackagePerDrone  ;
 		//System.out.println("from = " + fromIndex + " To = " + toIndex);
+		/*DeliverDrone dd = new DeliverDrone();
 		for(DeliverDrone d : lisOfDrones)
 		{
-
+				dd= d;
 				d.setTasks(new LinkedList<Package>(lisOfPackage.subList(fromIndex, toIndex)));
 				fromIndex = toIndex ;
 				toIndex = fromIndex + numberOfPackagePerDrone;
 				d.setTasksNotDelivered(new LinkedList<Package>());
-				System.out.println("Mys tasks are " + d.getTasks().size());
-			
+	
 		} 
+		// if the number of packages are odd
+		if(lisOfPackage.size()%2 != 0)
+		{
+			dd.getTasks().add(lisOfPackage.get(lisOfPackage.size()-1));
+		}  */
+		int countDrones = 0;
+		for(int i=0 ; i < lisOfPackage.size(); i++ )
+		{
+			Package p = lisOfPackage.get(i);
+			// reinitialize assign package to the first drone opn the list until the las drone
+			if(countDrones == lisOfDrones.size())
+			{
+				countDrones =0;
+			}
+			
+			lisOfDrones.get(countDrones).getTasks().add(p);
+			lisOfDrones.get(countDrones).setTasksNotDelivered(new LinkedList<Package>());
+			countDrones++; // next drone
+		}
+		
+		for(DeliverDrone d : lisOfDrones)
+		{
+			System.out.println("Mys tasks are " + d.getTasks().size());
+		}
 		
 	}
 	
