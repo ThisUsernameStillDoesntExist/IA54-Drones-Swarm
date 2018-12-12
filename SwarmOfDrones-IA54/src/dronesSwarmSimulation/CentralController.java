@@ -23,15 +23,18 @@ import repast.simphony.util.SimUtilities;
  	attach each package per building
  */
 
+
 public class CentralController
 {
 	protected ContinuousSpace<Object> space;
 	protected Grid<Object> grid;
 	private ArrayList<Package> lisOfPackage;
 	private ArrayList<Package> lisOfPackageNotDelivered;
+	private int  nbOfPackageDelivered=0;
 	private ArrayList<Building> lisOfBuilding;
 	private ArrayList<DockStation> lisOfDockStation;
 	private ArrayList<DeliverDrone> lisOfDrones;
+	private ArrayList<Priority> lisOfPriority;
 	private int   RF = 1; // 1KM de distance
 	
 	
@@ -46,6 +49,9 @@ public class CentralController
 		lisOfDrones = new  ArrayList<DeliverDrone>();
 		lisOfPackageNotDelivered = new ArrayList<Package>();
 		lisOfDockStation = new ArrayList<DockStation>();
+		lisOfPriority = new ArrayList<Priority>();
+		lisOfPriority.add(Priority.IMMEDIATE);
+		lisOfPriority.add(Priority.LATER);
 	}
 
 	@Watch(watcheeClassName = "dronesSwarmSimulation.DeliverDrone",
@@ -86,6 +92,8 @@ public class CentralController
 		{
 			if(p.getIsDelivered()==false)
 				nbPackage++;
+			else
+				nbOfPackageDelivered++;
 		}
 		
 		if(nbPackage > 0)
@@ -124,13 +132,6 @@ public class CentralController
 	}
 	
 	
-	public Context<Object> getContext() {
-		return context;
-	}
-
-	public void setContext(Context<Object> context) {
-		this.context = context;
-	}
 	
 	public void registerTask()
 	{
@@ -140,7 +141,13 @@ public class CentralController
 			// Create lists of package on the scene
 			if(obj instanceof Package )
 			{
-				lisOfPackage.add((Package)obj);
+				Package p = (Package)obj;
+				// Arrange the priority randomly
+				SimUtilities.shuffle(lisOfPriority, RandomHelper.getUniform());
+				// assign priority to the packages
+				p.setPriority(lisOfPriority.get(0));
+				// Add the package to the list
+				lisOfPackage.add(p);
 			}
 			
 			if(obj instanceof DockStation )
@@ -220,6 +227,24 @@ public class CentralController
 	}
 	
 	// This section is the getters and setters of the private field of the class
+	
+
+	public int getNbOfPackageDelivered() {
+		return nbOfPackageDelivered;
+	}
+
+	public void setNbOfPackageDelivered(int nbOfPackageDelivered) {
+		this.nbOfPackageDelivered = nbOfPackageDelivered;
+	}
+
+	public Context<Object> getContext() {
+		return context;
+	}
+
+	public void setContext(Context<Object> context) {
+		this.context = context;
+	}
+	
 	public ArrayList<Package> getLisOfPackage() {
 		return lisOfPackage;
 	}

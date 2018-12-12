@@ -18,6 +18,7 @@ import repast.simphony.space.grid.GridPoint;
 public class Package {
 	private ContinuousSpace<Object> space;
 	private Grid<Object> grid;
+	private Priority priority ;
 	private GridPoint destinationCoord; // destination to deliver the package
 	private Boolean isTaken;
 	private boolean isDelivered;
@@ -46,6 +47,12 @@ public class Package {
 	
 	
 	
+	public Priority getPriority() {
+		return priority;
+	}
+	public void setPriority(Priority priority) {
+		this.priority = priority;
+	}
 	public boolean getIsDelivered() {
 		return isDelivered;
 	}

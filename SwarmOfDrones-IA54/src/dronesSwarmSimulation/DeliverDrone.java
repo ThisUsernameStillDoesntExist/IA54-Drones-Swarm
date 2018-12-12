@@ -45,7 +45,7 @@ public class DeliverDrone extends Drone {
 	// method that implement the functional behavior of the drone
 	// it is called each 1 second
 	@Override
-	@ScheduledMethod(start = 1, interval = 2)
+	@ScheduledMethod(start = 1, interval = 1)
 	public void doTask()
 	{
 		if(charge>0)
@@ -68,9 +68,10 @@ public class DeliverDrone extends Drone {
 
 				if(!tasks.isEmpty() && !hasTask)
 				{
-					task = tasks.remove();
+					//task = tasks.remove();
+					task = getNewTask();
 					hasTask = true;
-					System.out.println("nouveau package");
+					System.out.println("nouveau package, priority = " + task.getPriority());
 				}
 			}
 			
@@ -226,7 +227,29 @@ public class DeliverDrone extends Drone {
 		return nearestPos;
 	}
 
-	
+	public Package getNewTask()
+	{
+		
+		for(Package p : tasks)
+		{
+			if(p.getPriority() == Priority.IMMEDIATE)
+			{
+				tasks.remove(p);
+				
+				return p;
+			}
+		}
+		
+		return tasks.remove();
+	}
+	public ArrayList<Package> getTasksDelivered() {
+		return tasksDelivered;
+	}
+
+	public void setTasksDelivered(ArrayList<Package> tasksDelivered) {
+		this.tasksDelivered = tasksDelivered;
+	}
+
 	public Queue<Package> getTasksNotDelivered() {
 		return tasksNotDelivered;
 	}

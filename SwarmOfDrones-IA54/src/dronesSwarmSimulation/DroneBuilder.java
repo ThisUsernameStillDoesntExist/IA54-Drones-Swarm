@@ -33,9 +33,10 @@ public class DroneBuilder implements ContextBuilder<Object> {
 				new WrapAroundBorders(), new SimpleGridAdder<Object>(), true, 150, 100));
 		
 		//-------------------------------Creation of the Agents setup on the Screen-----------------------------------------------\\
+		Parameters params = RunEnvironment.getInstance().getParameters();
 		
-		int nombreDrone = 2;
-		int charge = 150;
+		int nombreDrone = (Integer) params.getValue("deliver_drone");
+		int charge = (Integer) params.getValue("charge");;
 
 		/*Define the number of DeliverDrone  */
 		for(int i = 0; i < nombreDrone; i++){
@@ -43,7 +44,7 @@ public class DroneBuilder implements ContextBuilder<Object> {
 		} 
 		// package
 		// creation of the packages 
-		int nombrepack = 7;
+		int nombrepack = (Integer) params.getValue("package");
 		/*Define the number of Package */
 		for (int i = 0; i < nombrepack ; i++) {
 			context.add(new Package(space, grid));

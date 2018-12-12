@@ -2,5 +2,28 @@
 <parameters>
 
 	<parameter name="randomSeed" displayName="Default Random Seed" type="int" defaultValue="__NULL__" />
-
+	<parameter name="deliver_drone" displayName="Deliver drone Count" type="int" 
+						defaultValue="3" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
+									
+		/>
+			
+				<parameter name="package" displayName="Package Count" type="int" 
+						defaultValue="7" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
+									
+		/>
+		
+		<parameter name="charge" displayName="Charge value" type="int" 
+						defaultValue="50" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
+				/>
+						<parameter name="dockstation" displayName="Dockstation Count" type="int" 
+						defaultValue="5" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
+				/>
 </parameters>
