@@ -19,6 +19,7 @@ import repast.simphony.space.grid.GridPoint;
 import repast.simphony.util.SimUtilities;
 
 public class DeliverDrone extends Drone {
+	private int id;
 	private boolean dejaTrouvePackage ;
 	private boolean hasTask;
 	private Package task;
@@ -30,7 +31,7 @@ public class DeliverDrone extends Drone {
 	private int index = 0;
 	private int charge ;
 	private boolean finishedWorkEvent = false;
-
+	public static int idcontrol = 0;
 	
 	public DeliverDrone(ContinuousSpace<Object> space, Grid<Object> grid, int charge) {
 		super(space, grid, charge);
@@ -40,6 +41,7 @@ public class DeliverDrone extends Drone {
 	    tasksNotDelivered = new LinkedList<Package>();
 	    tasksDelivered = new  ArrayList<Package>();
 	    lisOfDockStation = new ArrayList<DockStation>();
+	    
 	}
 	
 	// method that implement the functional behavior of the drone
@@ -48,7 +50,8 @@ public class DeliverDrone extends Drone {
 	@ScheduledMethod(start = 1, interval = 1)
 	public void doTask()
 	{
-		if(charge>0)
+		
+		if(charge>10)
 		{	
 
 			if(hasTask && !dejaTrouvePackage)
