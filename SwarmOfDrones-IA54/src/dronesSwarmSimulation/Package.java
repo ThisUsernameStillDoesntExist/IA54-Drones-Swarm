@@ -21,7 +21,7 @@ public class Package {
 	//priority 
 	private Priority priority ;
 	private GridPoint destinationCoord; // destination to deliver the package
-	private Boolean isTaken;
+	private boolean isTaken;
 	private boolean isDelivered;
 	public Package(ContinuousSpace<Object> space, Grid<Object> grid) {
 		this.space = space;
@@ -61,10 +61,10 @@ public class Package {
 		this.isDelivered = isDelivered;
 	}
 	// getters and setters of the private fields
-	public Boolean isTaken() {
+	public boolean isTaken() {
 		return isTaken;
 	}
-	public void setTaken(Boolean isTaken) {
+	public void setTaken(boolean isTaken) {
 		this.isTaken = isTaken;
 	}
 	public ContinuousSpace<Object> getSpace() {

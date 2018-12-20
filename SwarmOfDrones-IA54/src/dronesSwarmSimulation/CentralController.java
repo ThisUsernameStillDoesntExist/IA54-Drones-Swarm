@@ -54,39 +54,14 @@ public class CentralController
 		lisOfPriority.add(Priority.LATER);
 	}
 
-	@Watch(watcheeClassName = "dronesSwarmSimulation.DeliverDrone",
-			watcheeFieldNames = "nbTaskNotDeliveredEvent",
-			query = "colocated",
-			whenToTrigger = WatcherTriggerSchedule.IMMEDIATE)
-	public void taskNotDeliveredEvent()
-	{
-		//chercher les package non delivré, et les mettres dans une liste
-		System.out.println("Queue not delivered changed");
-		//Chercher les drones without task to do
-		 for(DeliverDrone d : lisOfDrones)
-		{ 
-					if(d.getTasksNotDelivered().size() > 0 && d.getTasks().size() <=0)
-					{
-						
-						for( Package p: d.getTasksNotDelivered())
-						{
-							if(!lisOfPackageNotDelivered.contains(p))
-								lisOfPackageNotDelivered.add(p);
-						}
-					}
-			
-		}
-		
-	}
-	
-	
+	// event to gather information of drones that have finished work or not
 	@Watch(watcheeClassName = "dronesSwarmSimulation.DeliverDrone",
 			watcheeFieldNames = "finishedWorkEvent",
 			query = "colocated",
 			whenToTrigger = WatcherTriggerSchedule.IMMEDIATE)
 	public void taskFinishedEvent()
 	{
-		// test if all package are in  mode isDelivered=true
+		// test if all package are in  Delivered
 		int nbPackage = 0;
 		for( Package p : lisOfPackage)
 		{
@@ -98,29 +73,15 @@ public class CentralController
 		
 		if(nbPackage > 0)
 		{
+			// Log some informations to the console
 			System.out.println("Task are not finished yet, More " + nbPackage + " Packages to be delivered");
+			// to keep track of drones that have finished their work
 			ArrayList<DeliverDrone> newlisOfDrones = new  ArrayList<DeliverDrone>();
-			//System.out.println(newlisOfPackage.size() + "Drones no livré");
-			
-			 for(DeliverDrone d : lisOfDrones)
-				{ 
-							if(d.getTasksNotDelivered().size() > 0 && d.getTasks().size() <=0)
-							{
-								newlisOfDrones.add(d);
-								for( Package p: d.getTasksNotDelivered())
-								{
-									if(!lisOfPackageNotDelivered.contains(p))
-										lisOfPackageNotDelivered.add(p);
-								}
-							}
-					
-				}
-			
-			//assign Task not done to drones without task to do
+	
+			//control of drones without task to do
 			if(newlisOfDrones.size() > 0)
 			{
 				System.out.println("New list of drones = " + newlisOfDrones.size());
-				assignTask(lisOfPackageNotDelivered,newlisOfDrones);
 			}
 			lisOfPackageNotDelivered = new ArrayList<Package>();
 		}	
@@ -129,8 +90,7 @@ public class CentralController
 			System.out.println("All task Are finished, Stop The simularion");
 		}
 		
-	}
-	
+	} 
 	
 	
 	public void registerTask()
@@ -171,6 +131,7 @@ public class CentralController
 		for(DeliverDrone d : lisOfDrones)
 		{
 			d.setLisOfDockStation(lisOfDockStation);
+			d.setCentralController(this); // set the company to later extract information from
 		}
 		
 		// Randomly ordered of building and package, to no be all the same task at the same building
@@ -244,6 +205,32 @@ public class CentralController
 
 	public void setNbOfPackageDelivered(int nbOfPackageDelivered) {
 		this.nbOfPackageDelivered = nbOfPackageDelivered;
+	}
+	
+	
+	
+	public ArrayList<Package> getLisOfPackageNotDelivered() {
+		return lisOfPackageNotDelivered;
+	}
+
+	public void setLisOfPackageNotDelivered(ArrayList<Package> lisOfPackageNotDelivered) {
+		this.lisOfPackageNotDelivered = lisOfPackageNotDelivered;
+	}
+
+	public ArrayList<DeliverDrone> getLisOfDrones() {
+		return lisOfDrones;
+	}
+
+	public void setLisOfDrones(ArrayList<DeliverDrone> lisOfDrones) {
+		this.lisOfDrones = lisOfDrones;
+	}
+
+	public ArrayList<Priority> getLisOfPriority() {
+		return lisOfPriority;
+	}
+
+	public void setLisOfPriority(ArrayList<Priority> lisOfPriority) {
+		this.lisOfPriority = lisOfPriority;
 	}
 
 	public Context<Object> getContext() {

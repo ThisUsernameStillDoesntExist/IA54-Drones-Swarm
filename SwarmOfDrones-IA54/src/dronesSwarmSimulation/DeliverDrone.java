@@ -74,6 +74,7 @@ public class DeliverDrone extends Drone {
 				{
 					//task = tasks.remove();
 					task = getNewTask();
+					task.setTaken(true);
 					hasTask = true;
 					System.out.println("nouveau package, priority = " + task.getPriority());
 				}
@@ -108,6 +109,7 @@ public class DeliverDrone extends Drone {
 				tasksNotDelivered.add(task);
 				nbTaskNotDeliveredEvent++;
 				task.setIsDelivered(false);
+				task.setTaken(false);
 				//System.out.println("Triger l'evenement package");
 				task = null;
 				hasTask=false;
@@ -246,6 +248,71 @@ public class DeliverDrone extends Drone {
 		
 		return tasks.remove();
 	}
+	
+	
+	@Watch(watcheeClassName = "dronesSwarmSimulation.DeliverDrone",
+			watcheeFieldNames = "nbTaskNotDeliveredEvent",
+			query = "colocated",
+			whenToTrigger = WatcherTriggerSchedule.IMMEDIATE)
+	public void taskNotDeliveredEvent()
+	{
+		//chercher les package non delivré, et les mettres dans une liste
+		System.out.println("Queue not delivered changed");
+		CentralController companyInfo = this.getCentralController();
+		ArrayList<Package> lisOfPackage = companyInfo.getLisOfPackage();
+		//Chercher les drones without task to do
+		synchronized(this)
+		{
+					if(getTasksNotDelivered().size() > 0 && getTasks().size() <=0)
+					{
+						
+						for( Package p: lisOfPackage)
+						{
+							//!tasksNotDelivered.contains(p) &&
+							if( !p.isTaken() && !p.getIsDelivered() && !tasks.contains(p))
+							{
+								p.setTaken(true);
+								tasks.add(p);
+							}
+						}
+					}
+			
+		}
+	}
+	
+	
+	@Watch(watcheeClassName = "dronesSwarmSimulation.DeliverDrone",
+			watcheeFieldNames = "finishedWorkEvent",
+			query = "colocated",
+			whenToTrigger = WatcherTriggerSchedule.IMMEDIATE)
+	public void taskFinishedEvent()
+	{
+		// test if all package are in  mode isDelivered=true
+		System.out.println("Queue not delivered changed");
+		CentralController companyInfo = this.getCentralController();
+		ArrayList<Package> lisOfPackage = companyInfo.getLisOfPackage();
+		//Chercher les drones without task to do
+		synchronized(this)
+		{
+					if(getTasksNotDelivered().size() > 0 && getTasks().size() <=0)
+					{
+						
+						for( Package p: lisOfPackage)
+						{
+							//!tasksNotDelivered.contains(p) &&
+							if( !p.isTaken() && !p.getIsDelivered() && !tasks.contains(p))
+							{
+								p.setTaken(true);
+								tasks.add(p);
+							}
+						}
+					}
+			
+		}
+			
+	}
+	
+	
 	public ArrayList<Package> getTasksDelivered() {
 		return tasksDelivered;
 	}

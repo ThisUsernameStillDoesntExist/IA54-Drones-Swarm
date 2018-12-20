@@ -1,26 +1,26 @@
 <repast.simphony.data2.engine.DataSetDescriptor simphonyVersion="2.5.0">
-  <name>Drones Chrage Data Set</name>
+  <name>Package Delivered Data Set</name>
   <type>AGGREGATE</type>
   <inclTick>true</inclTick>
   <inclBatchRun>false</inclBatchRun>
   <inclRandomSeed>false</inclRandomSeed>
   <scheduleParams>
     <start>1.0</start>
-    <interval>3.0</interval>
+    <interval>1.0</interval>
     <priority>-Infinity</priority>
     <pType>LAST</pType>
     <duration>-1.0</duration>
     <frequency>REPEAT</frequency>
-    <hashCode>889175613</hashCode>
+    <hashCode>-322567645</hashCode>
   </scheduleParams>
   <atEnd>true</atEnd>
   <methodDataSources class="linked-hash-map">
     <entry>
-      <string>Charge</string>
+      <string>NombrePackages</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Charge</id>
-        <className>dronesSwarmSimulation.DeliverDrone</className>
-        <methodName>getCharge</methodName>
+        <id>NombrePackages</id>
+        <className>dronesSwarmSimulation.Package</className>
+        <methodName>getIsDelivered</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
