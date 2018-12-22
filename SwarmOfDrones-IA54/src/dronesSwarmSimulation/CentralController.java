@@ -47,7 +47,7 @@ public class CentralController
 		lisOfPackage = new ArrayList<Package>();
 		lisOfBuilding = new ArrayList<Building>();
 		lisOfDrones = new  ArrayList<DeliverDrone>();
-		lisOfPackageNotDelivered = new ArrayList<Package>();
+		//lisOfPackageNotDelivered = new ArrayList<Package>();
 		lisOfDockStation = new ArrayList<DockStation>();
 		lisOfPriority = new ArrayList<Priority>();
 		lisOfPriority.add(Priority.IMMEDIATE);
@@ -55,11 +55,12 @@ public class CentralController
 	}
 
 	// event to gather information of drones that have finished work or not
+	/*
 	@Watch(watcheeClassName = "dronesSwarmSimulation.DeliverDrone",
 			watcheeFieldNames = "finishedWorkEvent",
 			query = "colocated",
 			whenToTrigger = WatcherTriggerSchedule.IMMEDIATE)
-	public void taskFinishedEvent()
+	public void log()
 	{
 		// test if all package are in  Delivered
 		int nbPackage = 0;
@@ -90,7 +91,7 @@ public class CentralController
 			System.out.println("All task Are finished, Stop The simularion");
 		}
 		
-	} 
+	}  */
 	
 	
 	public void registerTask()
