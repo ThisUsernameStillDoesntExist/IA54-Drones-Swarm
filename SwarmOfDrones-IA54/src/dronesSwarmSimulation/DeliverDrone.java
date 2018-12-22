@@ -5,9 +5,11 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
+import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.engine.watcher.Watch;
 import repast.simphony.engine.watcher.WatcherTriggerSchedule;
+import repast.simphony.parameter.Parameters;
 import repast.simphony.query.space.grid.GridCell;
 import repast.simphony.query.space.grid.GridCellNgh;
 import repast.simphony.random.RandomHelper;
@@ -103,7 +105,7 @@ public class DeliverDrone extends Drone {
 		}
 		else
 		{
-			// notify the central
+			// notify the All Drones that exists task not delivered because of charge
 			if(hasTask)
 			{
 				tasksNotDelivered.add(task);
@@ -132,6 +134,7 @@ public class DeliverDrone extends Drone {
 		
 		if(tasks.size() <=0)
 		{
+			// notify all drones that I have finished with my tasks
 			finishedWorkEvent = true;
 			System.out.println("Fire event task finished");
 		}
@@ -256,27 +259,41 @@ public class DeliverDrone extends Drone {
 			whenToTrigger = WatcherTriggerSchedule.IMMEDIATE)
 	public void taskNotDeliveredEvent()
 	{
-		//chercher les package non delivré, et les mettres dans une liste
-		System.out.println("Queue not delivered changed");
-		CentralController companyInfo = this.getCentralController();
-		ArrayList<Package> lisOfPackage = companyInfo.getLisOfPackage();
-		//Chercher les drones without task to do
-		synchronized(this)
+		Parameters params = RunEnvironment.getInstance().getParameters();
+		boolean swarm =(Boolean) params.getValue("swarm");
+		// test if all package are in  mode isDelivered=true
+		if(swarm)
 		{
-					if(getTasksNotDelivered().size() > 0 && getTasks().size() <=0)
-					{
-						
-						for( Package p: lisOfPackage)
+			//chercher les package non delivré, et les mettres dans une liste
+			System.out.println("Queue not delivered changed");
+			CentralController companyInfo = this.getCentralController();
+			ArrayList<Package> lisOfPackage = companyInfo.getLisOfPackage();
+			//Chercher les drones without task to do
+			synchronized(this)
+			{
+						if(getTasksNotDelivered().size() > 0 && getTasks().size() <=0)
 						{
-							//!tasksNotDelivered.contains(p) &&
-							if( !p.isTaken() && !p.getIsDelivered() && !tasks.contains(p))
+							
+							for( Package p: lisOfPackage)
 							{
-								p.setTaken(true);
-								tasks.add(p);
+								//!tasksNotDelivered.contains(p) &&
+								if( !p.isTaken() && !p.getIsDelivered() && !tasks.contains(p))
+								{
+									p.setTaken(true);
+									tasks.add(p);
+								}
 							}
 						}
-					}
-			
+				
+			}
+		}
+		else
+		{
+			synchronized(this)
+			{
+				tasks.addAll(getTasksNotDelivered());
+				tasksNotDelivered.clear();
+			}
 		}
 	}
 	
@@ -287,27 +304,40 @@ public class DeliverDrone extends Drone {
 			whenToTrigger = WatcherTriggerSchedule.IMMEDIATE)
 	public void taskFinishedEvent()
 	{
+		Parameters params = RunEnvironment.getInstance().getParameters();
+		boolean swarm =(boolean) params.getValue("swarm");
 		// test if all package are in  mode isDelivered=true
-		System.out.println("Queue not delivered changed");
-		CentralController companyInfo = this.getCentralController();
-		ArrayList<Package> lisOfPackage = companyInfo.getLisOfPackage();
-		//Chercher les drones without task to do
-		synchronized(this)
+		if(swarm)
 		{
-					if(getTasksNotDelivered().size() > 0 && getTasks().size() <=0)
-					{
-						
-						for( Package p: lisOfPackage)
+			System.out.println("Queue not delivered changed");
+			CentralController companyInfo = this.getCentralController();
+			ArrayList<Package> lisOfPackage = companyInfo.getLisOfPackage();
+			//Chercher les drones without task to do
+			synchronized(this)
+			{
+						if(getTasksNotDelivered().size() > 0 && getTasks().size() <=0)
 						{
-							//!tasksNotDelivered.contains(p) &&
-							if( !p.isTaken() && !p.getIsDelivered() && !tasks.contains(p))
+							
+							for( Package p: lisOfPackage)
 							{
-								p.setTaken(true);
-								tasks.add(p);
+								//!tasksNotDelivered.contains(p) &&
+								if( !p.isTaken() && !p.getIsDelivered() && !tasks.contains(p))
+								{
+									p.setTaken(true);
+									tasks.add(p);
+								}
 							}
 						}
-					}
-			
+				
+			}
+		}
+		else
+		{
+			synchronized(this)
+			{
+				tasks.addAll(getTasksNotDelivered());
+				tasksNotDelivered.clear();
+			}
 		}
 			
 	}
