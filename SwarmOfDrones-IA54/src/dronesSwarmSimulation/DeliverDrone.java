@@ -327,14 +327,15 @@ public class DeliverDrone extends Drone {
 									tasks.add(p);
 								}
 							}
-						}
-				
+						}	
 			}
 		}
 		else
 		{
 			synchronized(this)
 			{
+				// When sawrm is not activated, all packages in the taskNotDelivered Queue must be put to the 
+				// Queue tasks, and removed from the  taskNotDelivered.
 				tasks.addAll(getTasksNotDelivered());
 				tasksNotDelivered.clear();
 			}
