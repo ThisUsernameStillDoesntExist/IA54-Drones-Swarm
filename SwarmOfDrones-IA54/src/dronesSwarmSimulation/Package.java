@@ -31,7 +31,7 @@ public class Package {
 	}
 	// this function is used to help the package to be deliver following   the drone
 	// and it receives the drone charged to carry the package, so that can it get the drone's position and follow him.
-	public void move(DeliverDrone drone)
+	public void move(Drone drone)
 	{
 		GridPoint positonDrone = grid.getLocation(drone);
 		if(!positonDrone.equals(grid.getLocation(this)))

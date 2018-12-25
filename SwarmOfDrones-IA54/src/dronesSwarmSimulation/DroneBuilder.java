@@ -36,7 +36,7 @@ public class DroneBuilder implements ContextBuilder<Object> {
 		Parameters params = RunEnvironment.getInstance().getParameters();
 		
 		int nombreDrone = (Integer) params.getValue("deliver_drone");
-		int charge = (Integer) params.getValue("charge");;
+		int charge = (Integer) params.getValue("charge");
 
 		/*Define the number of DeliverDrone  */
 		for(int i = 0; i < nombreDrone; i++){
@@ -91,7 +91,7 @@ public class DroneBuilder implements ContextBuilder<Object> {
 					space.moveTo(t, coordinated.getX(), coordinated.getY());
 				}
 				Parameters params = RunEnvironment.getInstance().getParameters();
-				int dockstation = 8;
+				int dockstation =(Integer) params.getValue("dockstation");
 				if(dockstation > 8) {
 					dockstation = 8;
 				}
@@ -100,7 +100,7 @@ public class DroneBuilder implements ContextBuilder<Object> {
 					DockStation d = new DockStation(space, grid);
 					context.add(d);
 					NdPoint coordinated = coordinatedInitialisationUtils.getDockstationCoordinatedAt(i);
-					space.moveTo(d, coordinated.getX(), coordinated.getY());
+					space.moveTo(d, coordinated.getX()+50, coordinated.getY());
 				}
 				
 				return context;

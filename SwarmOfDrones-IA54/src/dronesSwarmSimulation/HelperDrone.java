@@ -2,25 +2,20 @@ package dronesSwarmSimulation;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 
-import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.engine.watcher.Watch;
 import repast.simphony.engine.watcher.WatcherTriggerSchedule;
-import repast.simphony.parameter.Parameters;
-import repast.simphony.query.space.grid.GridCell;
-import repast.simphony.query.space.grid.GridCellNgh;
-import repast.simphony.random.RandomHelper;
 import repast.simphony.space.SpatialMath;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
 import repast.simphony.space.grid.Grid;
 import repast.simphony.space.grid.GridPoint;
-import repast.simphony.util.SimUtilities;
 
-public class DeliverDrone extends Drone {
+public class HelperDrone extends Drone{
+	
+	
 	private int id;
 	private boolean dejaTrouvePackage ;
 	private boolean hasTask;
@@ -35,7 +30,7 @@ public class DeliverDrone extends Drone {
 	private boolean finishedWorkEvent = false;
 	public static int idcontrol = 0;
 	
-	public DeliverDrone(ContinuousSpace<Object> space, Grid<Object> grid, int charge) {
+	public HelperDrone(ContinuousSpace<Object> space, Grid<Object> grid, int charge) {
 		super(space, grid, charge);
 	    dejaTrouvePackage = false;
 	    this.hasTask = false;
@@ -46,7 +41,7 @@ public class DeliverDrone extends Drone {
 	    lisOfDockStation = new ArrayList<DockStation>();
 	    
 	}
-	public DeliverDrone() {};
+	public HelperDrone() {};
 	// method that implement the functional behavior of the drone
 	// it is called each 1 second
 	@Override
@@ -105,7 +100,7 @@ public class DeliverDrone extends Drone {
 		}
 		else
 		{
-			// notify the All Drones that exists task not delivered because of charge
+			// notify the central
 			if(hasTask)
 			{
 				tasksNotDelivered.add(task);
@@ -134,7 +129,6 @@ public class DeliverDrone extends Drone {
 		
 		if(tasks.size() <=0)
 		{
-			// notify all drones that I have finished with my tasks
 			finishedWorkEvent = true;
 			System.out.println("Fire event task finished");
 		}
@@ -259,41 +253,27 @@ public class DeliverDrone extends Drone {
 			whenToTrigger = WatcherTriggerSchedule.IMMEDIATE)
 	public void taskNotDeliveredEvent()
 	{
-		Parameters params = RunEnvironment.getInstance().getParameters();
-		boolean swarm =(Boolean) params.getValue("swarm");
-		// test if all package are in  mode isDelivered=true
-		if(swarm)
+		//chercher les package non delivré, et les mettres dans une liste
+		System.out.println("Queue not delivered changed");
+		CentralController companyInfo = this.getCentralController();
+		ArrayList<Package> lisOfPackage = companyInfo.getLisOfPackage();
+		//Chercher les drones without task to do
+		synchronized(this)
 		{
-			//chercher les package non delivré, et les mettres dans une liste
-			System.out.println("Queue not delivered changed");
-			CentralController companyInfo = this.getCentralController();
-			ArrayList<Package> lisOfPackage = companyInfo.getLisOfPackage();
-			//Chercher les drones without task to do
-			synchronized(this)
-			{
-						if(getTasksNotDelivered().size() > 0 && getTasks().size() <=0)
+					if(getTasksNotDelivered().size() > 0 && getTasks().size() <=0)
+					{
+						
+						for( Package p: lisOfPackage)
 						{
-							
-							for( Package p: lisOfPackage)
+							//!tasksNotDelivered.contains(p) &&
+							if( !p.isTaken() && !p.getIsDelivered() && !tasks.contains(p))
 							{
-								//!tasksNotDelivered.contains(p) &&
-								if( !p.isTaken() && !p.getIsDelivered() && !tasks.contains(p))
-								{
-									p.setTaken(true);
-									tasks.add(p);
-								}
+								p.setTaken(true);
+								tasks.add(p);
 							}
 						}
-				
-			}
-		}
-		else
-		{
-			synchronized(this)
-			{
-				tasks.addAll(getTasksNotDelivered());
-				tasksNotDelivered.clear();
-			}
+					}
+			
 		}
 	}
 	
@@ -304,41 +284,27 @@ public class DeliverDrone extends Drone {
 			whenToTrigger = WatcherTriggerSchedule.IMMEDIATE)
 	public void taskFinishedEvent()
 	{
-		Parameters params = RunEnvironment.getInstance().getParameters();
-		boolean swarm =(boolean) params.getValue("swarm");
 		// test if all package are in  mode isDelivered=true
-		if(swarm)
+		System.out.println("Queue not delivered changed");
+		CentralController companyInfo = this.getCentralController();
+		ArrayList<Package> lisOfPackage = companyInfo.getLisOfPackage();
+		//Chercher les drones without task to do
+		synchronized(this)
 		{
-			System.out.println("Queue not delivered changed");
-			CentralController companyInfo = this.getCentralController();
-			ArrayList<Package> lisOfPackage = companyInfo.getLisOfPackage();
-			//Chercher les drones without task to do
-			synchronized(this)
-			{
-						if(getTasksNotDelivered().size() > 0 && getTasks().size() <=0)
+					if(getTasksNotDelivered().size() > 0 && getTasks().size() <=0)
+					{
+						
+						for( Package p: lisOfPackage)
 						{
-							
-							for( Package p: lisOfPackage)
+							//!tasksNotDelivered.contains(p) &&
+							if( !p.isTaken() && !p.getIsDelivered() && !tasks.contains(p))
 							{
-								//!tasksNotDelivered.contains(p) &&
-								if( !p.isTaken() && !p.getIsDelivered() && !tasks.contains(p))
-								{
-									p.setTaken(true);
-									tasks.add(p);
-								}
+								p.setTaken(true);
+								tasks.add(p);
 							}
-						}	
-			}
-		}
-		else
-		{
-			synchronized(this)
-			{
-				// When sawrm is not activated, all packages in the taskNotDelivered Queue must be put to the 
-				// Queue tasks, and removed from the  taskNotDelivered.
-				tasks.addAll(getTasksNotDelivered());
-				tasksNotDelivered.clear();
-			}
+						}
+					}
+			
 		}
 			
 	}
