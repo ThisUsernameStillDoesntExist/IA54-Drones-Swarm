@@ -3,7 +3,7 @@ package dronesSwarmSimulation.physics;
 import java.util.ArrayList;
 import java.util.Map;
 
-import dronesSwarmSimulation.DeliverDrone;
+import dronesSwarmSimulation.DeliveryDrone;
 import dronesSwarmSimulation.Drone;
 import dronesSwarmSimulation.physics.collisions.CollisionSortElement;
 import dronesSwarmSimulation.utilities.Vect3;
