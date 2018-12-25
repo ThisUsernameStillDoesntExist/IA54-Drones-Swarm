@@ -3,6 +3,7 @@ package dronesSwarmSimulation.physics;
 import java.util.ArrayList;
 import java.util.Map;
 
+import dronesSwarmSimulation.DeliverDrone;
 import dronesSwarmSimulation.Drone;
 import dronesSwarmSimulation.physics.collisions.CollisionSortElement;
 import dronesSwarmSimulation.utilities.Vect3;
@@ -11,45 +12,29 @@ public class PhysicsEngine {
 	
 	public static final Vect3 Gravity=new Vect3(0,0,-9.81);
 	
-	private Map map;
-	private ArrayList<Emission> emissions = new ArrayList<Emission>(); //special list for electromagnetic wave emissions
+	//private Map map;
 	
 	public PhysicsEngine(Map m) {
-		this.map=m;
+		//this.map=m;
 	}
 	
 	//manage only drones collisions at first
 	
-	public void updateMap(double time)
-	{
-		if(map!=null)
-		{
-			updateWorld(map.getAllObjects(), time);
-		}
-	}
 	
 	public void updateWorld(ArrayList<WorldObject> world, double time)
 	{
 		processCollisions(world);
-		processCommunications(world);
 		
 		for (WorldObject w : world) {
 			
 			w.move(time);
-
-			if(w instanceof Drone)
+/*
+			if(w instanceof DeliverDrone)
 			{
-				Drone d = ((Drone) w);
+				DeliverDrone d = ((DeliverDrone) w);
 				
 				d.updateMe(time);
-				//Vect3 goalPosition = d.getNextObjective().getPosition(); -> bug !
-				//d.setTargetDirection(DroneAI.AI.updateSpeed(d, goalPosition, map));
-				//d.setPropellerDirection(new Vect3(1,0.5,1));//for testing only. the drone should be further controlled with a command module		
-				
-				
-				//Vect3 goalPosition = d.getNextObjective().getPosition();
-				//d.setPropellerDirection(DroneAI.AI.updateSpeed(d, goalPosition, map));
-			}
+			}*/
 		}
 	}
 	
@@ -101,23 +86,6 @@ public class PhysicsEngine {
 		}
 	}
 	
-	private void processCommunications(ArrayList<WorldObject> world)
-	{
-		ArrayList<Emission> newEmissions=new ArrayList<Emission>();
-		
-		for(WorldObject w : world)
-		{
-			if(w instanceof Drone)
-			{
-				Drone d = ((Drone) w);
-				CommunicationModule dcom=d.getModuleCOM();
-				dcom.receiveAmbientCommunications(emissions);
-				newEmissions.addAll(dcom.sendPendingMessages());
-			}
-		}
-		
-		emissions=newEmissions;
-	}
 	
 	private void collide(WorldObject w1, WorldObject w2)
 	{
