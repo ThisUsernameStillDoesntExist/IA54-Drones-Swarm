@@ -33,7 +33,7 @@ public class CentralController
 	private int  nbOfPackageDelivered=0;
 	private ArrayList<Building> lisOfBuilding;
 	private ArrayList<DockStation> lisOfDockStation;
-	private ArrayList<DeliveryDrone> lisOfDrones;
+	private ArrayList<DeliverDrone> lisOfDrones;
 	private ArrayList<Priority> lisOfPriority;
 	private int   RF = 1; // 1KM de distance
 	
@@ -46,7 +46,7 @@ public class CentralController
 		this.context = context;
 		lisOfPackage = new ArrayList<Package>();
 		lisOfBuilding = new ArrayList<Building>();
-		lisOfDrones = new  ArrayList<DeliveryDrone>();
+		lisOfDrones = new  ArrayList<DeliverDrone>();
 		//lisOfPackageNotDelivered = new ArrayList<Package>();
 		lisOfDockStation = new ArrayList<DockStation>();
 		lisOfPriority = new ArrayList<Priority>();
@@ -121,15 +121,15 @@ public class CentralController
 			{
 				lisOfBuilding.add((Building)obj);
 			}
-			if(obj instanceof DeliveryDrone )
+			if(obj instanceof DeliverDrone )
 			{
-				lisOfDrones.add((DeliveryDrone)obj);
+				lisOfDrones.add((DeliverDrone)obj);
 			}
 
 		}
 		
 		// Give list of DockStation to All Drones
-		for(DeliveryDrone d : lisOfDrones)
+		for(DeliverDrone d : lisOfDrones)
 		{
 			d.setLisOfDockStation(lisOfDockStation);
 			d.setCentralController(this); // set the company to later extract information from
@@ -164,7 +164,7 @@ public class CentralController
 		assignTask(lisOfPackage,lisOfDrones);
 	}
 	
-	void assignTask(ArrayList<Package> lisOfPackage ,ArrayList<DeliveryDrone> lisOfDrones)
+	void assignTask(ArrayList<Package> lisOfPackage ,ArrayList<DeliverDrone> lisOfDrones)
 	{
 		// Bug one package assigned to more tha 1 Drone
 			//Solution : Free the list the two queue of Package and give the new one
@@ -190,7 +190,7 @@ public class CentralController
 			countDrones++; // next drone
 		}
 		
-		for(DeliveryDrone d : lisOfDrones)
+		for(DeliverDrone d : lisOfDrones)
 		{
 			System.out.println("Mys tasks are " + d.getTasks().size());
 		}
@@ -218,11 +218,11 @@ public class CentralController
 		this.lisOfPackageNotDelivered = lisOfPackageNotDelivered;
 	}
 
-	public ArrayList<DeliveryDrone> getLisOfDrones() {
+	public ArrayList<DeliverDrone> getLisOfDrones() {
 		return lisOfDrones;
 	}
 
-	public void setLisOfDrones(ArrayList<DeliveryDrone> lisOfDrones) {
+	public void setLisOfDrones(ArrayList<DeliverDrone> lisOfDrones) {
 		this.lisOfDrones = lisOfDrones;
 	}
 

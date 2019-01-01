@@ -20,7 +20,7 @@ import repast.simphony.space.grid.Grid;
 import repast.simphony.space.grid.GridPoint;
 import repast.simphony.util.SimUtilities;
 
-public class DeliveryDrone extends Drone {
+public class DeliverDrone extends Drone {
 	private int id;
 	private boolean dejaTrouvePackage ;
 	private boolean hasTask;
@@ -35,7 +35,7 @@ public class DeliveryDrone extends Drone {
 	private boolean finishedWorkEvent = false;
 	public static int idcontrol = 0;
 	
-	public DeliveryDrone(ContinuousSpace<Object> space, Grid<Object> grid, int charge) {
+	public DeliverDrone(ContinuousSpace<Object> space, Grid<Object> grid, int charge) {
 		super(space, grid, charge);
 	    dejaTrouvePackage = false;
 	    this.hasTask = false;
@@ -46,7 +46,7 @@ public class DeliveryDrone extends Drone {
 	    lisOfDockStation = new ArrayList<DockStation>();
 	    
 	}
-	public DeliveryDrone() {};
+	public DeliverDrone() {};
 	// method that implement the functional behavior of the drone
 	// it is called each 1 second
 	@Override
@@ -264,7 +264,7 @@ public class DeliveryDrone extends Drone {
 		// test if all package are in  mode isDelivered=true
 		if(swarm)
 		{
-			//chercher les package non delivrï¿½, et les mettres dans une liste
+			//chercher les package non delivré, et les mettres dans une liste
 			System.out.println("Queue not delivered changed");
 			CentralController companyInfo = this.getCentralController();
 			ArrayList<Package> lisOfPackage = companyInfo.getLisOfPackage();
