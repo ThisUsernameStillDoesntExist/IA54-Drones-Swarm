@@ -11,11 +11,11 @@ import repast.simphony.space.grid.GridPoint;
  * this why there is a field of type Package ( the product to be deliver) 
  * 
  */
-public class DeliverTask extends Task {
+public class DeliveryTask extends Task {
 	private int id;
 	private Package mPackage;
 	private static int countID = 0;
-	public DeliverTask(ContinuousSpace<Object> space, Grid<Object> grid) {
+	public DeliveryTask(ContinuousSpace<Object> space, Grid<Object> grid) {
 		super(space, grid);
 		
 		countID++;
