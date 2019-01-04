@@ -18,7 +18,7 @@ public class Drone {
 	private int charge;
 	protected ContinuousSpace<Object> space;
 	protected Grid<Object> grid;
-	protected Task task;
+	protected Package task;
 	protected DockStation dock;
 	protected boolean charging;
 	protected ArrayList<DockStation> docks;

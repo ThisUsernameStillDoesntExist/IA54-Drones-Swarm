@@ -71,7 +71,7 @@
     <pType>LAST</pType>
     <duration>-1.0</duration>
     <frequency>REPEAT</frequency>
-    <hashCode>1833906617</hashCode>
+    <hashCode>-196265075</hashCode>
   </schedParams>
   <layoutClassName>foo.bar.baz</layoutClassName>
   <layoutProjection>space</layoutProjection>
@@ -79,19 +79,15 @@
   <layerOrder>
     <entry>
       <string>dronesSwarmSimulation.Building</string>
-      <int>3</int>
+      <int>2</int>
     </entry>
     <entry>
       <string>dronesSwarmSimulation.Tree</string>
       <int>1</int>
     </entry>
     <entry>
-      <string>dronesSwarmSimulation.DeliverTask</string>
-      <int>2</int>
-    </entry>
-    <entry>
       <string>dronesSwarmSimulation.Package</string>
-      <int>5</int>
+      <int>4</int>
     </entry>
     <entry>
       <string>dronesSwarmSimulation.CentralController</string>
@@ -99,11 +95,11 @@
     </entry>
     <entry>
       <string>dronesSwarmSimulation.DeliverDrone</string>
-      <int>6</int>
+      <int>5</int>
     </entry>
     <entry>
       <string>dronesSwarmSimulation.DockStation</string>
-      <int>4</int>
+      <int>3</int>
     </entry>
   </layerOrder>
   <projections>
