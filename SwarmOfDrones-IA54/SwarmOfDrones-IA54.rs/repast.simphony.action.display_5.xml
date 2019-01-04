@@ -11,10 +11,6 @@
       <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
     </entry>
     <entry>
-      <string>dronesSwarmSimulation.DeliverTask</string>
-      <string>repast.simphony.visualizationOGL2D.DefaultStyleOGL2D</string>
-    </entry>
-    <entry>
       <string>dronesSwarmSimulation.Package</string>
       <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
     </entry>
@@ -39,10 +35,6 @@
     <entry>
       <string>dronesSwarmSimulation.Tree</string>
       <string>dronesSwarmSimulation.Tree.style_0.xml</string>
-    </entry>
-    <entry>
-      <string>dronesSwarmSimulation.DeliverTask</string>
-      <null/>
     </entry>
     <entry>
       <string>dronesSwarmSimulation.Package</string>
@@ -71,7 +63,7 @@
     <pType>LAST</pType>
     <duration>-1.0</duration>
     <frequency>REPEAT</frequency>
-    <hashCode>-196265075</hashCode>
+    <hashCode>-2076375851</hashCode>
   </schedParams>
   <layoutClassName>foo.bar.baz</layoutClassName>
   <layoutProjection>space</layoutProjection>
