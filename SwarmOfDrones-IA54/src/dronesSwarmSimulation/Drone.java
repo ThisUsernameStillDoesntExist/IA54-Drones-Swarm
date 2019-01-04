@@ -2,6 +2,8 @@ package dronesSwarmSimulation;
 
 import java.util.ArrayList;
 
+import dronesSwarmSimulation.physics.WorldObject;
+import dronesSwarmSimulation.physics.collisions.colliders.Collider;
 import repast.simphony.space.SpatialMath;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
@@ -14,7 +16,7 @@ import repast.simphony.space.grid.GridPoint;
  * of the two types of drones existing in our simulation software 
  * 
  */
-public class Drone {
+public class Drone extends WorldObject {
 	private int charge;
 	protected ContinuousSpace<Object> space;
 	protected Grid<Object> grid;
@@ -108,7 +110,7 @@ public class Drone {
 		/*different step of drone*/
 	}
 	
-	public GridPoint  getPosition() {
+	public GridPoint getGridPosition() {
 		/*return the drone's position*/
 		return new GridPoint();
 	}
@@ -119,6 +121,21 @@ public class Drone {
 
 	public void setCentralController(CentralController centralController) {
 		this.centralController = centralController;
+	}
+	@Override
+	public boolean collideWith(WorldObject w) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+	@Override
+	public WorldObject copy() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+	@Override
+	protected Collider createSpecificCollider() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	

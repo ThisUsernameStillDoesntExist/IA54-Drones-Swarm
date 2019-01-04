@@ -253,7 +253,7 @@ public class HelperDrone extends Drone{
 			whenToTrigger = WatcherTriggerSchedule.IMMEDIATE)
 	public void taskNotDeliveredEvent()
 	{
-		//chercher les package non delivré, et les mettres dans une liste
+		//chercher les package non delivrï¿½, et les mettres dans une liste
 		System.out.println("Queue not delivered changed");
 		CentralController companyInfo = this.getCentralController();
 		ArrayList<Package> lisOfPackage = companyInfo.getLisOfPackage();
@@ -410,7 +410,7 @@ public class HelperDrone extends Drone{
 	}
 	
 	@Override
-	public GridPoint  getPosition() {
+	public GridPoint getGridPosition() {
 		/*return drone position*/
 		return new GridPoint();
 	}

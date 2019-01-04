@@ -19,7 +19,7 @@ public abstract class WorldObject {
 	}
 	
 	/**
-	 * Actually useful constructor, thx Francis
+	 * 
 	 * @param position
 	 * @param speed
 	 * @param size

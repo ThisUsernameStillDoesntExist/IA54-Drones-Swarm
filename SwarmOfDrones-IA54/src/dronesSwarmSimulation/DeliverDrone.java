@@ -54,6 +54,10 @@ public class DeliverDrone extends Drone {
 	public void doTask()
 	{
 		
+		
+		
+		return;
+		/*
 		if(charge>10)
 		{	
 
@@ -141,6 +145,7 @@ public class DeliverDrone extends Drone {
 		// Test if all the task are done
 			// Fire the finishedWorkEvent to the task controller
 		// When is that all the task are done for a particular drone
+		*/
 	
 	}
 	// method that move the Drone to a desired location on the scene(screen), we just need to give in the location
@@ -264,7 +269,7 @@ public class DeliverDrone extends Drone {
 		// test if all package are in  mode isDelivered=true
 		if(swarm)
 		{
-			//chercher les package non delivré, et les mettres dans une liste
+			//chercher les package non delivrï¿½, et les mettres dans une liste
 			System.out.println("Queue not delivered changed");
 			CentralController companyInfo = this.getCentralController();
 			ArrayList<Package> lisOfPackage = companyInfo.getLisOfPackage();
@@ -444,7 +449,7 @@ public class DeliverDrone extends Drone {
 	}
 	
 	@Override
-	public GridPoint  getPosition() {
+	public GridPoint getGridPosition() {
 		/*return drone position*/
 		return new GridPoint();
 	}
