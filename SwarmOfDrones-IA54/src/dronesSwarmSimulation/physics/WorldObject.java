@@ -61,8 +61,9 @@ public abstract class WorldObject {
 	public abstract boolean collideWith(WorldObject w);
 	
 	
-	public void move(double time)
+	public void updateMe(double time)
 	{
+		todoOnUpdate(time);
 		updateSpeed(time);
 		
 		Vect3 dspeed=speed.getMultipliedBy(time);
@@ -81,8 +82,8 @@ public abstract class WorldObject {
 		//so dirty without operator overloading...
 		Vect3 specificAcceleration = getSpecificAcceleration();
 		Vect3 dragAcceleration = speed.getMultipliedBy(speed.norm() * charact.getAirDrag() / getTotalWeight()); ////drag proportional to squared speed
-		//Vect3 dragAcceleration = speed.getMultipliedBy(characteristics.getAirDrag() / getTotalFlyWeight()); //drag proportional to speed
-		Vect3 acceleration = specificAcceleration.getAdded(PhysicsEngine.Gravity).substract(dragAcceleration);
+		Vect3 linearFrictionAcceleration = speed.getMultipliedBy(charact.getFrictionDrag() / getTotalWeight()); //drag proportional to speed
+		Vect3 acceleration = specificAcceleration.getAdded(Constants.Gravity).substract(dragAcceleration).substract(linearFrictionAcceleration);
 		
 		speed.add(acceleration.getMultipliedBy(time));
 	}
@@ -94,6 +95,12 @@ public abstract class WorldObject {
 	 * @return
 	 */
 	protected abstract Vect3 getSpecificAcceleration();
+	
+	/**
+	 * do all necessary actions on each frame update.
+	 * this method is called before getSpecificAcceleration
+	 */
+	protected abstract void todoOnUpdate(double time);
 	
 	
 	/**for deep copy

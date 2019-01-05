@@ -55,11 +55,13 @@ public class DeliverDrone extends Drone {
 	{
 		
 		
-		/*
+		
+		
+		
 		if(true)
 		{
 			return;
-		}*/
+		}
 		
 		if(charge>10)
 		{	
@@ -151,6 +153,7 @@ public class DeliverDrone extends Drone {
 		
 	
 	}
+	/*
 	// method that move the Drone to a desired location on the scene(screen), we just need to give in the location
 	// This method is used to move the to the building where the package will be delivered
 	@Override
@@ -173,7 +176,34 @@ public class DeliverDrone extends Drone {
 			
 		}
 
+	}*/
+	
+	//test method
+	// method that move the Drone to a desired location on the scene(screen), we just need to give in the location
+	// This method is used to move the to the building where the package will be delivered
+	@Override
+	public void move(GridPoint pt)
+	{
+		if (!pt.equals(grid.getLocation(this )) ) {
+			
+				//turn(pt);
+				NdPoint  myPoint = space.getLocation(this);
+				
+				NdPoint  otherPoint = new  NdPoint(pt.getX(), pt.getY ());
+				
+				double  angle = SpatialMath.calcAngleFor2DMovement(space ,myPoint , otherPoint );
+				
+				space.moveByVector(this , 1, angle , 0);
+				//space.moveTo(this, 1,2,2);
+				
+				myPoint = space.getLocation(this);
+				
+				grid.moveTo(this , (int)myPoint.getX(), (int)myPoint.getY ());
+			
+		}
+
 	}
+	
 	private boolean hasArrived(GridPoint pt)
 	{
 		GridPoint actualLocation = grid.getLocation(this);

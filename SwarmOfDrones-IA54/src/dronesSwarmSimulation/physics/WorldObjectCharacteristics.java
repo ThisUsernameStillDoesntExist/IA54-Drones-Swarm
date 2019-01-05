@@ -5,6 +5,7 @@ public class WorldObjectCharacteristics {
 	
 
 	protected double airDrag;// Kg/m
+	protected double frictionDrag;// Kg/s
 	protected double radius;// m
 	protected double dryWeight;// Kg
 
@@ -18,6 +19,7 @@ public class WorldObjectCharacteristics {
 
 	protected void setCharacteristics(WorldObjectType wot) {
 		airDrag=0;
+		frictionDrag=0;
 		radius=1;
 		dryWeight=1;
 	}
@@ -35,7 +37,9 @@ public class WorldObjectCharacteristics {
 		return dryWeight;
 	}
 
-
+	public double getFrictionDrag() {
+		return frictionDrag;
+	}
 
 	public double getAirDrag() {
 		return airDrag;

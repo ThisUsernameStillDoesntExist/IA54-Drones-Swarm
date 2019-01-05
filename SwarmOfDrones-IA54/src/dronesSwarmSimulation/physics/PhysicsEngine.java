@@ -10,7 +10,7 @@ import dronesSwarmSimulation.utilities.Vect3;
 
 public class PhysicsEngine {
 	
-	public static final Vect3 Gravity=new Vect3(0,0,-9.81);
+	
 	
 	//private Map map;
 	
@@ -27,7 +27,7 @@ public class PhysicsEngine {
 		
 		for (WorldObject w : world) {
 			
-			w.move(time);
+			w.updateMe(time);
 /*
 			if(w instanceof DeliverDrone)
 			{

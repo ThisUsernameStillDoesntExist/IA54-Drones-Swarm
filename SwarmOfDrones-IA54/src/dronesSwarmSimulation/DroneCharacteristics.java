@@ -39,6 +39,7 @@ public class DroneCharacteristics extends WorldObjectCharacteristics {
 		// horizontal speeds
 		propellerLift = 0.04;
 		airDrag = 0.004;// airdrag will limit the maxspeed
+		frictionDrag=0;
 
 		switch (wot) {
 		case MiniDrone:// based on Parrot Mambo
