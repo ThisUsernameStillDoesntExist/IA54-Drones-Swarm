@@ -187,22 +187,28 @@ public class DeliverDrone extends Drone {
 	@Override
 	public void move(GridPoint pt)
 	{
+		//this test method show how to update a drone position using new physics.
+		
 		System.out.print("Drone "+this.getId());
 		
+		//motor at full power
 		this.setMotorThrottle(1);
 				
+		//compute the time that we will provide to the update drone function
 		Parameters params = RunEnvironment.getInstance().getParameters();		
 		double frametime=(double)params.getValue("frametime");
 		double tickdelay=RunEnvironment.getInstance().getScheduleTickDelay();
 		double time=frametime;//*tickdelay/1000.0;
 		
+		
 		NdPoint  targetpoint = new  NdPoint(pt.getX(), pt.getY (), 10);//arbitrary z
 		System.out.print(" targetpos : "+targetpoint);
 		
 		Vect3 tarp=UtilityFunctions.NdPointToVect3(targetpoint);
+		//gives the target position to the drone brain (the brain will be improved to find the best path, but for the moment it only computes a direction)
 		this.getBrain().setTargetPosition(tarp);
 		
-		this.updateMe(time);//update the drone state and position
+		this.updateMe(time);//update the drone state (battery level, speed...) and position
 		
 		Vect3 newDronePos=this.getPosition();
 		System.out.print(" actualpos : "+newDronePos.toStringLen(30, 3));
@@ -212,6 +218,7 @@ public class DeliverDrone extends Drone {
 		
 		NdPoint newDronePoint = space.getLocation(this);
 		
+		//updates the grid
 		grid.moveTo(this , (int)newDronePoint.getX(), (int)newDronePoint.getY ());
 		
 		System.out.print(" batterylevel : "+this.getBatteryLevelRelative());
