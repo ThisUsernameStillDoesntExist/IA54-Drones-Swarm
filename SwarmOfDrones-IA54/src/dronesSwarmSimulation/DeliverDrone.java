@@ -55,9 +55,12 @@ public class DeliverDrone extends Drone {
 	{
 		
 		
-		
-		return;
 		/*
+		if(true)
+		{
+			return;
+		}*/
+		
 		if(charge>10)
 		{	
 
@@ -145,7 +148,7 @@ public class DeliverDrone extends Drone {
 		// Test if all the task are done
 			// Fire the finishedWorkEvent to the task controller
 		// When is that all the task are done for a particular drone
-		*/
+		
 	
 	}
 	// method that move the Drone to a desired location on the scene(screen), we just need to give in the location
