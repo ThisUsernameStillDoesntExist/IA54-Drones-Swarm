@@ -187,45 +187,37 @@ public class DeliverDrone extends Drone {
 	@Override
 	public void move(GridPoint pt)
 	{
-		double time=1;
+		System.out.print("Drone "+this.getId());
+		
+		this.setMotorThrottle(1);
+				
+		Parameters params = RunEnvironment.getInstance().getParameters();		
+		double frametime=(double)params.getValue("frametime");
+		double tickdelay=RunEnvironment.getInstance().getScheduleTickDelay();
+		double time=frametime;//*tickdelay/1000.0;
 		
 		NdPoint  targetpoint = new  NdPoint(pt.getX(), pt.getY (), 10);//arbitrary z
+		System.out.print(" targetpos : "+targetpoint);
 		
 		Vect3 tarp=UtilityFunctions.NdPointToVect3(targetpoint);
 		this.getBrain().setTargetPosition(tarp);
 		
-		this.updateMe(time);
+		this.updateMe(time);//update the drone state and position
 		
 		Vect3 newDronePos=this.getPosition();
+		System.out.print(" actualpos : "+newDronePos.toStringLen(30, 3));
 		
-		space.moveTo(this, newDronePos.getX(), newDronePos.getY());//2D
+		space.moveTo(this, newDronePos.getX(), newDronePos.getY());//2D //update the drone position in the repast space
 		//space.moveTo(this, newDronePos.getX(), newDronePos.getY(), newDronePos.getZ());//3D
 		
 		NdPoint newDronePoint = space.getLocation(this);
 		
 		grid.moveTo(this , (int)newDronePoint.getX(), (int)newDronePoint.getY ());
 		
+		System.out.print(" batterylevel : "+this.getBatteryLevelRelative());
+		System.out.println("");
 		
-		
-		if(true) return;
-		
-		if (!pt.equals(grid.getLocation(this )) ) {
-			
-				//turn(pt);
-				NdPoint  myPoint = space.getLocation(this);
-				
-				NdPoint  otherPoint = new  NdPoint(pt.getX(), pt.getY ());
-				
-				double  angle = SpatialMath.calcAngleFor2DMovement(space ,myPoint , otherPoint );
-				
-				space.moveByVector(this , 1, angle , 0);
-				
-				
-				myPoint = space.getLocation(this);
-				
-				grid.moveTo(this , (int)myPoint.getX(), (int)myPoint.getY ());
-			
-		}
+	
 
 	}
 	

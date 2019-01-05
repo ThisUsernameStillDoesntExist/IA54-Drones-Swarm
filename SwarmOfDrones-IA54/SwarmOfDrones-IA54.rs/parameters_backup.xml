@@ -1,29 +1,47 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <parameters>
-
-	<parameter name="randomSeed" displayName="Default Random Seed" type="int" defaultValue="__NULL__" />
-	<parameter name="deliver_drone" displayName="Deliver drone Count" type="int" 
-						defaultValue="3" 
+					<parameter name="randomSeed" displayName="Default Random Seed" type="int" 
+						defaultValue="__NULL__"
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
 									
 		/>
-			
 				<parameter name="package" displayName="Package Count" type="int" 
 						defaultValue="7" 
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
 									
 		/>
-		
-		<parameter name="charge" displayName="Charge value" type="int" 
-						defaultValue="50" 
+				<parameter name="charge" displayName="Charge value" type="int" 
+						defaultValue="150" 
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
-				/>
-						<parameter name="dockstation" displayName="Dockstation Count" type="int" 
+									
+		/>
+				<parameter name="deliver_drone" displayName="Deliver drone Count" type="int" 
+						defaultValue="3" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
+									
+		/>
+				<parameter name="swarm" displayName="Allow Swarm" type="boolean" 
+						defaultValue="true" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$BooleanConverter"
+									
+		/>
+				<parameter name="frametime" displayName="Frame Time" type="double" 
+						defaultValue="1.0" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter"
+									
+		/>
+				<parameter name="dockstation" displayName="Dockstation Count" type="int" 
 						defaultValue="5" 
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
-				/>
-</parameters>
+									
+		/>
+		</parameters>
+
+
