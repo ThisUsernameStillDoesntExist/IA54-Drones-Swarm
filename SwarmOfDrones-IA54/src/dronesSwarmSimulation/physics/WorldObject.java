@@ -10,12 +10,14 @@ public abstract class WorldObject {
 	protected Vect3 position;//center of the bounding box
 	protected Vect3 speed;
 	protected Vect3 size;//for a sphere this is the diameter	
+	protected WorldObjectCharacteristics charact;
 
 	public WorldObject() {
 		position=new Vect3();
 		speed=new Vect3();
 		size=new Vect3();
 		collider=createSpecificCollider();
+		charact=new WorldObjectCharacteristics();
 	}
 	
 	/**
@@ -24,11 +26,12 @@ public abstract class WorldObject {
 	 * @param speed
 	 * @param size
 	 */
-	public WorldObject(Vect3 position, Vect3 speed, Vect3 size, Collider c) {
+	public WorldObject(Vect3 position, Vect3 speed, Vect3 size, Collider c, WorldObjectCharacteristics wot) {
 		this.position = position;
 		this.speed = speed;
 		this.size = size;
 		this.collider=c;
+		this.charact=wot;
 	}
 	
 	//we want a deep copy
@@ -38,6 +41,7 @@ public abstract class WorldObject {
 		speed=new Vect3(w.speed);
 		size=new Vect3(w.size);
 		collider=w.collider.copy();
+		this.charact=w.charact;
 	}
 	
 	//
@@ -59,12 +63,38 @@ public abstract class WorldObject {
 	
 	public void move(double time)
 	{
+		updateSpeed(time);
+		
 		Vect3 dspeed=speed.getMultipliedBy(time);
 		
 		position=position.getAdded(dspeed);//position+=speed*time
 		
 		this.collider.setSpeed(dspeed);//set the last position variation, to be used for collision processing
 	}
+	
+	/**
+	 * updates speed according to computed acceleration
+	 * @param time
+	 */
+	private void updateSpeed(double time)
+	{	
+		//so dirty without operator overloading...
+		Vect3 specificAcceleration = getSpecificAcceleration();
+		Vect3 dragAcceleration = speed.getMultipliedBy(speed.norm() * charact.getAirDrag() / getTotalWeight()); ////drag proportional to squared speed
+		//Vect3 dragAcceleration = speed.getMultipliedBy(characteristics.getAirDrag() / getTotalFlyWeight()); //drag proportional to speed
+		Vect3 acceleration = specificAcceleration.getAdded(PhysicsEngine.Gravity).substract(dragAcceleration);
+		
+		speed.add(acceleration.getMultipliedBy(time));
+	}
+	
+	/**
+	 * Should return the specific object acceleration (for example, thrust or propeller force for a drone).
+	 * Return the zero-vector if the object has no specific acceleration.
+	 * This method is used only in the updatespeed super method.
+	 * @return
+	 */
+	protected abstract Vect3 getSpecificAcceleration();
+	
 	
 	/**for deep copy
 	 * 
@@ -94,6 +124,15 @@ public abstract class WorldObject {
 
 	public Vect3 getSize() {
 		return size;
+	}
+	
+	/**
+	 * can be overridden if the object is carrying a payload
+	 * @return
+	 */
+	public double getTotalWeight()
+	{
+		return charact.dryWeight;
 	}
 	
 	/**
