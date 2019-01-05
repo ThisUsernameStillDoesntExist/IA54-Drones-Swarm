@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import dronesSwarmSimulation.physics.WorldObject;
 import dronesSwarmSimulation.physics.collisions.CollisionTools;
 import dronesSwarmSimulation.physics.collisions.colliders.Collider;
+import dronesSwarmSimulation.physics.collisions.colliders.Sphere;
 import dronesSwarmSimulation.utilities.Vect3;
 import dronesSwarmSimulation.physics.Constants;
 import repast.simphony.space.SpatialMath;
@@ -181,8 +182,8 @@ public class Drone extends WorldObject {
 
 	@Override
 	protected Collider createSpecificCollider() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return new Sphere();
 	}
 
 	public int getId() {

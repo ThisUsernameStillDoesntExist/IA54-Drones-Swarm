@@ -5,6 +5,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
+import dronesSwarmSimulation.utilities.UtilityFunctions;
+import dronesSwarmSimulation.utilities.Vect3;
 import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.engine.watcher.Watch;
@@ -46,7 +48,7 @@ public class DeliverDrone extends Drone {
 	    lisOfDockStation = new ArrayList<DockStation>();
 	    
 	}
-	public DeliverDrone() {};
+	public DeliverDrone() {super();};
 	// method that implement the functional behavior of the drone
 	// it is called each 1 second
 	@Override
@@ -57,11 +59,11 @@ public class DeliverDrone extends Drone {
 		
 		
 		
-		
+		/*
 		if(true)
 		{
 			return;
-		}
+		}*/
 		
 		if(charge>10)
 		{	
@@ -153,6 +155,7 @@ public class DeliverDrone extends Drone {
 		
 	
 	}
+	
 	/*
 	// method that move the Drone to a desired location on the scene(screen), we just need to give in the location
 	// This method is used to move the to the building where the package will be delivered
@@ -184,6 +187,28 @@ public class DeliverDrone extends Drone {
 	@Override
 	public void move(GridPoint pt)
 	{
+		double time=1;
+		
+		NdPoint  targetpoint = new  NdPoint(pt.getX(), pt.getY (), 10);//arbitrary z
+		
+		Vect3 tarp=UtilityFunctions.NdPointToVect3(targetpoint);
+		this.getBrain().setTargetPosition(tarp);
+		
+		this.updateMe(time);
+		
+		Vect3 newDronePos=this.getPosition();
+		
+		space.moveTo(this, newDronePos.getX(), newDronePos.getY());//2D
+		//space.moveTo(this, newDronePos.getX(), newDronePos.getY(), newDronePos.getZ());//3D
+		
+		NdPoint newDronePoint = space.getLocation(this);
+		
+		grid.moveTo(this , (int)newDronePoint.getX(), (int)newDronePoint.getY ());
+		
+		
+		
+		if(true) return;
+		
 		if (!pt.equals(grid.getLocation(this )) ) {
 			
 				//turn(pt);
@@ -194,7 +219,7 @@ public class DeliverDrone extends Drone {
 				double  angle = SpatialMath.calcAngleFor2DMovement(space ,myPoint , otherPoint );
 				
 				space.moveByVector(this , 1, angle , 0);
-				//space.moveTo(this, 1,2,2);
+				
 				
 				myPoint = space.getLocation(this);
 				
@@ -218,7 +243,6 @@ public class DeliverDrone extends Drone {
 	
 	// method that move the Drone to a desired location on the scene(screen), it used to 
 	// find the package that has been assigned to him, to be delivered
-	
 	public void findPackage(GridPoint pt)
 	{
 		
@@ -249,6 +273,8 @@ public class DeliverDrone extends Drone {
 			}*/
 		}
 	}
+	
+	
 	@Override
 	public GridPoint findDockStation()
 	{

@@ -60,7 +60,11 @@ public abstract class WorldObject {
 	 */
 	public abstract boolean collideWith(WorldObject w);
 	
-	
+	/**
+	 * Updates speed and position of the drone according to time.
+	 * Also update the state of the drone (battery, etc).
+	 * @param time
+	 */
 	public void updateMe(double time)
 	{
 		todoOnUpdate(time);

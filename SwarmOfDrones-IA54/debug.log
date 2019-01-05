@@ -181,3 +181,46 @@ Caused by: java.lang.ClassNotFoundException: dronesSwarmSimulation.DeliverTask
 	at repast.simphony.visualization.engine.StyleRegistrar.registerStyles(StyleRegistrar.java:34)
 	at repast.simphony.visualization.engine.DisplayCreatorOGL2D.createDisplay(DisplayCreatorOGL2D.java:79)
 	... 49 more
+FATAL [Thread-7] 2019-01-05 16:46:35,039 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
+Current tick (2.0)
+java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
+	at repast.simphony.engine.controller.ScheduledMethodControllerAction$ScheduleMethodAllAction.execute(ScheduledMethodControllerAction.java:333)
+	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
+	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
+	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
+	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
+	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.lang.reflect.InvocationTargetException
+	at dronesSwarmSimulation.DeliverDrone$$FastClassByCGLIB$$30f152fd.invoke(<generated>)
+	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
+	... 7 more
+Caused by: java.lang.NullPointerException
+	at dronesSwarmSimulation.physics.WorldObject.updateMe(WorldObject.java:77)
+	at dronesSwarmSimulation.DeliverDrone.move(DeliverDrone.java:197)
+	at dronesSwarmSimulation.DeliverDrone.doTask(DeliverDrone.java:79)
+	... 10 more
+FATAL [Thread-7] 2019-01-05 16:48:47,966 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
+Current tick (2.0)
+java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
+	at repast.simphony.engine.controller.ScheduledMethodControllerAction$ScheduleMethodAllAction.execute(ScheduledMethodControllerAction.java:333)
+	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
+	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
+	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
+	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
+	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.lang.reflect.InvocationTargetException
+	at dronesSwarmSimulation.DeliverDrone$$FastClassByCGLIB$$30f152fd.invoke(<generated>)
+	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
+	... 7 more
+Caused by: java.lang.IllegalArgumentException: An object's new location must have the same number of dimensions as the space. (newLocation's dimensions: 3, space's:2.
+	at repast.simphony.space.continuous.AbstractContinuousSpace.doMove(AbstractContinuousSpace.java:135)
+	at repast.simphony.space.continuous.AbstractContinuousSpace.moveTo(AbstractContinuousSpace.java:121)
+	at dronesSwarmSimulation.DeliverDrone.move(DeliverDrone.java:201)
+	at dronesSwarmSimulation.DeliverDrone.doTask(DeliverDrone.java:79)
+	... 10 more
