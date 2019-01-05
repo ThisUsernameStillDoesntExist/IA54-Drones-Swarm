@@ -194,10 +194,10 @@ public class DeliverDrone extends Drone {
 		//motor at full power
 		this.setMotorThrottle(1);
 				
-		//compute the time that we will provide to the update drone function
+		//retrieve the time that we will provide to the update drone function
 		Parameters params = RunEnvironment.getInstance().getParameters();		
 		double frametime=(double)params.getValue("frametime");
-		double tickdelay=RunEnvironment.getInstance().getScheduleTickDelay();
+		//double tickdelay=RunEnvironment.getInstance().getScheduleTickDelay();
 		double time=frametime;//*tickdelay/1000.0;
 		
 		

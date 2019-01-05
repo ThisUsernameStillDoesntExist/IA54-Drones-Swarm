@@ -237,9 +237,10 @@ public class Drone extends WorldObject {
 	} // W
 
 	protected Vect3 getSpecificAcceleration() {
-		adjustPropellerDirection();
+		
+		//adjustPropellerDirection();
 
-		propellerDirection = this.brain.getTargetPosition();
+		propellerDirection = this.brain.getPropellerDirection();
 
 		Vect3 propellerAcceleration = propellerDirection.getNormalized()
 				.multiplyBy(thisCharacteristics().getPropellerLift() * getMotorOutputPower() / getTotalWeight());
