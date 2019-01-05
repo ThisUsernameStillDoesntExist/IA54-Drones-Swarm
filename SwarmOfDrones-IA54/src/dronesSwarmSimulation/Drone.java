@@ -50,12 +50,14 @@ public class Drone extends WorldObject {
 	}
 
 	public Drone(ContinuousSpace<Object> space, Grid<Object> grid, int charge) {
+		this.id=getNewId();
 		this.space = space;
 		this.grid = grid;
 		this.charge = charge;
 		this.charging = false;
 		this.charact = new DroneCharacteristics();
 		this.brain = new DroneAI(this);
+		this.batteryLevel = getCharacteristics().getBatteryCapacity();
 		setPropellerDirection(new Vect3(0, 0, 0));
 	}
 
@@ -69,10 +71,6 @@ public class Drone extends WorldObject {
 	@Override
 	protected void todoOnUpdate(double time) {
 
-		if (true) {
-			return;
-		}
-		// TODO
 
 		if (isPluggedToStation()) {
 			rechargeBattery(time);
