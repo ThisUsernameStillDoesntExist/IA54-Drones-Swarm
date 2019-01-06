@@ -2,14 +2,16 @@
 Multi-agent drones simulation using Java+Repast, aiming at reproducing drones interactions for delivering packages in a smart city.
 
 TODO : Adilson
-1.When the drone delivered a package, the drones need to notify the package, and the package need to nofify the central intelligence
-    1.1 The Central intelligence(CentralController) need to keep count of the package that were delivered, and time to , make the graphic curve
-2. If the package is not delivered(because of charge), the drone need to notify the central intelligence to search for other available drone come to delivery the package in question
-    2.1 Drones need to seachr fo rthe nearest station to charge they battery
 
-3- elctrical formula for the discharge of the drone battery
+1. If the package is not delivered(because of charge), the drone need to notify the others Drones  to search for other available drone come to delivery the package in question
+    1.1 Drones need to seachr for the nearest station to charge they battery  ---> OK Done
 
-4- Graphic, time/package delivered
+2- Electrical formula for the discharge of the drone battery
+
+3- Graphic, time/package delivered ---> OK Done
+4- Implement the HelperDrone behavior.
+  -- The HelperDrones will be helpful when the DeliverDrones let package on the street because of charge, So the DeliverDrone notify others drones and the HelperDrones will look for package let on the street to control until the DeliverDrone come to search for it.
+    
 
 TODO : Francis
 - integrate physics engine in repast continuous space (synchronization)
