@@ -190,16 +190,12 @@ public class DeliverDrone extends Drone {
 		//this test method show how to update a drone position using new physics.
 		
 		System.out.print("Drone "+this.getId());
-		
-		//motor at full power
-		this.setMotorThrottle(1);
-				
-		//compute the time that we will provide to the update drone function
+			
+		//retrieve the time that we will provide to the update drone function
 		Parameters params = RunEnvironment.getInstance().getParameters();		
 		double frametime=(double)params.getValue("frametime");
-		double tickdelay=RunEnvironment.getInstance().getScheduleTickDelay();
+		//double tickdelay=RunEnvironment.getInstance().getScheduleTickDelay();
 		double time=frametime;//*tickdelay/1000.0;
-		
 		
 		NdPoint  targetpoint = new  NdPoint(pt.getX(), pt.getY (), 10);//arbitrary z
 		System.out.print(" targetpos : "+targetpoint);
@@ -208,12 +204,12 @@ public class DeliverDrone extends Drone {
 		//gives the target position to the drone brain (the brain will be improved to find the best path, but for the moment it only computes a direction)
 		this.getBrain().setTargetPosition(tarp);
 		
-		this.updateMe(time);//update the drone state (battery level, speed...) and position
+		this.updateMe(time);//make the drone think/decide and update the drone state (battery level, speed...) and position
 		
 		Vect3 newDronePos=this.getPosition();
 		System.out.print(" actualpos : "+newDronePos.toStringLen(30, 3));
 		
-		space.moveTo(this, newDronePos.getX(), newDronePos.getY());//2D //update the drone position in the repast space
+		space.moveTo(this, newDronePos.getX(), newDronePos.getY());//2D //update the drone position in the repast continuous space
 		//space.moveTo(this, newDronePos.getX(), newDronePos.getY(), newDronePos.getZ());//3D
 		
 		NdPoint newDronePoint = space.getLocation(this);

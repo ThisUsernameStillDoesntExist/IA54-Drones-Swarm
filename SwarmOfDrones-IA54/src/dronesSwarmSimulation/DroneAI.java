@@ -20,11 +20,6 @@ public class DroneAI {
 	}
 	
 	
-	public Vect3 getPropellerDirection()
-	{
-		return targetPosition.getSubstracted(attachedDrone.getPosition());
-	}
-
 	public Vect3 getTargetPosition() {
 		return targetPosition;
 	}
@@ -35,6 +30,24 @@ public class DroneAI {
 			targetPosition=new Vect3(attachedDrone.getPosition());
 		}
 		this.targetPosition = targetPosition;
+	}
+
+
+	public void decide(double time) {
+		// TODO Auto-generated method stub
+		if(targetPosition==null)
+		{
+			return;
+		}
+		
+		Vect3 tarpos=new Vect3(targetPosition);
+		
+		attachedDrone.setPropellerDirection(tarpos.getSubstracted(attachedDrone.getPosition()));
+		
+		//motor at full power
+		attachedDrone.setMotorThrottle(1);
+		
+		
 	}
 	
 	

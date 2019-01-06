@@ -236,10 +236,12 @@ public class Drone extends WorldObject {
 		return batteryState() * motorThrottle * thisCharacteristics().getMotorMaxConsumption();
 	} // W
 
+	/**
+	 * should be used by physics update call only
+	 */
 	protected Vect3 getSpecificAcceleration() {
-		adjustPropellerDirection();
-
-		propellerDirection = this.brain.getTargetPosition();
+		
+		//adjustPropellerDirection();
 
 		Vect3 propellerAcceleration = propellerDirection.getNormalized()
 				.multiplyBy(thisCharacteristics().getPropellerLift() * getMotorOutputPower() / getTotalWeight());
@@ -338,9 +340,9 @@ public class Drone extends WorldObject {
 	 * makes our system multi-agent
 	 */
 	public void decide(double time) {
-		// brain.decide();
+		
+		brain.decide(time);
 
-		// Vect3 tp = brain.getTargetPos();
 	}
 
 	protected DroneCharacteristics thisCharacteristics() {
