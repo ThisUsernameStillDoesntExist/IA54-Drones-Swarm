@@ -41,8 +41,10 @@ public class DroneAI {
 		}
 		
 		Vect3 tarpos=new Vect3(targetPosition);
+		Vect3 propdir=tarpos.getSubstracted(attachedDrone.getPosition());
+		//propdir.Normalize();
 		
-		attachedDrone.setPropellerDirection(tarpos.getSubstracted(attachedDrone.getPosition()));
+		attachedDrone.setPropellerDirection(propdir);
 		
 		//motor at full power
 		attachedDrone.setMotorThrottle(1);
