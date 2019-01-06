@@ -134,7 +134,7 @@ public class DeliverDrone extends Drone {
 			// if the has arrived at the dockstation, charge the drone
 			if(hasArrived(nearestDockPos))
 			{
-				charge = 100;
+				charge = 400;
 			}
 			else
 			{
@@ -228,7 +228,7 @@ public class DeliverDrone extends Drone {
 	{
 		GridPoint actualLocation = grid.getLocation(this);
 		double distance = Math.hypot(pt.getX()-actualLocation.getX(), pt.getY()-actualLocation.getY());
-		if(distance <= 1 && distance >=0)	{
+		if(distance <= 2 && distance >=0)	{
 			//System.out.println("Arrivé au Building");
 			return true;
 		}
@@ -297,21 +297,68 @@ public class DeliverDrone extends Drone {
 
 	public Package getNewTask()
 	{
-		
-		for(Package p : tasks)
+		Package p = closeEstPackage(tasks);
+		// return the package with highest priority and most close to him, if there is one
+		for(Package highPriorityPackage : getListHighPrioriotyPackage(tasks))
 		{
-			if(p.getPriority() == Priority.IMMEDIATE)
+			// update the closest
+			p = closeEstPackage(getListHighPrioriotyPackage(tasks));
+			// if this High Priority package is the closest one them, take this one, or look for another close one
+			if(highPriorityPackage == p )
 			{
-				tasks.remove(p);
-				
-				return p;
+				tasks.remove(highPriorityPackage);
+				return highPriorityPackage;
 			}
 		}
 		
-		return tasks.remove();
+		// if the are no package with High priority them the drone must pick the package 
+		// that is more close to him to deliver.
+		
+		p = closeEstPackage(tasks);
+		tasks.remove(p);
+		
+		return  p;
+		//return tasks.remove();
 	}
-	
-	
+
+	Queue<Package> getListHighPrioriotyPackage(Queue<Package> listTask)
+	{
+		Queue<Package>  results = new LinkedList<Package>();
+		for(Package p : tasks)
+		{
+			if((p.getPriority() == Priority.IMMEDIATE) )
+			{
+				results.add(p);
+			}
+		}
+		return results;
+	}
+	// funcion to search for the closest package
+	Package closeEstPackage(Queue<Package> listTask )
+	{
+		double nearest=1000.00;
+		GridPoint nearestPos = new GridPoint();
+		GridPoint actualLocation = grid.getLocation(this);
+		double distance;
+		Package closestPackage = null;
+		for(Package pc : listTask )
+		{
+			GridPoint pt = grid.getLocation(pc);
+			distance =  Math.hypot(pt.getX()-actualLocation.getX(), pt.getY()-actualLocation.getY());
+			
+			if(nearest > distance )
+			{
+				nearest = distance;
+				nearestPos = pt;
+				closestPackage = pc;
+				//System.out.println("Distance " + distance);
+			}
+		}
+		
+		return closestPackage;
+		
+		
+	}
 	@Watch(watcheeClassName = "dronesSwarmSimulation.DeliverDrone",
 			watcheeFieldNames = "nbTaskNotDeliveredEvent",
 			query = "colocated",
