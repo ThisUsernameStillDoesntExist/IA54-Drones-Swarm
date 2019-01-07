@@ -11,6 +11,7 @@ public abstract class WorldObject {
 	protected Vect3 speed;
 	protected Vect3 size;//for a sphere this is the diameter	
 	protected WorldObjectCharacteristics charact;
+	protected double totalDistanceTravelled;//from beginning of simulation
 
 	public WorldObject() {
 		position=new Vect3();
@@ -18,6 +19,7 @@ public abstract class WorldObject {
 		size=new Vect3();
 		collider=createSpecificCollider();
 		charact=new WorldObjectCharacteristics();
+		resetDistanceTravelled();
 	}
 	
 	/**
@@ -32,6 +34,7 @@ public abstract class WorldObject {
 		this.size = size;
 		this.collider=c;
 		this.charact=wot;
+		resetDistanceTravelled();
 	}
 	
 	//we want a deep copy
@@ -42,6 +45,7 @@ public abstract class WorldObject {
 		size=new Vect3(w.size);
 		collider=w.collider.copy();
 		this.charact=w.charact;
+		this.totalDistanceTravelled=w.totalDistanceTravelled;
 	}
 	
 	//
@@ -72,7 +76,11 @@ public abstract class WorldObject {
 		
 		Vect3 dspeed=speed.getMultipliedBy(time);
 		
-		position=position.getAdded(dspeed);//position+=speed*time
+		Vect3 newpos=position.getAdded(dspeed);//position+=speed*time
+		
+		totalDistanceTravelled+=position.dist(newpos);
+		
+		position=newpos;
 		
 		this.collider.setSpeed(dspeed);//set the last position variation, to be used for collision processing
 	}
@@ -160,6 +168,11 @@ public abstract class WorldObject {
 	{
 		updateCollider();
 		return this.collider;
+	}
+	
+	public void resetDistanceTravelled()
+	{
+		totalDistanceTravelled=0;
 	}
 	
 	/**
