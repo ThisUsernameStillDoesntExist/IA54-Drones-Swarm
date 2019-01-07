@@ -11,7 +11,9 @@ TODO : Adilson
 3- Graphic, time/package delivered ---> OK Done
 4- Implement the HelperDrone behavior.
   -- The HelperDrones will be helpful when the DeliverDrones let package on the street because of charge, So the DeliverDrone notify others drones and the HelperDrones will look for package let on the street to control until the DeliverDrone come to search for it.
-    
+5- all packages spawn in warehouse
+6- each random seed -> generate unique config
+7- all drones spawn in same place
 
 TODO : Francis
 - integrate physics engine in repast continuous space (synchronization)
@@ -21,6 +23,12 @@ TODO : Francis
 - factorize code in the drone class
 
 - It would be better and more consistent to work only with continuous space, at least to check whether a drone has arrived to a particular location 
+
+TODO :
+- put dotask in droneAI
+- add delay/deadline to drone deliveries
+- make space 3D compatible
+- perform several iterations between each tick
 
 
 Technical notes :
