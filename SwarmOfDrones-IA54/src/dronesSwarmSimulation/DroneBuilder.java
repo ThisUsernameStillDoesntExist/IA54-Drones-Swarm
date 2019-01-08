@@ -26,11 +26,11 @@ public class DroneBuilder implements ContextBuilder<Object> {
 		//-------------------------------Creation and limitation of the Screen(Scene) space(Infinite coordinates system) -----------------------------------------------\\
 		ContinuousSpaceFactory spaceFactory = ContinuousSpaceFactoryFinder.createContinuousSpaceFactory(null);
 		ContinuousSpace<Object> space = spaceFactory.createContinuousSpace("space", context,
-				new RandomCartesianAdder<Object>(), new repast.simphony.space.continuous.WrapAroundBorders(), 150, 100);
+				new RandomCartesianAdder<Object>(), new repast.simphony.space.continuous.WrapAroundBorders(), 200, 150);
 		
 		GridFactory gridFactory = GridFactoryFinder.createGridFactory(null);
 		Grid<Object> grid = gridFactory.createGrid("grid", context, new GridBuilderParameters<Object>(
-				new WrapAroundBorders(), new SimpleGridAdder<Object>(), true, 150, 100));
+				new WrapAroundBorders(), new SimpleGridAdder<Object>(), true, 200, 150));
 		
 		//-------------------------------Creation of the Agents setup on the Screen-----------------------------------------------\\
 		Parameters params = RunEnvironment.getInstance().getParameters();
@@ -49,9 +49,13 @@ public class DroneBuilder implements ContextBuilder<Object> {
 		for (int i = 0; i < nombrepack ; i++) {
 			context.add(new Package(space, grid));
 		}
-	
+		WareHouse wareHouse = new WareHouse( space, grid);
+		context.add(wareHouse);
+		NdPoint pointWareHouse = new NdPoint(107,130);
+		space.moveTo( wareHouse, (int)pointWareHouse.getX(),(int)pointWareHouse.getY());
 		// creation of the City/Street 
 		context = setUpTheCity(context, grid, space);
+		
 		
 		//-------------------------------- Positioning of the Agents on the grid system ( Finite system )---------------\\
 		// counter to allow the package/drone to take the location of just one building at time
@@ -59,6 +63,7 @@ public class DroneBuilder implements ContextBuilder<Object> {
 		for( Object obj : context )
 		{
 			NdPoint pt = space.getLocation ( obj );
+			
 			grid.moveTo(obj,(int)pt.getX(),(int)pt.getY());
 
 		 }

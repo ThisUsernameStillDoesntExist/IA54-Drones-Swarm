@@ -13,6 +13,7 @@ import repast.simphony.query.space.grid.GridCell;
 import repast.simphony.query.space.grid.GridCellNgh;
 import repast.simphony.random.RandomHelper;
 import repast.simphony.space.continuous.ContinuousSpace;
+import repast.simphony.space.continuous.NdPoint;
 import repast.simphony.space.grid.Grid;
 import repast.simphony.space.grid.GridPoint;
 import repast.simphony.util.SimUtilities;
@@ -97,6 +98,7 @@ public class CentralController
 	public void registerTask()
 	{
 		// Create lists 
+		NdPoint pointWareHouse  = new  NdPoint();;
 		for(Object obj : this.context)
 		{
 			// Create lists of package on the scene
@@ -125,6 +127,11 @@ public class CentralController
 			{
 				lisOfDrones.add((DeliverDrone)obj);
 			}
+			
+			if(obj instanceof WareHouse )
+			{
+				pointWareHouse = space.getLocation((WareHouse)obj);
+			}
 
 		}
 		
@@ -139,6 +146,19 @@ public class CentralController
 		SimUtilities.shuffle(lisOfPackage, RandomHelper.getUniform());
 		SimUtilities.shuffle(lisOfBuilding, RandomHelper.getUniform());
 
+		//put all the packages on the warehouse
+		int pos = -50;
+		for(Package pa : lisOfPackage)
+		{
+			if(pos == 0)
+			{
+				pos = -50;
+			}
+			space.moveTo(pa, (int)pointWareHouse.getX()+pos,(int)pointWareHouse.getY()-7);
+			NdPoint pt = space.getLocation(pa);
+			grid.moveTo(pa,(int)pt.getX(),(int)pt.getY());
+			pos = pos +5;
+		}
 		
 		
 		// Package Recuperate  the location of buildings
