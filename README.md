@@ -33,7 +33,7 @@ TODO :
 - perform several iterations between each tick
 - add position attribute to packages and other objects, and synchronize their attribute position with their context position
 - remove unnecessary getters/setters at the end
-- every hardcoded value should be put in an attribute of a special parameters class (this allow to change every value, and avoid bug caused by strange values hidden deep in the code)
+- every hardcoded value should be put in an attribute of a special parameters class (this allow to change every value, and factorize code -> all parameters values can be found in the same class)
 
 
 Technical notes :
