@@ -29,6 +29,7 @@ TODO :
 - add delay/deadline to drone deliveries
 - make space 3D compatible
 - perform several iterations between each tick
+- add position attribute to packages and other objects, and synchronize their attribute position with their context position
 
 
 Technical notes :
