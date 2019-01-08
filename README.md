@@ -30,6 +30,7 @@ TODO :
 - make space 3D compatible
 - perform several iterations between each tick
 - add position attribute to packages and other objects, and synchronize their attribute position with their context position
+- remove unnecessary getters/setters at the end
 
 
 Technical notes :
