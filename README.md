@@ -33,6 +33,7 @@ TODO :
 - add position attribute to packages and other objects, and synchronize their attribute position with their context position
 - remove unnecessary getters/setters at the end
 - optimize performances (try to remove costly synchronize) 
+- every hardcoded value should be put in an attribute of a special parameters class (this allow to change every value, and avoid bug caused by strange values hidden deep in the code)
 
 
 Technical notes :
