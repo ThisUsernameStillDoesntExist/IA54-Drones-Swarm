@@ -359,6 +359,9 @@ public class DeliverDrone extends Drone {
 		
 		
 	}
+	/**
+	 * triggered when a package has been dropped during a delivery
+	 */
 	@Watch(watcheeClassName = "dronesSwarmSimulation.DeliverDrone",
 			watcheeFieldNames = "nbTaskNotDeliveredEvent",
 			query = "colocated",

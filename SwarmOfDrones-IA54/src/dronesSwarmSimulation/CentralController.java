@@ -143,8 +143,8 @@ public class CentralController
 		}
 		
 		// Randomly ordered of building and package, to no be all the same task at the same building
-		SimUtilities.shuffle(lisOfPackage, RandomHelper.getUniform());
-		SimUtilities.shuffle(lisOfBuilding, RandomHelper.getUniform());
+		//SimUtilities.shuffle(lisOfPackage, RandomHelper.getUniform());
+		//SimUtilities.shuffle(lisOfBuilding, RandomHelper.getUniform());
 
 		//put all the packages on the warehouse
 		int pos = -50;
