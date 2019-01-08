@@ -108,18 +108,7 @@ public class CentralController
 		
 		createStatistics();
 		
-		// Spawn packages on the scene
-		for(Package p : lisOfPackage)
-		{
-			// Arrange the priority randomly
-			SimUtilities.shuffle(lisOfPriority, RandomHelper.getUniform());
-			// assign priority to the packages
-			p.setPriority(lisOfPriority.get(0));
-			// Add the package to the liste
-
-		}
-		
-		NdPoint pointWareHouse  = space.getLocation(lisOfWareHouses.get(0));//Only one warehouse for the moment
+		spawnPackages();
 		
 		// Give list of DockStation to All Drones
 		for(DeliverDrone d : lisOfDrones)
@@ -132,44 +121,50 @@ public class CentralController
 		//SimUtilities.shuffle(lisOfPackage, RandomHelper.getUniform());
 		//SimUtilities.shuffle(lisOfBuilding, RandomHelper.getUniform());
 
-		//put all the packages on the warehouse
-		int pos = -50;
-		for(Package pa : lisOfPackage)
-		{
-			if(pos == 0)
-			{
-				pos = -50;
-			}
-			space.moveTo(pa, (int)pointWareHouse.getX()+pos,(int)pointWareHouse.getY()-7);
-			NdPoint pt = space.getLocation(pa);
-			grid.moveTo(pa,(int)pt.getX(),(int)pt.getY());
-			pos = pos +5;
-		}
+		placePackages();
 		
+		assignPackagesToBuildings();
 		
-		// Package Recuperate  the location of buildings
-		
-		int countBuinding = 0;
-		for(int i=0 ; i< lisOfPackage.size(); i++)
-		{	
-			// if whe have give each package to one building, and still have package without location to deliver
-			// then we reinitiate the distributition of the left's package, this mean there will be a building with one or more 
-			// package to be delivered
-			if( countBuinding == lisOfBuilding.size())
-			{
-				countBuinding = 0;
-			}
-			
-			// Get the location of a building
-			GridPoint buildingLocation = grid.getLocation(lisOfBuilding.get(countBuinding));
-			// Give the the destination of the package, using the building's location
-			lisOfPackage.get(i).setDestinationCoord(buildingLocation);
-			countBuinding++;
-		}
 		// divide the number of package to be distributed on each drone
 		assignTask(lisOfPackage,lisOfDrones);
 	}
 	
+	private void assignPackagesToBuildings() {
+		// Package Recuperate  the location of buildings
+				int countBuinding = 0;
+				for(int i=0 ; i< lisOfPackage.size(); i++)
+				{	
+					// if whe have give each package to one building, and still have package without location to deliver
+					// then we reinitiate the distributition of the left's package, this mean there will be a building with one or more 
+					// package to be delivered
+					if( countBuinding == lisOfBuilding.size())
+					{
+						countBuinding = 0;
+					}
+					
+					// Get the location of a building
+					GridPoint buildingLocation = grid.getLocation(lisOfBuilding.get(countBuinding));
+					// Give the the destination of the package, using the building's location
+					lisOfPackage.get(i).setDestinationCoord(buildingLocation);
+					countBuinding++;
+				}
+	}
+
+	/**
+	 * Spawn packages on the scene
+	 */
+	private void spawnPackages() {
+			for(Package p : lisOfPackage)
+			{
+				// Arrange the priority randomly
+				SimUtilities.shuffle(lisOfPriority, RandomHelper.getUniform());
+				// assign priority to the packages
+				p.setPriority(lisOfPriority.get(0));
+				// Add the package to the liste
+
+			}
+	}
+
 	/**
 	 * add context objects to the right list according to their type
 	 * this allow easier retrieving of context objects by type
@@ -210,6 +205,28 @@ public class CentralController
 	private void createStatistics()
 	{
 		stats=new Statistics(lisOfDrones.size(), this);
+	}
+	
+	/**
+	 * place packages in the warehouse
+	 */
+	private void placePackages()
+	{
+		NdPoint pointWareHouse  = space.getLocation(lisOfWareHouses.get(0));//Only one warehouse for the moment
+		
+		//put all the packages on the warehouse
+		int pos = -50;
+		for(Package pa : lisOfPackage)
+		{
+			if(pos == 0)
+			{
+				pos = -50;
+			}
+			space.moveTo(pa, (int)pointWareHouse.getX()+pos,(int)pointWareHouse.getY()-7);
+			NdPoint pt = space.getLocation(pa);
+			grid.moveTo(pa,(int)pt.getX(),(int)pt.getY());
+			pos = pos +5;
+		}
 	}
 	
 	void assignTask(ArrayList<Package> lisOfPackage ,ArrayList<DeliverDrone> lisOfDrones)
