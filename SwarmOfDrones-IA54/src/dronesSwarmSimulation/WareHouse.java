@@ -5,11 +5,13 @@ import java.util.ArrayList;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.grid.Grid;
 
+/// WareHouse
 public class WareHouse {
 	protected ContinuousSpace<Object> space;
 	protected Grid<Object> grid;
 	private ArrayList<Package> lisOfPackage;
 	
+	// need method to insert the packages and others functionalities to drone come to search for packages
 	public  WareHouse(ContinuousSpace<Object> space, Grid<Object> grid)
 	{
 		this.space = space;
