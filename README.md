@@ -21,6 +21,7 @@ TODO : Francis
 - pathfinding, trajectory optimisation for drones
 - maybe ignore collisions, and set a boolean when a drone is landed, to stop its motors and consumption
 - factorize code in the drone class
+- clean everything obsolete (including physicsengine class parts)
 
 - It would be better and more consistent to work only with continuous space, at least to check whether a drone has arrived to a particular location 
 
