@@ -286,6 +286,15 @@ public class CentralController
 	public ArrayList<DeliverDrone> getLisOfDrones() {
 		return lisOfDrones;
 	}
+	
+
+	public ArrayList<WareHouse> getLisOfWareHouses() {
+		return lisOfWareHouses;
+	}
+
+	public void setLisOfWareHouses(ArrayList<WareHouse> lisOfWareHouses) {
+		this.lisOfWareHouses = lisOfWareHouses;
+	}
 
 	public void setLisOfDrones(ArrayList<DeliverDrone> lisOfDrones) {
 		this.lisOfDrones = lisOfDrones;

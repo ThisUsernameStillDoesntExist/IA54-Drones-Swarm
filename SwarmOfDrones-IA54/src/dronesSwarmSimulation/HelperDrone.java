@@ -45,7 +45,7 @@ public class HelperDrone extends Drone{
 	// method that implement the functional behavior of the drone
 	// it is called each 1 second
 	@Override
-	@ScheduledMethod(start = 1, interval = 1)
+	@ScheduledMethod(start = 1, interval = 1, priority=10)
 	public void doTask()
 	{
 		

@@ -175,6 +175,12 @@ public abstract class WorldObject {
 		totalDistanceTravelled=0;
 	}
 	
+	public double getTotalDistanceTravelled()
+	{
+		return totalDistanceTravelled;
+	}
+	
+	
 	/**
 	 * should be called at each frame
 	 */
