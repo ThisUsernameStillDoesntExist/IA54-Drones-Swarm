@@ -35,11 +35,13 @@ public class CentralController
 	private ArrayList<Building> lisOfBuilding;
 	private ArrayList<DockStation> lisOfDockStation;
 	private ArrayList<DeliverDrone> lisOfDrones;
+	private ArrayList<WareHouse> lisOfWareHouses;
 	private ArrayList<Priority> lisOfPriority;
 	private int   RF = 1; // 1KM de distance
-	
-	
+	private Statistics stats;
+
 	private Context<Object> context;
+	
 	
 	public CentralController(ContinuousSpace<Object> space, Grid<Object> grid,Context<Object> context) {
 		this.space = space;
@@ -50,6 +52,7 @@ public class CentralController
 		lisOfDrones = new  ArrayList<DeliverDrone>();
 		//lisOfPackageNotDelivered = new ArrayList<Package>();
 		lisOfDockStation = new ArrayList<DockStation>();
+		lisOfWareHouses=new ArrayList<WareHouse>();
 		lisOfPriority = new ArrayList<Priority>();
 		lisOfPriority.add(Priority.IMMEDIATE);
 		lisOfPriority.add(Priority.LATER);
@@ -95,45 +98,28 @@ public class CentralController
 	}  */
 	
 	
+	/**
+	 * distribute packages, dockstations, and assign tasks to drones
+	 */
 	public void registerTask()
 	{
 		// Create lists 
-		NdPoint pointWareHouse  = new  NdPoint();;
-		for(Object obj : this.context)
+		populateLists(this.context);
+		
+		createStatistics();
+		
+		// Spawn packages on the scene
+		for(Package p : lisOfPackage)
 		{
-			// Create lists of package on the scene
-			if(obj instanceof Package )
-			{
-				Package p = (Package)obj;
-				// Arrange the priority randomly
-				SimUtilities.shuffle(lisOfPriority, RandomHelper.getUniform());
-				// assign priority to the packages
-				p.setPriority(lisOfPriority.get(0));
-				// Add the package to the liste
-				lisOfPackage.add(p);
-			}
-			
-			if(obj instanceof DockStation )
-			{
-				lisOfDockStation.add((DockStation)obj);
-			}
-			
-			// Create lists of Buildings on the scene
-			if(obj instanceof Building )
-			{
-				lisOfBuilding.add((Building)obj);
-			}
-			if(obj instanceof DeliverDrone )
-			{
-				lisOfDrones.add((DeliverDrone)obj);
-			}
-			
-			if(obj instanceof WareHouse )
-			{
-				pointWareHouse = space.getLocation((WareHouse)obj);
-			}
+			// Arrange the priority randomly
+			SimUtilities.shuffle(lisOfPriority, RandomHelper.getUniform());
+			// assign priority to the packages
+			p.setPriority(lisOfPriority.get(0));
+			// Add the package to the liste
 
 		}
+		
+		NdPoint pointWareHouse  = space.getLocation(lisOfWareHouses.get(0));//Only one warehouse for the moment
 		
 		// Give list of DockStation to All Drones
 		for(DeliverDrone d : lisOfDrones)
@@ -182,6 +168,48 @@ public class CentralController
 		}
 		// divide the number of package to be distributed on each drone
 		assignTask(lisOfPackage,lisOfDrones);
+	}
+	
+	/**
+	 * add context objects to the right list according to their type
+	 * this allow easier retrieving of context objects by type
+	 */
+	private void populateLists(Context<Object> context)
+	{
+		for(Object obj : context)
+		{
+			//no else if, so an object could belong to more than one list : expected behavior ?
+			
+			if(obj instanceof Package )
+			{
+				lisOfPackage.add((Package)obj);
+			}
+			
+			if(obj instanceof DockStation )
+			{
+				lisOfDockStation.add((DockStation)obj);
+			}
+			
+			// Create lists of Buildings on the scene
+			if(obj instanceof Building )
+			{
+				lisOfBuilding.add((Building)obj);
+			}
+			if(obj instanceof DeliverDrone )
+			{
+				lisOfDrones.add((DeliverDrone)obj);
+			}
+			
+			if(obj instanceof WareHouse )
+			{
+				lisOfWareHouses.add((WareHouse)obj);
+			}
+		}
+	}
+	
+	private void createStatistics()
+	{
+		stats=new Statistics(lisOfDrones.size(), this);
 	}
 	
 	void assignTask(ArrayList<Package> lisOfPackage ,ArrayList<DeliverDrone> lisOfDrones)
@@ -291,6 +319,12 @@ public class CentralController
 	public int getRF() {
 		return RF;
 	}
+
+	public Statistics getStats() {
+		return stats;
+	}
+	
+	
 
 	
 
