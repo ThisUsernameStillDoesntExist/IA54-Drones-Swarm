@@ -184,6 +184,20 @@ public class Vect3 {
 	}
 	
 	/**
+	 * return the cosinus of the angle between two vectors, and 0 if at least one vector has a zero norm
+	 * @return
+	 */
+	public double getAngleCosSafe(Vect3 a)
+	{
+		double temp = this.dotProduct(a);
+		double normprod=this.norm()*a.norm();
+		
+		if(normprod==0) return 0;
+		
+		return temp/normprod;
+	}
+	
+	/**
 	 * Multiply this vector by scalar c.
 	 * @param c
 	 * @return this

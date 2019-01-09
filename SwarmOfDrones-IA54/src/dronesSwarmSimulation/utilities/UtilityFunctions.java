@@ -19,6 +19,9 @@ public class UtilityFunctions {
 	
 	public static Vect3 NdPointToVect3(NdPoint ndp)
 	{
+		//temp checking, can be removed when space is 3D
+		if(ndp.dimensionCount()==2) return new Vect3(ndp.getX(), ndp.getY(), 0);		
+		
 		return new Vect3(ndp.getX(), ndp.getY(), ndp.getZ());
 	}
 

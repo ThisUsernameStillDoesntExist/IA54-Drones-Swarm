@@ -2,6 +2,7 @@ package dronesSwarmSimulation;
 
 import dronesSwarmSimulation.physics.WorldObjectCharacteristics;
 import dronesSwarmSimulation.physics.WorldObjectType;
+import dronesSwarmSimulation.utilities.Vect3;
 
 public class DroneCharacteristics extends WorldObjectCharacteristics {
 	
@@ -40,7 +41,7 @@ public class DroneCharacteristics extends WorldObjectCharacteristics {
 		propellerLift = 0.04;
 		airDrag = 0.004;// airdrag will limit the maxspeed
 		frictionDrag=0;
-
+		
 		switch (wot) {
 		case MiniDrone:// based on Parrot Mambo
 			propellerLift = 0.035;
@@ -79,6 +80,8 @@ public class DroneCharacteristics extends WorldObjectCharacteristics {
 			batteryRechargingRate = 300;
 			break;
 		}
+		
+		setSizeFromRadius();
 	}
 	
 	public double getMaxLeaningAngle() {
@@ -108,7 +111,7 @@ public class DroneCharacteristics extends WorldObjectCharacteristics {
 	public double getBatteryRechargingRate() {
 		return batteryRechargingRate;
 	}
-
+	
 
 
 }

@@ -143,7 +143,7 @@ public class CentralController
 					}
 					
 					// Get the location of a building
-					GridPoint buildingLocation = grid.getLocation(lisOfBuilding.get(countBuinding));
+					NdPoint buildingLocation = space.getLocation(lisOfBuilding.get(countBuinding));
 					// Give the the destination of the package, using the building's location
 					lisOfPackage.get(i).setDestinationCoord(buildingLocation);
 					countBuinding++;

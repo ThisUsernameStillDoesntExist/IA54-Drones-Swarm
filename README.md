@@ -21,17 +21,20 @@ TODO : Francis
 - pathfinding, trajectory optimisation for drones
 - maybe ignore collisions, and set a boolean when a drone is landed, to stop its motors and consumption
 - factorize code in the drone class
+- clean everything obsolete (including physicsengine class parts)
+- optimize performances (try to remove costly synchronize) 
 
 - It would be better and more consistent to work only with continuous space, at least to check whether a drone has arrived to a particular location 
 
 TODO :
 - put dotask in droneAI
+- factorize code a lot and move redundant things into subfunctions, thing of a way to integrate the lists of objects into the AI knowledge
 - add delay/deadline to drone deliveries
 - make space 3D compatible
 - perform several iterations between each tick
 - add position attribute to packages and other objects, and synchronize their attribute position with their context position
 - remove unnecessary getters/setters at the end
-- optimize performances (try to remove costly synchronize) 
+- every hardcoded value should be put in an attribute of a special parameters class (this allow to change every value, and factorize code -> all parameters values can be found in the same class)
 
 
 Technical notes :
