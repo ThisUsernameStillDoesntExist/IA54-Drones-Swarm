@@ -108,7 +108,7 @@ public class DroneCharacteristics extends WorldObjectCharacteristics {
 	public double getBatteryRechargingRate() {
 		return batteryRechargingRate;
 	}
-
+	
 
 
 }

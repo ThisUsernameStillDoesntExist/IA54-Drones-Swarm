@@ -180,6 +180,24 @@ public abstract class WorldObject {
 		return totalDistanceTravelled;
 	}
 	
+	/**
+	 * return physic momentum Q=m*v
+	 * @return
+	 */
+	public double getMomentum()
+	{
+		return getTotalWeight()*speed.norm();
+	}
+	
+	/**
+	 * return 0.5*m*v²
+	 * @return
+	 */
+	public double getCineticEnergy()
+	{
+		return 0.5*getTotalWeight()*speed.squaredNorm();
+	}
+	
 	
 	/**
 	 * should be called at each frame
