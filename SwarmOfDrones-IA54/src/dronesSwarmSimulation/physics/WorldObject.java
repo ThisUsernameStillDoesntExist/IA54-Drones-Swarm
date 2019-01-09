@@ -211,7 +211,30 @@ public abstract class WorldObject {
 	 */
 	public boolean isInRange(WorldObject w)
 	{
-		return this.getPosition().dist(w.getPosition())<=this.charact.getRadius()+w.charact.getRadius();
+		//temp
+		Vect3 thispos=this.getPosition().copy();
+		thispos.setZ(0);
+		Vect3 wpos=w.getPosition().copy();
+		wpos.setZ(0);
+		return thispos.dist(wpos)<=this.charact.getRadius()+w.charact.getRadius();
+		//return this.getPosition().dist(w.getPosition())<=this.charact.getRadius()+w.charact.getRadius();
+	}
+	
+	
+	/**
+	 * true if the point is within the object radius (point reachable by the object)
+	 * @param point
+	 * @return
+	 */
+	public boolean isInRange(Vect3 point)
+	{
+		//temp
+		Vect3 thispos=this.getPosition().copy();
+		thispos.setZ(0);
+		point=point.copy();
+		point.setZ(0);
+		return thispos.dist(point)<=this.charact.getRadius();
+		//return this.getPosition().dist(point)<=this.charact.getRadius();
 	}
 	
 	/**
@@ -223,16 +246,6 @@ public abstract class WorldObject {
 	public boolean isOver(WorldObject w)
 	{
 		return this.getPosition().dist(w.getPosition())<=w.charact.getRadius();
-	}
-	
-	/**
-	 * true if the point is within the object radius (point reachable by the object)
-	 * @param point
-	 * @return
-	 */
-	public boolean isInRange(Vect3 point)
-	{
-		return this.getPosition().dist(point)<=this.charact.getRadius();
 	}
 	
 	

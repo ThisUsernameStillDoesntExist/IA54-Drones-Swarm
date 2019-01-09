@@ -278,14 +278,14 @@ public class DeliverDrone extends Drone {
 	public NdPoint findDockStation()
 	{
 
-		double nearest=1000.00;
-		GridPoint nearestPos = new GridPoint();
-		GridPoint actualLocation = grid.getLocation(this);
+		double nearest=Double.MAX_VALUE;
+		NdPoint nearestPos = new NdPoint();
+		NdPoint actualLocation = space.getLocation(this);
 		double distance;
 		
 		for(DockStation ds : lisOfDockStation )
 		{
-			GridPoint pt = grid.getLocation(ds);
+			NdPoint pt = space.getLocation(ds);
 			distance =  Math.hypot(pt.getX()-actualLocation.getX(), pt.getY()-actualLocation.getY());
 			
 			if(nearest > distance )
@@ -296,7 +296,7 @@ public class DeliverDrone extends Drone {
 			}
 		}
 		
-		return new NdPoint(nearestPos.getX(), nearestPos.getY());
+		return nearestPos;
 	}
 
 	public Package getNewTask()
