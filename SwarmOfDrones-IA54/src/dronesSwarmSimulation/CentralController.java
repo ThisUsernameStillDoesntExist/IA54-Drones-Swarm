@@ -215,12 +215,12 @@ public class CentralController
 		NdPoint pointWareHouse  = space.getLocation(lisOfWareHouses.get(0));//Only one warehouse for the moment
 		
 		//put all the packages on the warehouse
-		int pos = -50;
+		int pos = -15;
 		for(Package pa : lisOfPackage)
 		{
-			if(pos == 0)
+			if(pos == 50)
 			{
-				pos = -50;
+				pos = -15;
 			}
 			space.moveTo(pa, (int)pointWareHouse.getX()+pos,(int)pointWareHouse.getY()-7);
 			NdPoint pt = space.getLocation(pa);
