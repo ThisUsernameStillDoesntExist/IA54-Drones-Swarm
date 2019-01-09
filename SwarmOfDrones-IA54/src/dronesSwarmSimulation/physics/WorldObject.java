@@ -9,14 +9,12 @@ public abstract class WorldObject {
 	protected Collider collider;//colliding box (sphere or cuboid)
 	protected Vect3 position;//center of the bounding box
 	protected Vect3 speed;
-	protected Vect3 size;//for a sphere this is the diameter	
 	protected WorldObjectCharacteristics charact;
 	protected double totalDistanceTravelled;//from beginning of simulation
 
 	public WorldObject() {
 		position=new Vect3();
 		speed=new Vect3();
-		size=new Vect3();
 		collider=createSpecificCollider();
 		charact=new WorldObjectCharacteristics();
 		resetDistanceTravelled();
@@ -31,7 +29,6 @@ public abstract class WorldObject {
 	public WorldObject(Vect3 position, Vect3 speed, Vect3 size, Collider c, WorldObjectCharacteristics wot) {
 		this.position = position;
 		this.speed = speed;
-		this.size = size;
 		this.collider=c;
 		this.charact=wot;
 		resetDistanceTravelled();
@@ -42,7 +39,6 @@ public abstract class WorldObject {
 		
 		position=new Vect3(w.position);
 		speed=new Vect3(w.speed);
-		size=new Vect3(w.size);
 		collider=w.collider.copy();
 		this.charact=w.charact;
 		this.totalDistanceTravelled=w.totalDistanceTravelled;
@@ -141,9 +137,6 @@ public abstract class WorldObject {
 		this.speed = speed;
 	}
 
-	public Vect3 getSize() {
-		return size;
-	}
 	
 	/**
 	 * can be overridden if the object is carrying a payload
@@ -209,5 +202,39 @@ public abstract class WorldObject {
 			this.collider.setCenter(this.position);
 		}
 	}
+	
+	//TODO : differentiate building colliders and drones colliders (rectangle vs sphere), work with size and not only with radius
+	/**
+	 * return true if objects collide (touch)
+	 * @param w
+	 * @return
+	 */
+	public boolean isInRange(WorldObject w)
+	{
+		return this.getPosition().dist(w.getPosition())<=this.charact.getRadius()+w.charact.getRadius();
+	}
+	
+	/**
+	 * true if the center of this object is within the radius of another object
+	 * ! not commutative 
+	 * @param w
+	 * @return
+	 */
+	public boolean isOver(WorldObject w)
+	{
+		return this.getPosition().dist(w.getPosition())<=w.charact.getRadius();
+	}
+	
+	/**
+	 * true if the point is within the object radius (point reachable by the object)
+	 * @param point
+	 * @return
+	 */
+	public boolean isInRange(Vect3 point)
+	{
+		return this.getPosition().dist(point)<=this.charact.getRadius();
+	}
+	
+	
 
 }

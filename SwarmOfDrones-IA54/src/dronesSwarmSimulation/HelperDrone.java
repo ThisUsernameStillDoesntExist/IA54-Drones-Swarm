@@ -54,13 +54,13 @@ public class HelperDrone extends Drone{
 
 			if(hasTask && !dejaTrouvePackage)
 			{
-					if(hasArrived(grid.getLocation(task)))
+					if(hasArrived(space.getLocation(task)))
 					{
 						dejaTrouvePackage = true;
 					}
 					else
 					{
-						move(grid.getLocation(task));
+						move(space.getLocation(task));
 						charge--;
 					}
 			}
@@ -114,7 +114,7 @@ public class HelperDrone extends Drone{
 			}
 			// find Dockstation to charge
 			//Get the nearest dockstation position
-			GridPoint nearestDockPos = findDockStation(); 
+			NdPoint nearestDockPos = findDockStation(); 
 			// if the has arrived at the dockstation, charge the drone
 			if(hasArrived(nearestDockPos))
 			{
@@ -140,7 +140,7 @@ public class HelperDrone extends Drone{
 	// method that move the Drone to a desired location on the scene(screen), we just need to give in the location
 	// This method is used to move the to the building where the package will be delivered
 	@Override
-	public void move(GridPoint pt)
+	public void move(NdPoint pt)
 	{
 		if (!pt.equals(grid.getLocation(this )) ) {
 			
@@ -160,17 +160,7 @@ public class HelperDrone extends Drone{
 		}
 
 	}
-	private boolean hasArrived(GridPoint pt)
-	{
-		GridPoint actualLocation = grid.getLocation(this);
-		double distance = Math.hypot(pt.getX()-actualLocation.getX(), pt.getY()-actualLocation.getY());
-		if(distance <= 1 && distance >=0)	{
-			//System.out.println("Arrivé au Building");
-			return true;
-		}
-		
-		return false;
-	}
+
 	
 	// method that move the Drone to a desired location on the scene(screen), it used to 
 	// find the package that has been assigned to him, to be delivered
@@ -205,8 +195,9 @@ public class HelperDrone extends Drone{
 			}*/
 		}
 	}
+
 	@Override
-	public GridPoint findDockStation()
+	public NdPoint findDockStation()
 	{
 
 		double nearest=1000.00;
@@ -227,7 +218,7 @@ public class HelperDrone extends Drone{
 			}
 		}
 		
-		return nearestPos;
+		return new NdPoint(nearestPos.getX(), nearestPos.getY(), nearestPos.getZ());
 	}
 
 	public Package getNewTask()

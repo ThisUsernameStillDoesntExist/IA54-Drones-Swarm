@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
+import dronesSwarmSimulation.physics.WorldObject;
 import dronesSwarmSimulation.utilities.UtilityFunctions;
 import dronesSwarmSimulation.utilities.Vect3;
 import repast.simphony.engine.environment.RunEnvironment;
@@ -70,13 +71,13 @@ public class DeliverDrone extends Drone {
 
 			if(hasTask && !dejaTrouvePackage)
 			{
-					if(hasArrived(grid.getLocation(task)))
+					if(hasArrived(space.getLocation(task)))
 					{
 						dejaTrouvePackage = true;
 					}
 					else
 					{
-						move(grid.getLocation(task));
+						move(space.getLocation(task));
 						charge--;
 					}
 			}
@@ -130,7 +131,7 @@ public class DeliverDrone extends Drone {
 			}
 			// find Dockstation to charge
 			//Get the nearest dockstation position
-			GridPoint nearestDockPos = findDockStation(); 
+			NdPoint nearestDockPos = findDockStation(); 
 			// if the has arrived at the dockstation, charge the drone
 			if(hasArrived(nearestDockPos))
 			{
@@ -184,8 +185,8 @@ public class DeliverDrone extends Drone {
 	//test method
 	// method that move the Drone to a desired location on the scene(screen), we just need to give in the location
 	// This method is used to move the to the building where the package will be delivered
-	@Override
-	public void move(GridPoint pt)
+	//@Override
+	public void move(NdPoint pt)
 	{
 		//this test method show how to update a drone position using new physics.
 		
@@ -224,6 +225,9 @@ public class DeliverDrone extends Drone {
 
 	}
 	
+
+	
+	/*
 	private boolean hasArrived(GridPoint pt)
 	{
 		GridPoint actualLocation = grid.getLocation(this);
@@ -234,7 +238,7 @@ public class DeliverDrone extends Drone {
 		}
 		
 		return false;
-	}
+	}*/
 	
 	// method that move the Drone to a desired location on the scene(screen), it used to 
 	// find the package that has been assigned to him, to be delivered
@@ -271,7 +275,7 @@ public class DeliverDrone extends Drone {
 	
 	
 	@Override
-	public GridPoint findDockStation()
+	public NdPoint findDockStation()
 	{
 
 		double nearest=1000.00;
@@ -292,7 +296,7 @@ public class DeliverDrone extends Drone {
 			}
 		}
 		
-		return nearestPos;
+		return new NdPoint(nearestPos.getX(), nearestPos.getY());
 	}
 
 	public Package getNewTask()

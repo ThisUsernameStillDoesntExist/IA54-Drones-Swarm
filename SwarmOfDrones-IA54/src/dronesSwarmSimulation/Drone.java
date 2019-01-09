@@ -6,6 +6,7 @@ import dronesSwarmSimulation.physics.WorldObject;
 import dronesSwarmSimulation.physics.collisions.CollisionTools;
 import dronesSwarmSimulation.physics.collisions.colliders.Collider;
 import dronesSwarmSimulation.physics.collisions.colliders.Sphere;
+import dronesSwarmSimulation.utilities.UtilityFunctions;
 import dronesSwarmSimulation.utilities.Vect3;
 import dronesSwarmSimulation.physics.Constants;
 import repast.simphony.space.SpatialMath;
@@ -50,6 +51,7 @@ public class Drone extends WorldObject {
 	}
 
 	public Drone(ContinuousSpace<Object> space, Grid<Object> grid, int charge) {
+		super();
 		this.id=getNewId();
 		this.space = space;
 		this.grid = grid;
@@ -139,14 +141,14 @@ public class Drone extends WorldObject {
 		/* negotiate between 2 or more drones */
 	}
 
-	public void move(GridPoint pt) {
+	public void move(NdPoint pt) {
 		/* code for movement of drone */
 
 	}
 
-	public GridPoint findDockStation() {
+	public NdPoint findDockStation() {
 		// Derived classes will implement this method
-		return new GridPoint();
+		return new NdPoint();
 	}
 
 	public void run() {
@@ -363,6 +365,30 @@ public class Drone extends WorldObject {
 
 	protected DroneCharacteristics thisCharacteristics() {
 		return (DroneCharacteristics) this.charact;
+	}
+	
+	
+	/**
+	 * true if the drone arrived to another object
+	 * @param w
+	 * @return
+	 */
+	protected boolean hasArrived(WorldObject w)
+	{
+		return this.isOver(w);
+
+		//System.out.println("Arrivé au Building");
+	}
+	
+	/**
+	 * true if the drone has arrived to this point
+	 * @param ndp
+	 * @return
+	 */
+	protected boolean hasArrived(NdPoint ndp)
+	{
+		Vect3 p=UtilityFunctions.NdPointToVect3(ndp);
+		return this.isInRange(p);
 	}
 
 }

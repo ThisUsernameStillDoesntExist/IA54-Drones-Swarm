@@ -20,7 +20,7 @@ public class Package {
 	private Grid<Object> grid;
 	//priority 
 	private Priority priority ;
-	private GridPoint destinationCoord; // destination to deliver the package
+	private NdPoint destinationCoord; // destination to deliver the package
 	private boolean isTaken;
 	private boolean isDelivered;
 	public Package(ContinuousSpace<Object> space, Grid<Object> grid) {
@@ -95,11 +95,11 @@ public class Package {
 	public void setGrid(Grid<Object> grid) {
 		this.grid = grid;
 	}
-	public GridPoint getDestinationCoord() {
+	public NdPoint getDestinationCoord() {
 		return destinationCoord;
 	}
 
-	public void setDestinationCoord(GridPoint destinationCoord) {
+	public void setDestinationCoord(NdPoint destinationCoord) {
 		this.destinationCoord = destinationCoord;
 	}
 
