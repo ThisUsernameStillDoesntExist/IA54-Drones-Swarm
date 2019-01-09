@@ -28,6 +28,7 @@ TODO : Francis
 
 TODO :
 - put dotask in droneAI
+- factorize code a lot and move redundant things into subfunctions, thing of a way to integrate the lists of objects into the AI knowledge
 - add delay/deadline to drone deliveries
 - make space 3D compatible
 - perform several iterations between each tick
