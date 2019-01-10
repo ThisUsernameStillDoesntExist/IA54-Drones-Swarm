@@ -56,17 +56,8 @@ public class DeliverDrone extends Drone {
 	@ScheduledMethod(start = 1, interval = 1, priority=10)
 	public void doTask()
 	{
-		
-		
-		
-		
-		/*
-		if(true)
-		{
-			return;
-		}*/
-		
-		if(charge>10)
+	
+		if(charge >= 10)
 		{	
 
 			if(hasTask && !dejaTrouvePackage)
@@ -131,16 +122,17 @@ public class DeliverDrone extends Drone {
 			}
 			// find Dockstation to charge
 			//Get the nearest dockstation position
-			NdPoint nearestDockPos = findDockStation(); 
+			DockStation nearestDockPos = findDockStation(); 
 			// if the has arrived at the dockstation, charge the drone
-			if(hasArrived(nearestDockPos))
+			if(hasArrived(space.getLocation(nearestDockPos)))
 			{
+				
 				charge = 400;
 			}
 			else
 			{
 				// if not arrived at the dockstation, continue looking for the dockstation
-				move(nearestDockPos);
+				move(space.getLocation(nearestDockPos));
 			}	
 		}
 		
@@ -281,28 +273,35 @@ public class DeliverDrone extends Drone {
 	
 	
 	@Override
-	public NdPoint findDockStation()
+	public DockStation findDockStation()
 	{
 
 		double nearest=Double.MAX_VALUE;
 		NdPoint nearestPos = new NdPoint();
+		DockStation dock = lisOfDockStation.get(0);
 		NdPoint actualLocation = space.getLocation(this);
 		double distance;
 		
 		for(DockStation ds : lisOfDockStation )
-		{
+		{ 
+			
 			NdPoint pt = space.getLocation(ds);
 			distance =  Math.hypot(pt.getX()-actualLocation.getX(), pt.getY()-actualLocation.getY());
 			
-			if(nearest > distance )
+			if(!ds.isBusy())
 			{
-				nearest = distance;
-				nearestPos = pt;
-				//System.out.println("Distance " + distance);
+				if(nearest > distance )
+				{
+					nearest = distance;
+					nearestPos = pt;
+					dock = ds;
+					//System.out.println("Distance " + distance);
+				}
 			}
 		}
 		
-		return nearestPos;
+		//return nearestPos;
+		return dock;
 	}
 
 	public Package getNewTask()

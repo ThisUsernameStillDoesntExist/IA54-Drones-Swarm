@@ -18,6 +18,11 @@ public class DockStation {
 		unplugFromDrone();
 	}
 	
+	public DockStation()
+	{
+		
+	}
+	
 	public boolean isBusy() {
 		return busy;
 	}

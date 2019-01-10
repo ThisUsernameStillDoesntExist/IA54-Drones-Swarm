@@ -146,12 +146,12 @@ public class Drone extends WorldObject {
 		/* code for movement of drone */
 
 	}
-
-	public NdPoint findDockStation() {
+	
+	public  DockStation findDockStation() {
 		// Derived classes will implement this method
-		return new NdPoint();
+		return new DockStation();
 	}
-
+	
 	public void run() {
 		/* different step of drone */
 	}

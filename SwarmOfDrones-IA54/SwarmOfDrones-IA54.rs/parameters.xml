@@ -54,6 +54,14 @@
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
 									
 		/>
+		
+		
+				<parameter name="warehouspositon" displayName="WareHouse Position" type="java.lang.String" 
+						defaultValue="140,130,100" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$StringStringConverter"
+									
+				/>
 		</parameters>
 
 

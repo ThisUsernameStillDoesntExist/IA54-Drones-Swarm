@@ -4,10 +4,13 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 
+import dronesSwarmSimulation.utilities.UtilityFunctions;
 import dronesSwarmSimulation.utilities.Vect3;
+import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.engine.watcher.Watch;
 import repast.simphony.engine.watcher.WatcherTriggerSchedule;
+import repast.simphony.parameter.Parameters;
 import repast.simphony.space.SpatialMath;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
@@ -42,15 +45,16 @@ public class HelperDrone extends Drone{
 	    lisOfDockStation = new ArrayList<DockStation>();
 	    
 	}
-	public HelperDrone() {};
+	
+	public HelperDrone() {super();};
 	// method that implement the functional behavior of the drone
 	// it is called each 1 second
 	@Override
 	@ScheduledMethod(start = 1, interval = 1, priority=10)
 	public void doTask()
 	{
-		
-		if(charge>10)
+	
+		if(getBatteryLevelRelative() >= 1)
 		{	
 
 			if(hasTask && !dejaTrouvePackage)
@@ -62,7 +66,7 @@ public class HelperDrone extends Drone{
 					else
 					{
 						move(space.getLocation(task));
-						charge--;
+						//charge--;
 					}
 			}
 			else
@@ -95,13 +99,13 @@ public class HelperDrone extends Drone{
 				{
 						move(task.getDestinationCoord());
 						this.getTask().move(this);
-						charge--;
+						//charge--;
 				}
 			}
 		}
 		else
 		{
-			// notify the central
+			// notify the All Drones that exists task not delivered because of charge
 			if(hasTask)
 			{
 				tasksNotDelivered.add(task);
@@ -115,35 +119,39 @@ public class HelperDrone extends Drone{
 			}
 			// find Dockstation to charge
 			//Get the nearest dockstation position
-			NdPoint nearestDockPos = findDockStation(); 
+			DockStation nearestDockPos = findDockStation(); 
 			// if the has arrived at the dockstation, charge the drone
-			if(hasArrived(nearestDockPos))
+			if(hasArrived(space.getLocation(nearestDockPos)))
 			{
-				charge = 100;
+				plugToStation(nearestDockPos);
+				charge = 400;
 			}
 			else
 			{
 				// if not arrived at the dockstation, continue looking for the dockstation
-				move(nearestDockPos);
+				move(space.getLocation(nearestDockPos));
 			}	
 		}
 		
 		if(tasks.size() <=0)
 		{
+			// notify all drones that I have finished with my tasks
 			finishedWorkEvent = true;
 			System.out.println("Fire event task finished");
 		}
 		// Test if all the task are done
 			// Fire the finishedWorkEvent to the task controller
 		// When is that all the task are done for a particular drone
+		
 	
 	}
+	
+	/*
 	// method that move the Drone to a desired location on the scene(screen), we just need to give in the location
 	// This method is used to move the to the building where the package will be delivered
 	@Override
-	public void move(NdPoint pt)
+	public void move(GridPoint pt)
 	{
-		//!!!deprecated, code should be updated
 		if (!pt.equals(grid.getLocation(this )) ) {
 			
 				//turn(pt);
@@ -161,12 +169,74 @@ public class HelperDrone extends Drone{
 			
 		}
 
-	}
+	}*/
+	
+	//test method
+	// method that move the Drone to a desired location on the scene(screen), we just need to give in the location
+	// This method is used to move the to the building where the package will be delivered
+	//@Override
+	public void move(NdPoint pt)
+	{
+		//this test method show how to update a drone position using new physics.
+			
+		//retrieve the time that we will provide to the update drone function		
+		double frametime=GlobalParameters.frameTime;
+		//double tickdelay=RunEnvironment.getInstance().getScheduleTickDelay();
+		double time=frametime;//*tickdelay/1000.0;
+		
+		NdPoint  targetpoint = new  NdPoint(pt.getX(), pt.getY (), 100);//arbitrary z
+		
+		Vect3 tarp=UtilityFunctions.NdPointToVect3(targetpoint);
+		//gives the target position to the drone brain (the brain will be improved to find the best path, but for the moment it only computes a direction)
+		this.getBrain().setTargetPosition(tarp);
+		
+		if(this.getId()==1)
+		{
+			System.out.print("Drone "+this.getId());
+		}
+		
+		this.updateMe(time);//make the drone think/decide and update the drone state (battery level, speed...) and position
+		
+		Vect3 newDronePos=this.getPosition();
+		
+		space.moveTo(this, newDronePos.getX(), newDronePos.getY(), newDronePos.getZ());//3D //update the drone position in the repast continuous space
+		
+		NdPoint newDronePoint = space.getLocation(this);
+		
+		//updates the grid
+		grid.moveTo(this , (int)newDronePoint.getX(), (int)newDronePoint.getY ());
+		
+		if(this.getId()==1)
+		{
+			System.out.print(" targetpos : "+targetpoint);
+			System.out.print(" actualpos : "+newDronePos.toStringLen(30, 3));
+			System.out.print(" batterylevel : "+this.getBatteryLevelRelative());
+			System.out.println("");
+		}
+		
+		
+	
 
+	}
+	
+
+	
+	/*
+	private boolean hasArrived(GridPoint pt)
+	{
+		GridPoint actualLocation = grid.getLocation(this);
+		double distance = Math.hypot(pt.getX()-actualLocation.getX(), pt.getY()-actualLocation.getY());
+		if(distance <= 2 && distance >=0)	{
+			//System.out.println("Arrivé au Building");
+			return true;
+		}
+		
+		return false;
+	}*/
+	
 	/*
 	// method that move the Drone to a desired location on the scene(screen), it used to 
 	// find the package that has been assigned to him, to be delivered
-	
 	public void findPackage(GridPoint pt)
 	{
 		
@@ -197,76 +267,148 @@ public class HelperDrone extends Drone{
 			//}
 		}
 	}*/
-
+	
+	
 	@Override
-	public NdPoint findDockStation()
+	public DockStation findDockStation()
 	{
 
+		double nearest=Double.MAX_VALUE;
+		NdPoint nearestPos = new NdPoint();
+		DockStation dock = lisOfDockStation.get(0);
+		NdPoint actualLocation = space.getLocation(this);
+		double distance;
+		
+		for(DockStation ds : lisOfDockStation )
+		{ 
+			
+			NdPoint pt = space.getLocation(ds);
+			distance =  Math.hypot(pt.getX()-actualLocation.getX(), pt.getY()-actualLocation.getY());
+			
+			if(!ds.isBusy())
+			{
+				if(nearest > distance )
+				{
+					nearest = distance;
+					nearestPos = pt;
+					dock = ds;
+					//System.out.println("Distance " + distance);
+				}
+			}
+		}
+		
+		//return nearestPos;
+		return dock;
+	}
+
+	public Package getNewTask()
+	{
+		Package p = closeEstPackage(tasks);
+		// return the package with highest priority and most close to him, if there is one
+		for(Package highPriorityPackage : getListHighPrioriotyPackage(tasks))
+		{
+			// update the closest
+			p = closeEstPackage(getListHighPrioriotyPackage(tasks));
+			// if this High Priority package is the closest one them, take this one, or look for another close one
+			if(highPriorityPackage == p )
+			{
+				tasks.remove(highPriorityPackage);
+				return highPriorityPackage;
+			}
+		}
+		
+		// if the are no package with High priority them the drone must pick the package 
+		// that is more close to him to deliver.
+		
+		p = closeEstPackage(tasks);
+		tasks.remove(p);
+		
+		return  p;
+		//return tasks.remove();
+	}
+
+	Queue<Package> getListHighPrioriotyPackage(Queue<Package> listTask)
+	{
+		Queue<Package>  results = new LinkedList<Package>();
+		for(Package p : tasks)
+		{
+			if((p.getPriority() == Priority.IMMEDIATE) )
+			{
+				results.add(p);
+			}
+		}
+		return results;
+	}
+	// funcion to search for the closest package
+	Package closeEstPackage(Queue<Package> listTask )
+	{
 		double nearest=1000.00;
 		GridPoint nearestPos = new GridPoint();
 		GridPoint actualLocation = grid.getLocation(this);
 		double distance;
-		
-		for(DockStation ds : lisOfDockStation )
+		Package closestPackage = null;
+		for(Package pc : listTask )
 		{
-			GridPoint pt = grid.getLocation(ds);
+			GridPoint pt = grid.getLocation(pc);
 			distance =  Math.hypot(pt.getX()-actualLocation.getX(), pt.getY()-actualLocation.getY());
 			
 			if(nearest > distance )
 			{
 				nearest = distance;
 				nearestPos = pt;
+				closestPackage = pc;
 				//System.out.println("Distance " + distance);
 			}
 		}
 		
-		return new NdPoint(nearestPos.getX(), nearestPos.getY(), nearestPos.getZ());
-	}
-
-	public Package getNewTask()
-	{
+		return closestPackage;
 		
-		for(Package p : tasks)
-		{
-			if(p.getPriority() == Priority.IMMEDIATE)
-			{
-				tasks.remove(p);
-				
-				return p;
-			}
-		}
 		
-		return tasks.remove();
 	}
-	
-	
+	/**
+	 * triggered when a package has been dropped during a delivery
+	 */
 	@Watch(watcheeClassName = "dronesSwarmSimulation.DeliverDrone",
 			watcheeFieldNames = "nbTaskNotDeliveredEvent",
 			query = "colocated",
 			whenToTrigger = WatcherTriggerSchedule.IMMEDIATE)
 	public void taskNotDeliveredEvent()
 	{
-		//chercher les package non delivr�, et les mettres dans une liste
-		System.out.println("Queue not delivered changed");
-		CentralController companyInfo = this.getCentralController();
-		ArrayList<Package> lisOfPackage = companyInfo.getLisOfPackage();
-		//Chercher les drones without task to do
-		synchronized(this)
+		Parameters params = RunEnvironment.getInstance().getParameters();
+		boolean swarm =GlobalParameters.swarmActivated;
+		// test if all package are in  mode isDelivered=true
+		if(swarm)
 		{
-					if(getTasksNotDelivered().size() > 0 && getTasks().size() <=0)
-					{
-						
-						for( Package p: lisOfPackage)
+			//chercher les package non delivr�, et les mettres dans une liste
+			System.out.println("Queue not delivered changed");
+			CentralController companyInfo = this.getCentralController();
+			ArrayList<Package> lisOfPackage = companyInfo.getLisOfPackage();
+			//Chercher les drones without task to do
+			synchronized(this)
+			{
+						if(getTasksNotDelivered().size() > 0 && getTasks().size() <=0)
 						{
-							//!tasksNotDelivered.contains(p) &&
-							if( !p.isTaken() && !p.getIsDelivered() && !tasks.contains(p))
+							
+							for( Package p: lisOfPackage)
 							{
-								p.setTaken(true);
-								tasks.add(p);
+								//!tasksNotDelivered.contains(p) &&
+								if( !p.isTaken() && !p.getIsDelivered() && !tasks.contains(p))
+								{
+									p.setTaken(true);
+									tasks.add(p);
+								}
 							}
 						}
-					}
-			
+				
+			}
+		}
+		else
+		{
+			synchronized(this)
+			{
+				tasks.addAll(getTasksNotDelivered());
+				tasksNotDelivered.clear();
+			}
 		}
 	}
 	
@@ -277,27 +419,41 @@ public class HelperDrone extends Drone{
 			whenToTrigger = WatcherTriggerSchedule.IMMEDIATE)
 	public void taskFinishedEvent()
 	{
+		Parameters params = RunEnvironment.getInstance().getParameters();
+		boolean swarm =GlobalParameters.swarmActivated;
 		// test if all package are in  mode isDelivered=true
-		System.out.println("Queue not delivered changed");
-		CentralController companyInfo = this.getCentralController();
-		ArrayList<Package> lisOfPackage = companyInfo.getLisOfPackage();
-		//Chercher les drones without task to do
-		synchronized(this)
+		if(swarm)
 		{
-					if(getTasksNotDelivered().size() > 0 && getTasks().size() <=0)
-					{
-						
-						for( Package p: lisOfPackage)
+			System.out.println("Queue not delivered changed");
+			CentralController companyInfo = this.getCentralController();
+			ArrayList<Package> lisOfPackage = companyInfo.getLisOfPackage();
+			//Chercher les drones without task to do
+			synchronized(this)
+			{
+						if(getTasksNotDelivered().size() > 0 && getTasks().size() <=0)
 						{
-							//!tasksNotDelivered.contains(p) &&
-							if( !p.isTaken() && !p.getIsDelivered() && !tasks.contains(p))
+							
+							for( Package p: lisOfPackage)
 							{
-								p.setTaken(true);
-								tasks.add(p);
+								//!tasksNotDelivered.contains(p) &&
+								if( !p.isTaken() && !p.getIsDelivered() && !tasks.contains(p))
+								{
+									p.setTaken(true);
+									tasks.add(p);
+								}
 							}
-						}
-					}
-			
+						}	
+			}
+		}
+		else
+		{
+			synchronized(this)
+			{
+				// When sawrm is not activated, all packages in the taskNotDelivered Queue must be put to the 
+				// Queue tasks, and removed from the  taskNotDelivered.
+				tasks.addAll(getTasksNotDelivered());
+				tasksNotDelivered.clear();
+			}
 		}
 			
 	}

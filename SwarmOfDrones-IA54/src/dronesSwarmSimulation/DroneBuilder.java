@@ -22,7 +22,7 @@ import repast.simphony.space.grid.GridBuilderParameters;
 import repast.simphony.space.grid.SimpleGridAdder;
 
 public class DroneBuilder implements ContextBuilder<Object> {
-
+	
 	@Override
 	public Context build(Context<Object> context) {
 		context.setId("SwarmOfDrones-IA54");
@@ -52,7 +52,7 @@ public class DroneBuilder implements ContextBuilder<Object> {
 
 		/*Define the number of DeliverDrone  */
 		for(int i = 0; i < nombreDrone; i++){
-			context.add(new DeliverDrone(space, grid,charge, new Vect3(0,0,100)));
+			context.add(new DeliverDrone(space, grid,charge, GlobalParameters.initDronePosition));
 		} 
 		// package
 		
@@ -68,7 +68,7 @@ public class DroneBuilder implements ContextBuilder<Object> {
 		
 		WareHouse wareHouse = new WareHouse( space, grid, wareHouseName);
 		context.add(wareHouse);
-		NdPoint pointWareHouse = new NdPoint(107,130,100);
+		NdPoint pointWareHouse = GlobalParameters.wareHousePostion;
 		space.moveTo( wareHouse, pointWareHouse.getX(), pointWareHouse.getY(), pointWareHouse.getZ());
 		// creation of the City/Street 
 		context = setUpTheCity(context, grid, space);
@@ -99,7 +99,7 @@ public class DroneBuilder implements ContextBuilder<Object> {
 				CoordinatedInitialisationUtils coordinatedInitialisationUtils = new CoordinatedInitialisationUtils();
 				
 				// 17 Buildings
-				for (int i = 0; i < 17; i++) {
+				for (int i = 0; i <GlobalParameters.nbOfBuildings; i++) {
 					Building b = new Building(space, grid);
 					context.add(b);
 					NdPoint coordinated = coordinatedInitialisationUtils.getBuildingCoordinatedAt(i);
@@ -107,7 +107,7 @@ public class DroneBuilder implements ContextBuilder<Object> {
 				}
 				
 				// 27 Trees
-				for (int i = 0; i < 27; i++) {
+				for (int i = 0; i <GlobalParameters.nbOfTrees; i++) {
 					Tree t = new Tree(space, grid);
 					context.add(t);
 					NdPoint coordinated = coordinatedInitialisationUtils.getTreeCoordinatedAt(i);

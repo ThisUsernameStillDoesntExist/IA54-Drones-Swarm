@@ -3,6 +3,7 @@ package dronesSwarmSimulation;
 import dronesSwarmSimulation.utilities.Vect3;
 import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.parameter.Parameters;
+import repast.simphony.space.continuous.NdPoint;
 
 /**
  * Stores and regroup parameters of the simulation.
@@ -24,7 +25,10 @@ public final class GlobalParameters {
 	public static int nbPackages=0;
 	public static String warehouseName=null;
 	public static int nbDockstations=0;
-	
+	public static NdPoint wareHousePostion =  null;
+	public static Vect3 initDronePosition = new Vect3(0,0,100);
+	public static int nbOfBuildings = 17;
+	public static int nbOfTrees = 27;
 	
 	/**
 	 * should be called on each simulation init
@@ -40,6 +44,16 @@ public final class GlobalParameters {
 		nbPackages=RP.getInteger("package");
 		warehouseName=RP.getString("warehousenames");
 		nbDockstations=RP.getInteger("dockstation");
+		
+		String[]  whPositions =  RP.getString("warehouspositon").split(",");
+		if( whPositions.length < 3)
+		{
+			wareHousePostion =  new NdPoint(107,130,100);
+		}
+		else {
+			wareHousePostion =  new NdPoint(Integer.parseInt(whPositions[0]),Integer.parseInt(whPositions[0]),Integer.parseInt(whPositions[0]));
+		}
+		
 	}
 	
 	private GlobalParameters()//simulate static class
