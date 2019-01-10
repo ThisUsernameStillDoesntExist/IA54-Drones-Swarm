@@ -18,7 +18,13 @@ public final class GlobalParameters {
 	//repast parameters
 	private static Parameters RP=RunEnvironment.getInstance().getParameters();		
 	public static final int nbChargingStations=RP.getInteger("nbChargingStations");
-	public static final double frameTime=(double)RP.getValue("frametime");
+	public static final double frameTime=RP.getDouble("frametime");
+	public static final boolean swarmActivated=RP.getBoolean("swarm");
+	public static final int nbDeliveryDrones=RP.getInteger("deliver_drone");
+	public static final int initialCharge=RP.getInteger("charge");
+	public static final int nbPackages=RP.getInteger("package");
+	public static final String warehouseName=RP.getString("warehousenames");
+	public static final int nbDockstations=RP.getInteger("dockstation");
 	
 	
 	private GlobalParameters()//simulate static class

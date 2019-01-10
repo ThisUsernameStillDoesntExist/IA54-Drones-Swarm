@@ -372,7 +372,7 @@ public class DeliverDrone extends Drone {
 	public void taskNotDeliveredEvent()
 	{
 		Parameters params = RunEnvironment.getInstance().getParameters();
-		boolean swarm =(Boolean) params.getValue("swarm");
+		boolean swarm =GlobalParameters.swarmActivated;
 		// test if all package are in  mode isDelivered=true
 		if(swarm)
 		{
@@ -417,7 +417,7 @@ public class DeliverDrone extends Drone {
 	public void taskFinishedEvent()
 	{
 		Parameters params = RunEnvironment.getInstance().getParameters();
-		boolean swarm =(boolean) params.getValue("swarm");
+		boolean swarm =GlobalParameters.swarmActivated;
 		// test if all package are in  mode isDelivered=true
 		if(swarm)
 		{
