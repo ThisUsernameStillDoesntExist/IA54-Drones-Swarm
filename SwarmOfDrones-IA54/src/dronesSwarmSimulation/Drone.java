@@ -349,18 +349,27 @@ public class Drone extends WorldObject {
 		}
 	}
 
-	/*
-	 * public void plugToStation(Station st) { this.unplugFromStation();
-	 * 
-	 * this.pluggedStation=st;
-	 * 
-	 * if(!st.isPluggedToDrone(this)) { st.plugToDrone(this); } }
-	 * 
-	 * public void unplugFromStation() { if(this.pluggedStation!=null) {
-	 * this.pluggedStation.unplugFromDrone(); }
-	 * 
-	 * this.pluggedStation=null; }
-	 */
+	
+	public void plugToStation(DockStation st) {
+		this.unplugFromStation();
+		
+		if(st.isPluggedToDrone()) return;//already plugged
+		
+		this.pluggedStation = st;
+
+		if (!st.isPluggedToDrone(this)) {
+			st.plugToDrone(this);
+		}
+	}
+
+	public void unplugFromStation() {
+		if (this.pluggedStation != null) {
+			this.pluggedStation.unplugFromDrone();
+		}
+
+		this.pluggedStation = null;
+	}
+	 
 
 	public boolean isPluggedToStation() {
 		return this.pluggedStation != null;

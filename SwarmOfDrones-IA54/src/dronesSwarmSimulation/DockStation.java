@@ -8,12 +8,14 @@ public class DockStation {
 	private ContinuousSpace<Object> space;
 	private Grid<Object> grid;
 	private boolean busy;
+	protected Drone pluggedDrone;
 	
 	public DockStation(ContinuousSpace<Object> space, Grid<Object> grid) {
 		super();
 		this.space = space;
 		this.grid = grid;
 		busy = false;
+		unplugFromDrone();
 	}
 	
 	public boolean isBusy() {
@@ -44,5 +46,29 @@ public class DockStation {
 	{
 		
 		return grid.getLocation(this)	;
+	}
+
+	public void unplugFromDrone() {
+		
+		pluggedDrone=null;
+	}
+
+	public void plugToDrone(Drone drone) {
+		if(!isPluggedToDrone())
+		{
+			pluggedDrone=drone;
+		}		
+		else
+		{
+			System.out.println("Can't accept this drone, already plugged to another drone.");
+		}
+	}
+	
+	public boolean isPluggedToDrone(Drone drone) {
+		return pluggedDrone==drone;
+	}
+	
+	public boolean isPluggedToDrone() {
+		return pluggedDrone!=null;
 	}
 }
