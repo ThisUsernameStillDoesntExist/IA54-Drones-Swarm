@@ -20,8 +20,10 @@ public class Statistics {
 	//declare dynamic variables here :
 	private double totalDistanceTravelledByDrones;
 	private double distanceTravelledPerDrone;
-	private double droneAvgSpeed;//=distance travelled per count
+	private double droneAvgSpeed;//=distance travelled per s
 	private double droneCurrentSpeed;//mean speed of all drones
+	private double totalTimeElapsed;
+	//add total electricity used
 	
 	
 	
@@ -41,6 +43,7 @@ public class Statistics {
 		distanceTravelledPerDrone=0;
 		droneAvgSpeed=0;
 		droneCurrentSpeed=0;
+		totalTimeElapsed=0;
 	}
 
 
@@ -52,11 +55,21 @@ public class Statistics {
 	public void update(/*double time*/)
 	{
 		currentTickCount = RunEnvironment.getInstance().getCurrentSchedule().getTickCount();
+		//totalTimeElapsed=currentTickCount*GlobalParameters.frameTime;
+		totalTimeElapsed+=GlobalParameters.frameTime;//take in account a possible change of frametime
 		
+		updateStandardStats();
 		updateStatsPerDrone();
 		
 		System.out.println("Statistics updated");
 	}
+
+	private void updateStandardStats() {
+
+		
+		
+	}
+
 
 	/**
 	 * update variables that depends on each and every drone
@@ -85,9 +98,9 @@ public class Statistics {
 			droneCurrentSpeed=0;
 		}
 		
-		if(currentTickCount!=0)
+		if(totalTimeElapsed!=0)
 		{
-			droneAvgSpeed=distanceTravelledPerDrone/currentTickCount;
+			droneAvgSpeed=distanceTravelledPerDrone/totalTimeElapsed;
 		}
 		else
 		{
@@ -115,6 +128,12 @@ public class Statistics {
 	public double getDroneCurrentSpeed() {
 		return droneCurrentSpeed;
 	}
+
+	public double getTotalTimeElapsed() {
+		return totalTimeElapsed;
+	}
+	
+	
 	
 	
 

@@ -1,9 +1,9 @@
 <repast.simphony.chart2.engine.TimeSeriesChartDescriptor simphonyVersion="2.5.0">
-  <name>Average Speed of Drones</name>
-  <dataSet>Average Speed of Drones</dataSet>
+  <name>Average battery charge per drone</name>
+  <dataSet>Drone charge</dataSet>
   <xAxisLabel>Tick Count</xAxisLabel>
-  <yAxisLabel>Speed (m/tick)</yAxisLabel>
-  <chartTitle>Average Speed of all Drones</chartTitle>
+  <yAxisLabel>Battery level [0,1]</yAxisLabel>
+  <chartTitle>Average battery level per drone</chartTitle>
   <type>TIME_SERIES</type>
   <background>
     <red>192</red>
@@ -21,9 +21,9 @@
   <showLegend>true</showLegend>
   <seriesIds>
     <entry>
-      <string>Average Speed of Drones</string>
+      <string>Drone mean charge</string>
       <SeriesData>
-        <label>Average Speed of Drones</label>
+        <label>Drone mean charge</label>
         <color>
           <red>0</red>
           <green>0</green>
