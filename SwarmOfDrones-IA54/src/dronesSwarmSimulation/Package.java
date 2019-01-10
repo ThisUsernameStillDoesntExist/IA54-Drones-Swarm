@@ -38,7 +38,7 @@ public class Package {
 	public void move(Drone drone)
 	{
 		NdPoint dronePos = space.getLocation(drone);
-		space.moveTo(this, dronePos.getX(), dronePos.getY());
+		space.moveTo(this, dronePos.getX(), dronePos.getY(), dronePos.getZ());
 		grid.moveTo(this, (int) (dronePos.getX() + 0.5f), (int) (dronePos.getY() + 0.5f));
 
 	}

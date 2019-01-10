@@ -142,6 +142,7 @@ public class HelperDrone extends Drone{
 	@Override
 	public void move(NdPoint pt)
 	{
+		//!!!deprecated, code should be updated
 		if (!pt.equals(grid.getLocation(this )) ) {
 			
 				//turn(pt);
@@ -161,7 +162,7 @@ public class HelperDrone extends Drone{
 
 	}
 
-	
+	/*
 	// method that move the Drone to a desired location on the scene(screen), it used to 
 	// find the package that has been assigned to him, to be delivered
 	
@@ -187,14 +188,14 @@ public class HelperDrone extends Drone{
 		}
 		else
 		{
-			/*GridPoint actualLocation = grid.getLocation(this);
-			double distance = Math.hypot(pt.getX()-actualLocation.getX(), pt.getY()-actualLocation.getY());
-			if(distance < 1)	{
-				System.out.println("Arrivé au Package");
-				dejaTrouvePackage = true;
-			}*/
+			//GridPoint actualLocation = grid.getLocation(this);
+			//double distance = Math.hypot(pt.getX()-actualLocation.getX(), pt.getY()-actualLocation.getY());
+			//if(distance < 1)	{
+			//	System.out.println("Arrivé au Package");
+			//	dejaTrouvePackage = true;
+			//}
 		}
-	}
+	}*/
 
 	@Override
 	public NdPoint findDockStation()

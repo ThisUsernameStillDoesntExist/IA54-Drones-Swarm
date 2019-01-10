@@ -2,6 +2,7 @@ package dronesSwarmSimulation;
 
 import dronesSwarmSimulation.utilities.Vect3;
 import repast.simphony.engine.environment.RunEnvironment;
+import repast.simphony.parameter.Parameters;
 
 /**
  * Stores and regroup parameters of the simulation.
@@ -15,7 +16,9 @@ public final class GlobalParameters {
 	public static final Vect3 spaceDimensions=new Vect3(200, 150, 400);
 	
 	//repast parameters
-	public static final int nbChargingStations=RunEnvironment.getInstance().getParameters().getInteger("nbChargingStations");
+	private static Parameters RP=RunEnvironment.getInstance().getParameters();		
+	public static final int nbChargingStations=RP.getInteger("nbChargingStations");
+	public static final double frameTime=(double)RP.getValue("frametime");
 	
 	
 	private GlobalParameters()//simulate static class

@@ -192,9 +192,8 @@ public class DeliverDrone extends Drone {
 		
 		System.out.print("Drone "+this.getId());
 			
-		//retrieve the time that we will provide to the update drone function
-		Parameters params = RunEnvironment.getInstance().getParameters();		
-		double frametime=(double)params.getValue("frametime");
+		//retrieve the time that we will provide to the update drone function		
+		double frametime=GlobalParameters.frameTime;
 		//double tickdelay=RunEnvironment.getInstance().getScheduleTickDelay();
 		double time=frametime;//*tickdelay/1000.0;
 		
@@ -210,8 +209,7 @@ public class DeliverDrone extends Drone {
 		Vect3 newDronePos=this.getPosition();
 		System.out.print(" actualpos : "+newDronePos.toStringLen(30, 3));
 		
-		space.moveTo(this, newDronePos.getX(), newDronePos.getY(), newDronePos.getZ());//2D //update the drone position in the repast continuous space
-		//space.moveTo(this, newDronePos.getX(), newDronePos.getY(), newDronePos.getZ());//3D
+		space.moveTo(this, newDronePos.getX(), newDronePos.getY(), newDronePos.getZ());//3D //update the drone position in the repast continuous space
 		
 		NdPoint newDronePoint = space.getLocation(this);
 		
@@ -240,6 +238,7 @@ public class DeliverDrone extends Drone {
 		return false;
 	}*/
 	
+	/*
 	// method that move the Drone to a desired location on the scene(screen), it used to 
 	// find the package that has been assigned to him, to be delivered
 	public void findPackage(GridPoint pt)
@@ -264,14 +263,14 @@ public class DeliverDrone extends Drone {
 		}
 		else
 		{
-			/*GridPoint actualLocation = grid.getLocation(this);
-			double distance = Math.hypot(pt.getX()-actualLocation.getX(), pt.getY()-actualLocation.getY());
-			if(distance < 1)	{
-				System.out.println("Arrivé au Package");
-				dejaTrouvePackage = true;
-			}*/
+			//GridPoint actualLocation = grid.getLocation(this);
+			//double distance = Math.hypot(pt.getX()-actualLocation.getX(), pt.getY()-actualLocation.getY());
+			//if(distance < 1)	{
+			//	System.out.println("Arrivé au Package");
+			//	dejaTrouvePackage = true;
+			//}
 		}
-	}
+	}*/
 	
 	
 	@Override
