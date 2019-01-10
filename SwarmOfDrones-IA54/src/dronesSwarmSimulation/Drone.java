@@ -266,6 +266,18 @@ public class Drone extends WorldObject {
 		return thisCharacteristics().getPropellerLift() * outputpower / getTotalWeight();
 		
 	}
+	
+	/**
+	 * return the amount of throttle necessary to maintain a constant altitude with a vertical propeller direction
+	 * @return
+	 */
+	public double getCounterGravityThrottle()
+	{
+		double tht = -getTotalWeight() * Constants.Gravity.getZ() / (thisCharacteristics().getPropellerLift()
+				* thisCharacteristics().getMotorMaxConsumption() * thisCharacteristics().getMotorEfficiency());
+
+		return CollisionTools.limit(tht, 0, 1);
+	}
 
 	public DroneCharacteristics getCharacteristics() {
 		return thisCharacteristics();

@@ -56,7 +56,7 @@ public class DroneCharacteristics extends WorldObjectCharacteristics {
 			batteryRechargingRate = 4.4;// 30 min charging time
 			break;
 		case StandardDrone:// based on DJI Spark
-			propellerLift = 0.035;
+			propellerLift = 0.07;
 			airDrag = 0.012;
 			maxLeaningAngle = 25;
 			radius = 0.11;

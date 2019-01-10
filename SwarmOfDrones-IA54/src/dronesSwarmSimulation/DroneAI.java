@@ -1,5 +1,7 @@
 package dronesSwarmSimulation;
 
+import org.apache.ivy.core.report.DownloadReport;
+
 import dronesSwarmSimulation.utilities.Vect3;
 
 /**
@@ -51,35 +53,100 @@ public class DroneAI {
 		
 		Vect3 tarpos=new Vect3(targetPosition);
 		
-		//Vect3 propdir=getComputedPropellerDirection(tarpos);
-		Vect3 targetdir=tarpos.getSubstracted(attachedDrone.getPosition());
-		Vect3 propdir=targetdir;
+		DroneCommandValues dcv=getComputedCommandValues(tarpos);
 		
-		propdir.Normalize();
+		dcv.getPropellerDirection().Normalize();
 		
-		attachedDrone.setPropellerDirection(propdir);
-		
-		//motor at full power
-		attachedDrone.setMotorThrottle(1);
+		attachedDrone.setPropellerDirection(dcv.getPropellerDirection());
+		attachedDrone.setMotorThrottle(dcv.getMotorThrottle());
 		
 		
 	}
+	
+	/**
+	 * get a coef multiplicating dirvector such that ||upvector+coef*dirvector||=1
+	 * if upvector has already a norm >=1, return 0
+	 * @param upvector
+	 * @param dirvector
+	 * @return
+	 */
+	private double getComplementNormCoef(Vect3 upvector, Vect3 dirvector)
+	{
+		double uvSQnorm=upvector.squaredNorm();
+		double dvSQnorm=dirvector.squaredNorm();
+		if(uvSQnorm>=1 || dvSQnorm==0)
+		{
+			return 0;
+		}
+		
+		double dotprod=upvector.dotProduct(dirvector);
+		
+		double discriminant=4*dotprod*dotprod-4*dvSQnorm*(uvSQnorm-1);
+		double res=(-2*dotprod+Math.sqrt(discriminant))/(2*dvSQnorm);
+		
+		return res;
+	}
 
+	private double getComputedThrottle(Vect3 tarpos)
+	{
+		//motor at full power
+		return 1;
+	}
 
-	private Vect3 getComputedPropellerDirection(Vect3 tarpos) {
+	private DroneCommandValues getComputedCommandValues(Vect3 tarpos) {
 		
 		//TODO : add safety coef to avoid full stop too early
 		
-		Vect3 targetdir=tarpos.getSubstracted(attachedDrone.getPosition());
-		Vect3 actualspeed=attachedDrone.getSpeed().copy();//=new Vect3(attachedDrone.getSpeed())
-		Vect3 propdir=targetdir;
+		DroneCommandValues DCV=new DroneCommandValues();
+		DCV.setMotorThrottle(getComputedThrottle(tarpos));
 		
+		Vect3 targetdir=tarpos.getSubstracted(attachedDrone.getPosition());
+		Vect3 propdir;
+		
+		DCV.setPropellerDirection(targetdir);
+		anticipateBraking(DCV, targetdir);//modify dcv.propellerdirection
+		Vect3 modtargetdir=DCV.getPropellerDirection();
+		
+		Vect3 throttleup=new Vect3(0,0,1);
+		double tht=attachedDrone.getCounterGravityThrottle();
+		throttleup.multiplyBy(tht);//to maintain vertical speed (if speed=0, =maintain altitude)
+		Vect3 tardirN=modtargetdir.getNormalized();
+		if(tardirN.squaredNorm()==0)
+		{
+			DCV.setMotorThrottle(tht);//final direction is vertical
+		}
+		
+		double dcoef=getComplementNormCoef(throttleup, tardirN);
+		Vect3 adjustedtardir=tardirN.getMultipliedBy(dcoef);
+				
+		propdir=throttleup.getAdded(adjustedtardir);
+		
+		DCV.setPropellerDirection(propdir);
+		
+		return DCV;
+		
+	}
+
+	/**
+	 * brake if necessary to approach target position with a reasonable speed
+	 * modify propeller direction (and potentially motorthrottle) in dcv
+	 * @param dcv
+	 * @param targetdir
+	 */
+	private void anticipateBraking(DroneCommandValues dcv, Vect3 targetdir) {
+
+		
+		if(true) return ;
+		
+		Vect3 propdir=targetdir;
+		Vect3 actualspeed=attachedDrone.getSpeed().copy();//=new Vect3(attachedDrone.getSpeed())
 		double cosdirs=targetdir.getAngleCosSafe(actualspeed);
 		double speedTowardTarget=cosdirs*actualspeed.norm();//amount of speed directed toward target
 		
 		if(speedTowardTarget<=0)
 		{
-			return propdir;
+			dcv.setPropellerDirection(propdir);
+			return;
 		}
 		
 		//optimal braking distance
@@ -98,7 +165,9 @@ public class DroneAI {
 			}
 		}
 		
-		return propdir;
+		//DCV.setPropellerDirection(propdir);
+		//return DCV;
+		
 	}
 	
 	
