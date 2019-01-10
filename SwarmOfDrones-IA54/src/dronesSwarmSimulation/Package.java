@@ -23,11 +23,13 @@ public class Package {
 	private NdPoint destinationCoord; // destination to deliver the package
 	private boolean isTaken;
 	private boolean isDelivered;
-	public Package(ContinuousSpace<Object> space, Grid<Object> grid) {
+	private String wareHouseName;
+	public Package(ContinuousSpace<Object> space, Grid<Object> grid ) {
 		this.space = space;
 		this.grid = grid;
 		this.isTaken = false;
 		isDelivered = false;
+		
 	}
 
 	//new method
@@ -59,11 +61,19 @@ public class Package {
 
 	}*/
 
-
-
+	
+	
 	public Priority getPriority() {
 		return priority;
 	}
+	public String getWareHouseName() {
+		return wareHouseName;
+	}
+
+	public void setWareHouseName(String wareHouseName) {
+		this.wareHouseName = wareHouseName;
+	}
+
 	public void setPriority(Priority priority) {
 		this.priority = priority;
 	}

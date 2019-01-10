@@ -109,7 +109,7 @@ public class CentralController
 		createStatistics();
 		
 		spawnPackages();
-		
+
 		// Give list of DockStation to All Drones
 		for(DeliverDrone d : lisOfDrones)
 		{
@@ -121,7 +121,8 @@ public class CentralController
 		//SimUtilities.shuffle(lisOfPackage, RandomHelper.getUniform());
 		//SimUtilities.shuffle(lisOfBuilding, RandomHelper.getUniform());
 
-		placePackages();
+		//placePackages(); WareHouse now they know how to place their packages 
+		assignPackageToWareHouse(lisOfPackage);
 		
 		assignPackagesToBuildings();
 		
@@ -163,6 +164,46 @@ public class CentralController
 				// Add the package to the liste
 
 			}
+			
+			
+	}
+	
+	/*
+	 * 
+	 *  Funtion tha assign the packages of specific company/ WareHouse
+	 *  Every PAckage Must have a identification of what Company/WareHouse he belongs to
+	 */
+	
+	private void assignPackageToWareHouse(ArrayList<Package> lisOfPackage)
+	{
+		
+		// search for a where house
+		for(Package pa : lisOfPackage)
+		{
+			// randomly reoder the list to pick one warehouse
+			SimUtilities.shuffle(lisOfWareHouses, RandomHelper.getUniform());
+			
+			/* pick the first position and assign one drone on their list
+			 * the warehouse on the first position might change if there is more than one warehouse
+			*/
+			WareHouse wh = lisOfWareHouses.get(0);
+			// insert the name of the ware house on the package
+			pa.setWareHouseName(wh.getName());
+			// add the package on the warehouse list
+			wh.getLisOfPackage().add(pa);
+			
+		}
+			//no else if, so an object could belong to more than one list : expected behavior ?
+			// it will not happen 
+		// after assign each package to their warehouse, we need to call place package on each warehouse
+		
+		for(WareHouse wh : lisOfWareHouses)
+		{
+			// call place packages 
+			wh.placePackages();
+		}
+			
+			
 	}
 
 	/**
@@ -209,7 +250,7 @@ public class CentralController
 	
 	/**
 	 * place packages in the warehouse
-	 */
+	 
 	private void placePackages()
 	{
 		NdPoint pointWareHouse  = space.getLocation(lisOfWareHouses.get(0));//Only one warehouse for the moment
@@ -227,7 +268,8 @@ public class CentralController
 			grid.moveTo(pa,(int)pt.getX(),(int)pt.getY());
 			pos = pos +5;
 		}
-	}
+	} 
+	*/
 	
 	void assignTask(ArrayList<Package> lisOfPackage ,ArrayList<DeliverDrone> lisOfDrones)
 	{

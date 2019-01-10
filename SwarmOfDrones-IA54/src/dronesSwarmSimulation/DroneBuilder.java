@@ -35,6 +35,7 @@ public class DroneBuilder implements ContextBuilder<Object> {
 		//-------------------------------Creation of the Agents setup on the Screen-----------------------------------------------\\
 		Parameters params = RunEnvironment.getInstance().getParameters();
 		
+		
 		int nombreDrone = (Integer) params.getValue("deliver_drone");
 		int charge = (Integer) params.getValue("charge");
 
@@ -43,13 +44,18 @@ public class DroneBuilder implements ContextBuilder<Object> {
 			context.add(new DeliverDrone(space, grid,charge));
 		} 
 		// package
+		
 		// creation of the packages 
 		int nombrepack = (Integer) params.getValue("package");
 		/*Define the number of Package */
 		for (int i = 0; i < nombrepack ; i++) {
 			context.add(new Package(space, grid));
 		}
-		WareHouse wareHouse = new WareHouse( space, grid);
+		// creation of warehouse
+		// get de warehouse name parameter
+		String wareHouseName = (String) params.getValue("warehousenames");
+		
+		WareHouse wareHouse = new WareHouse( space, grid, wareHouseName);
 		context.add(wareHouse);
 		NdPoint pointWareHouse = new NdPoint(107,130);
 		space.moveTo( wareHouse, (int)pointWareHouse.getX(),(int)pointWareHouse.getY());
