@@ -19,7 +19,7 @@
 									
 		/>
 				<parameter name="charge" displayName="Charge value" type="int" 
-						defaultValue="150" 
+						defaultValue="800" 
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
 									

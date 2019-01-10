@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
 
+import dronesSwarmSimulation.utilities.Vect3;
 import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.engine.watcher.Watch;
 import repast.simphony.engine.watcher.WatcherTriggerSchedule;
@@ -30,8 +31,8 @@ public class HelperDrone extends Drone{
 	private boolean finishedWorkEvent = false;
 	public static int idcontrol = 0;
 	
-	public HelperDrone(ContinuousSpace<Object> space, Grid<Object> grid, int charge) {
-		super(space, grid, charge);
+	public HelperDrone(ContinuousSpace<Object> space, Grid<Object> grid, int charge, Vect3 initposition) {
+		super(space, grid, charge, initposition);
 	    dejaTrouvePackage = false;
 	    this.hasTask = false;
 	    this.charge = charge;

@@ -47,11 +47,12 @@ public class Drone extends WorldObject {
 	// All drone to be create and set on the scene( visual system ) need to receive
 	// the space and grid
 	public Drone() {
-		this(null, null, 0);
+		this(null, null, 0, new Vect3());
 	}
 
-	public Drone(ContinuousSpace<Object> space, Grid<Object> grid, int charge) {
+	public Drone(ContinuousSpace<Object> space, Grid<Object> grid, int charge, Vect3 initposition) {
 		super();
+		this.position=initposition.copy();
 		this.id=getNewId();
 		this.space = space;
 		this.grid = grid;

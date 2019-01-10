@@ -38,8 +38,8 @@ public class DeliverDrone extends Drone {
 	private boolean finishedWorkEvent = false;
 	public static int idcontrol = 0;
 	
-	public DeliverDrone(ContinuousSpace<Object> space, Grid<Object> grid, int charge) {
-		super(space, grid, charge);
+	public DeliverDrone(ContinuousSpace<Object> space, Grid<Object> grid, int charge, Vect3 initposition) {
+		super(space, grid, charge, initposition);
 	    dejaTrouvePackage = false;
 	    this.hasTask = false;
 	    this.charge = charge;
@@ -189,8 +189,6 @@ public class DeliverDrone extends Drone {
 	public void move(NdPoint pt)
 	{
 		//this test method show how to update a drone position using new physics.
-		
-		System.out.print("Drone "+this.getId());
 			
 		//retrieve the time that we will provide to the update drone function		
 		double frametime=GlobalParameters.frameTime;
@@ -198,16 +196,19 @@ public class DeliverDrone extends Drone {
 		double time=frametime;//*tickdelay/1000.0;
 		
 		NdPoint  targetpoint = new  NdPoint(pt.getX(), pt.getY (), 100);//arbitrary z
-		System.out.print(" targetpos : "+targetpoint);
 		
 		Vect3 tarp=UtilityFunctions.NdPointToVect3(targetpoint);
 		//gives the target position to the drone brain (the brain will be improved to find the best path, but for the moment it only computes a direction)
 		this.getBrain().setTargetPosition(tarp);
 		
+		if(this.getId()==1)
+		{
+			System.out.print("Drone "+this.getId());
+		}
+		
 		this.updateMe(time);//make the drone think/decide and update the drone state (battery level, speed...) and position
 		
 		Vect3 newDronePos=this.getPosition();
-		System.out.print(" actualpos : "+newDronePos.toStringLen(30, 3));
 		
 		space.moveTo(this, newDronePos.getX(), newDronePos.getY(), newDronePos.getZ());//3D //update the drone position in the repast continuous space
 		
@@ -216,8 +217,14 @@ public class DeliverDrone extends Drone {
 		//updates the grid
 		grid.moveTo(this , (int)newDronePoint.getX(), (int)newDronePoint.getY ());
 		
-		System.out.print(" batterylevel : "+this.getBatteryLevelRelative());
-		System.out.println("");
+		if(this.getId()==1)
+		{
+			System.out.print(" targetpos : "+targetpoint);
+			System.out.print(" actualpos : "+newDronePos.toStringLen(30, 3));
+			System.out.print(" batterylevel : "+this.getBatteryLevelRelative());
+			System.out.println("");
+		}
+		
 		
 	
 

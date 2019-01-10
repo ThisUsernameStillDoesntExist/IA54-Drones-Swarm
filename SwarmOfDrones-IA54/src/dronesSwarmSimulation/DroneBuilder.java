@@ -52,7 +52,7 @@ public class DroneBuilder implements ContextBuilder<Object> {
 
 		/*Define the number of DeliverDrone  */
 		for(int i = 0; i < nombreDrone; i++){
-			context.add(new DeliverDrone(space, grid,charge));
+			context.add(new DeliverDrone(space, grid,charge, new Vect3(0,0,100)));
 		} 
 		// package
 		
