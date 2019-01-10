@@ -10,10 +10,13 @@ import repast.simphony.dataLoader.ContextBuilder;
 import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.parameter.Parameters;
 import repast.simphony.random.RandomHelper;
+import repast.simphony.space.Dimensions;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
+import repast.simphony.space.continuous.PointTranslator;
 import repast.simphony.space.continuous.RandomCartesianAdder;
 import repast.simphony.space.grid.WrapAroundBorders;
+import repast.simphony.space.grid.BouncyBorders;
 import repast.simphony.space.grid.Grid;
 import repast.simphony.space.grid.GridBuilderParameters;
 import repast.simphony.space.grid.SimpleGridAdder;
@@ -26,9 +29,13 @@ public class DroneBuilder implements ContextBuilder<Object> {
 		
 		//-------------------------------Creation and limitation of the Screen(Scene) space(Infinite coordinates system) -----------------------------------------------\\
 		ContinuousSpaceFactory spaceFactory = ContinuousSpaceFactoryFinder.createContinuousSpaceFactory(null);
+		
 		Vect3 spacedims=GlobalParameters.spaceDimensions;
+		PointTranslator ptranslator=new repast.simphony.space.continuous.InfiniteBorders<>();
+		ptranslator.init(new Dimensions(spacedims.getX(), spacedims.getY(), spacedims.getZ()));
+		
 		ContinuousSpace<Object> space = spaceFactory.createContinuousSpace("space", context,
-				new RandomCartesianAdder<Object>(), new repast.simphony.space.continuous.WrapAroundBorders(), spacedims.getX(), spacedims.getY(), spacedims.getZ());
+				new RandomCartesianAdder<Object>(), ptranslator, spacedims.getX(), spacedims.getY(), spacedims.getZ());
 		
 		GridFactory gridFactory = GridFactoryFinder.createGridFactory(null);
 		Grid<Object> grid = gridFactory.createGrid("grid", context, new GridBuilderParameters<Object>(
