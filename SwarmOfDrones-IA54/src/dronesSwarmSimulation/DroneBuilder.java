@@ -27,6 +27,8 @@ public class DroneBuilder implements ContextBuilder<Object> {
 	public Context build(Context<Object> context) {
 		context.setId("SwarmOfDrones-IA54");
 		
+		GlobalParameters.initParamsFromRepast();
+		
 		//-------------------------------Creation and limitation of the Screen(Scene) space(Infinite coordinates system) -----------------------------------------------\\
 		ContinuousSpaceFactory spaceFactory = ContinuousSpaceFactoryFinder.createContinuousSpaceFactory(null);
 		

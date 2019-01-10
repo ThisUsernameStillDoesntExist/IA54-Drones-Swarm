@@ -15,17 +15,32 @@ public final class GlobalParameters {
 
 	public static final Vect3 spaceDimensions=new Vect3(200, 150, 400);
 	
-	//repast parameters
-	private static Parameters RP=RunEnvironment.getInstance().getParameters();		
-	public static final int nbChargingStations=RP.getInteger("nbChargingStations");
-	public static final double frameTime=RP.getDouble("frametime");
-	public static final boolean swarmActivated=RP.getBoolean("swarm");
-	public static final int nbDeliveryDrones=RP.getInteger("deliver_drone");
-	public static final int initialCharge=RP.getInteger("charge");
-	public static final int nbPackages=RP.getInteger("package");
-	public static final String warehouseName=RP.getString("warehousenames");
-	public static final int nbDockstations=RP.getInteger("dockstation");
+	//repast parameters	
+	public static int nbChargingStations=0;
+	public static double frameTime=0;
+	public static boolean swarmActivated=false;
+	public static int nbDeliveryDrones=0;
+	public static int initialCharge=0;
+	public static int nbPackages=0;
+	public static String warehouseName=null;
+	public static int nbDockstations=0;
 	
+	
+	/**
+	 * should be called on each simulation init
+	 */
+	public static void initParamsFromRepast()
+	{
+		Parameters RP=RunEnvironment.getInstance().getParameters();		
+		nbChargingStations=RP.getInteger("nbChargingStations");
+		frameTime=RP.getDouble("frametime");
+		swarmActivated=RP.getBoolean("swarm");
+		nbDeliveryDrones=RP.getInteger("deliver_drone");
+		initialCharge=RP.getInteger("charge");
+		nbPackages=RP.getInteger("package");
+		warehouseName=RP.getString("warehousenames");
+		nbDockstations=RP.getInteger("dockstation");
+	}
 	
 	private GlobalParameters()//simulate static class
 	{

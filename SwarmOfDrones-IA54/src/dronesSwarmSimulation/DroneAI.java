@@ -2,6 +2,7 @@ package dronesSwarmSimulation;
 
 import org.apache.ivy.core.report.DownloadReport;
 
+import dronesSwarmSimulation.utilities.UtilityFunctions;
 import dronesSwarmSimulation.utilities.Vect3;
 
 /**
@@ -103,12 +104,14 @@ public class DroneAI {
 		Vect3 targetdir=tarpos.getSubstracted(attachedDrone.getPosition());
 		Vect3 propdir;
 		
+		double tht=attachedDrone.getCounterGravityThrottle();
+		
 		DCV.setPropellerDirection(targetdir);
-		anticipateBraking(DCV, targetdir);//modify dcv.propellerdirection
+		anticipateBraking(DCV, targetdir, throttleLimit-tht);//modify dcv.propellerdirection
 		Vect3 modtargetdir=DCV.getPropellerDirection();
 		
 		Vect3 throttleup=new Vect3(0,0,1);
-		double tht=attachedDrone.getCounterGravityThrottle();
+		
 		throttleup.multiplyBy(tht);//to maintain vertical speed (if speed=0, =maintain altitude)
 		Vect3 tardirN=modtargetdir.getNormalized();
 		if(tardirN.squaredNorm()==0)
@@ -133,31 +136,31 @@ public class DroneAI {
 	 * @param dcv
 	 * @param targetdir
 	 */
-	private void anticipateBraking(DroneCommandValues dcv, Vect3 targetdir) {
+	private void anticipateBraking(DroneCommandValues dcv, Vect3 targetdir, double availableBrakingThrottle) {
 
 		
-		if(true) return ;
-		
-		Vect3 propdir=targetdir;
+		targetdir=targetdir.copy();//work with a duplicate vector
 		Vect3 actualspeed=attachedDrone.getSpeed().copy();//=new Vect3(attachedDrone.getSpeed())
 		double cosdirs=targetdir.getAngleCosSafe(actualspeed);
 		double speedTowardTarget=cosdirs*actualspeed.norm();//amount of speed directed toward target
 		
-		if(speedTowardTarget<=0)
+		if(speedTowardTarget<=0)//going in the opposite direction, no braking needed
 		{
-			dcv.setPropellerDirection(propdir);
 			return;
 		}
 		
 		//optimal braking distance
-		double brakingdist=speedTowardTarget*speedTowardTarget/attachedDrone.getMaxAccelerationAtThrottle(throttleLimit);//when the drone is at a smaller distance than brakingdist from the target, he should start to brake
+		double brakingdist=speedTowardTarget*speedTowardTarget/attachedDrone.getMaxAccelerationAtThrottle(availableBrakingThrottle);//when the drone is at a smaller distance than brakingdist from the target, he should start to brake
 		
 		double distToTarget=targetdir.norm();//distance between drone and targetposition
 		
 		if(distToTarget<brakingdist)
 		{
 			//slow down
-			propdir=actualspeed.getReversed();
+			Vect3 propdir=UtilityFunctions.getReversedOnXYPlane(actualspeed);
+			System.out.print(" Braking");
+			
+			dcv.setPropellerDirection(propdir);
 			
 			if(propdir.norm()==0)
 			{
@@ -165,10 +168,11 @@ public class DroneAI {
 			}
 		}
 		
-		//DCV.setPropellerDirection(propdir);
-		//return DCV;
+		return;
 		
 	}
+	
+	
 	
 	
 

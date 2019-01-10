@@ -258,7 +258,7 @@ public class Drone extends WorldObject {
 	 */
 	protected double getMaxAccelerationAtThrottle(double tht)
 	{
-		//tht=CollisionTools.limit(tht, 0, 1);//throttle in % between 0,1
+		tht=CollisionTools.limit(tht, 0, 1);//throttle in % between 0,1
 		
 		double motorcons= tht * thisCharacteristics().getMotorMaxConsumption();
 		double outputpower=motorcons*thisCharacteristics().getMotorEfficiency();

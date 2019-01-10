@@ -24,5 +24,15 @@ public class UtilityFunctions {
 		
 		return new Vect3(ndp.getX(), ndp.getY(), ndp.getZ());
 	}
+	
+	/**
+	 * reverse only x and y
+	 * @param v
+	 * @return
+	 */
+	public static Vect3 getReversedOnXYPlane(Vect3 v)
+	{
+		return new Vect3(-v.getX(),-v.getY(),v.getZ());
+	}
 
 }

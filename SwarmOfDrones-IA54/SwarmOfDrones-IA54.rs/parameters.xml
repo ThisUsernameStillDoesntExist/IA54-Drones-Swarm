@@ -43,7 +43,7 @@
 									
 		/>
 				<parameter name="frametime" displayName="Frame Time" type="double" 
-						defaultValue="0.2" 
+						defaultValue="0.1" 
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter"
 									
