@@ -1,5 +1,5 @@
 <repast.simphony.data2.engine.DataSetDescriptor simphonyVersion="2.5.0">
-  <name>Drone charge</name>
+  <name>Current Speed of Drones</name>
   <type>AGGREGATE</type>
   <inclTick>true</inclTick>
   <inclBatchRun>false</inclBatchRun>
@@ -11,17 +11,17 @@
     <pType>LAST</pType>
     <duration>-1.0</duration>
     <frequency>REPEAT</frequency>
-    <hashCode>-1535458429</hashCode>
+    <hashCode>-1788823691</hashCode>
   </scheduleParams>
-  <atEnd>true</atEnd>
+  <atEnd>false</atEnd>
   <methodDataSources class="linked-hash-map">
     <entry>
-      <string>Drone mean charge</string>
+      <string>Current Speed of Drones</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Drone mean charge</id>
-        <className>dronesSwarmSimulation.Drone</className>
-        <methodName>getBatteryLevelRelative</methodName>
-        <aggType>MEAN</aggType>
+        <id>Current Speed of Drones</id>
+        <className>dronesSwarmSimulation.Statistics</className>
+        <methodName>getDroneCurrentSpeed</methodName>
+        <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
   </methodDataSources>

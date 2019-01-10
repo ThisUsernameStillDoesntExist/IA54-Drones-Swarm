@@ -21,6 +21,7 @@ public class Statistics {
 	private double totalDistanceTravelledByDrones;
 	private double distanceTravelledPerDrone;
 	private double droneAvgSpeed;//=distance travelled per count
+	private double droneCurrentSpeed;//mean speed of all drones
 	
 	
 	
@@ -39,6 +40,7 @@ public class Statistics {
 		totalDistanceTravelledByDrones=0;
 		distanceTravelledPerDrone=0;
 		droneAvgSpeed=0;
+		droneCurrentSpeed=0;
 	}
 
 
@@ -61,22 +63,26 @@ public class Statistics {
 	 */
 	private void updateStatsPerDrone() {
 		
-		//update total distance
+		//update total distance, mean current speed
 		double tdt=0;
+		double mcs=0;
 		for(Drone d : centralController.getLisOfDrones())
 		{
 			tdt+=d.getTotalDistanceTravelled();
+			mcs+=d.getSpeed().norm();
 		}
+		
 		
 		totalDistanceTravelledByDrones=tdt;
 		if(centralController.getLisOfDrones().size()>0)
 		{
 			distanceTravelledPerDrone=totalDistanceTravelledByDrones/centralController.getLisOfDrones().size();
-			
+			droneCurrentSpeed=mcs/centralController.getLisOfDrones().size();
 		}
 		else
 		{
 			distanceTravelledPerDrone=0;
+			droneCurrentSpeed=0;
 		}
 		
 		if(currentTickCount!=0)
@@ -104,6 +110,10 @@ public class Statistics {
 
 	public double getDroneAvgSpeed() {
 		return droneAvgSpeed;
+	}
+	
+	public double getDroneCurrentSpeed() {
+		return droneCurrentSpeed;
 	}
 	
 	
