@@ -36,7 +36,7 @@ public class WareHouse {
 			{
 				pos = -15;
 			}
-			space.moveTo(pa, (int)pointWareHouse.getX()+pos,(int)pointWareHouse.getY()-7);
+			space.moveTo(pa, pointWareHouse.getX()+pos, pointWareHouse.getY()-7, pointWareHouse.getZ());
 			NdPoint pt = space.getLocation(pa);
 			grid.moveTo(pa,(int)pt.getX(),(int)pt.getY());
 			pos = pos +5;

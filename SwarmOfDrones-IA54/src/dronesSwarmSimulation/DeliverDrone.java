@@ -198,7 +198,7 @@ public class DeliverDrone extends Drone {
 		//double tickdelay=RunEnvironment.getInstance().getScheduleTickDelay();
 		double time=frametime;//*tickdelay/1000.0;
 		
-		NdPoint  targetpoint = new  NdPoint(pt.getX(), pt.getY (), 10);//arbitrary z
+		NdPoint  targetpoint = new  NdPoint(pt.getX(), pt.getY (), 100);//arbitrary z
 		System.out.print(" targetpos : "+targetpoint);
 		
 		Vect3 tarp=UtilityFunctions.NdPointToVect3(targetpoint);
@@ -210,7 +210,7 @@ public class DeliverDrone extends Drone {
 		Vect3 newDronePos=this.getPosition();
 		System.out.print(" actualpos : "+newDronePos.toStringLen(30, 3));
 		
-		space.moveTo(this, newDronePos.getX(), newDronePos.getY());//2D //update the drone position in the repast continuous space
+		space.moveTo(this, newDronePos.getX(), newDronePos.getY(), newDronePos.getZ());//2D //update the drone position in the repast continuous space
 		//space.moveTo(this, newDronePos.getX(), newDronePos.getY(), newDronePos.getZ());//3D
 		
 		NdPoint newDronePoint = space.getLocation(this);

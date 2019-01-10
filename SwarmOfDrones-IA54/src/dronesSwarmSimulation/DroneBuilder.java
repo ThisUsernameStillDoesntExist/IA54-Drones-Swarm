@@ -28,7 +28,7 @@ public class DroneBuilder implements ContextBuilder<Object> {
 		ContinuousSpaceFactory spaceFactory = ContinuousSpaceFactoryFinder.createContinuousSpaceFactory(null);
 		Vect3 spacedims=GlobalParameters.spaceDimensions;
 		ContinuousSpace<Object> space = spaceFactory.createContinuousSpace("space", context,
-				new RandomCartesianAdder<Object>(), new repast.simphony.space.continuous.WrapAroundBorders(), spacedims.getX(), spacedims.getY());
+				new RandomCartesianAdder<Object>(), new repast.simphony.space.continuous.WrapAroundBorders(), spacedims.getX(), spacedims.getY(), spacedims.getZ());
 		
 		GridFactory gridFactory = GridFactoryFinder.createGridFactory(null);
 		Grid<Object> grid = gridFactory.createGrid("grid", context, new GridBuilderParameters<Object>(
@@ -59,8 +59,8 @@ public class DroneBuilder implements ContextBuilder<Object> {
 		
 		WareHouse wareHouse = new WareHouse( space, grid, wareHouseName);
 		context.add(wareHouse);
-		NdPoint pointWareHouse = new NdPoint(107,130);
-		space.moveTo( wareHouse, (int)pointWareHouse.getX(),(int)pointWareHouse.getY());
+		NdPoint pointWareHouse = new NdPoint(107,130,100);
+		space.moveTo( wareHouse, pointWareHouse.getX(), pointWareHouse.getY(), pointWareHouse.getZ());
 		// creation of the City/Street 
 		context = setUpTheCity(context, grid, space);
 		
@@ -94,7 +94,7 @@ public class DroneBuilder implements ContextBuilder<Object> {
 					Building b = new Building(space, grid);
 					context.add(b);
 					NdPoint coordinated = coordinatedInitialisationUtils.getBuildingCoordinatedAt(i);
-					space.moveTo(b, coordinated.getX(), coordinated.getY());
+					space.moveTo(b, coordinated.getX(), coordinated.getY(), coordinated.getZ());
 				}
 				
 				// 27 Trees
@@ -102,7 +102,7 @@ public class DroneBuilder implements ContextBuilder<Object> {
 					Tree t = new Tree(space, grid);
 					context.add(t);
 					NdPoint coordinated = coordinatedInitialisationUtils.getTreeCoordinatedAt(i);
-					space.moveTo(t, coordinated.getX(), coordinated.getY());
+					space.moveTo(t, coordinated.getX(), coordinated.getY(), coordinated.getZ());
 				}
 				Parameters params = RunEnvironment.getInstance().getParameters();
 				int dockstation =(Integer) params.getValue("dockstation");
@@ -114,7 +114,7 @@ public class DroneBuilder implements ContextBuilder<Object> {
 					DockStation d = new DockStation(space, grid);
 					context.add(d);
 					NdPoint coordinated = coordinatedInitialisationUtils.getDockstationCoordinatedAt(i);
-					space.moveTo(d, coordinated.getX()+50, coordinated.getY());
+					space.moveTo(d, coordinated.getX()+50, coordinated.getY(), coordinated.getZ());
 				}
 				
 				return context;
