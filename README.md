@@ -16,11 +16,9 @@ TODO : Adilson
 7- all drones spawn in same place
 
 TODO : Francis
-- integrate physics engine in repast continuous space (synchronization)
 - implement decision making methods in the drone brain (droneAI)
 - pathfinding, trajectory optimisation for drones
 - maybe ignore collisions, and set a boolean when a drone is landed, to stop its motors and consumption
-- factorize code in the drone class
 - clean everything obsolete (including physicsengine class parts)
 - optimize performances (try to remove costly synchronize) 
 
@@ -30,11 +28,9 @@ TODO :
 - put dotask in droneAI
 - factorize code a lot and move redundant things into subfunctions, thing of a way to integrate the lists of objects into the AI knowledge
 - add delay/deadline to drone deliveries
-- make space 3D compatible
-- perform several iterations between each tick
-- add position attribute to packages and other objects, and synchronize their attribute position with their context position
 - remove unnecessary getters/setters at the end
 - every hardcoded value should be put in an attribute of a special parameters class (this allow to change every value, and factorize code -> all parameters values can be found in the same class)
+- packages, dockstations and all environment objects should extend Worldobject (and be synchronized with space coords)
 
 
 Technical notes :
