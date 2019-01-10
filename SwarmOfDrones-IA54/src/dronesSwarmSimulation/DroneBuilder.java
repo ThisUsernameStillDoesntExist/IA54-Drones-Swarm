@@ -44,6 +44,8 @@ public class DroneBuilder implements ContextBuilder<Object> {
 				new WrapAroundBorders(), new SimpleGridAdder<Object>(), true, (int)(spacedims.getX()), (int)(spacedims.getY())));
 		
 		//-------------------------------Creation of the Agents setup on the Screen-----------------------------------------------\\
+		CentralController cc = new CentralController(space, grid, context);
+		
 		Parameters params = RunEnvironment.getInstance().getParameters();
 		
 		
@@ -52,7 +54,9 @@ public class DroneBuilder implements ContextBuilder<Object> {
 
 		/*Define the number of DeliverDrone  */
 		for(int i = 0; i < nombreDrone; i++){
-			context.add(new DeliverDrone(space, grid,charge, GlobalParameters.initDronePosition));
+			DeliverDrone d = new DeliverDrone(space, grid,charge, GlobalParameters.initDronePosition);
+			context.add(d);
+			cc.getLisOfDrones().add(d);
 		} 
 		// package
 		
@@ -60,7 +64,9 @@ public class DroneBuilder implements ContextBuilder<Object> {
 		int nombrepack = GlobalParameters.nbPackages;
 		/*Define the number of Package */
 		for (int i = 0; i < nombrepack ; i++) {
-			context.add(new Package(space, grid));
+			Package p = new Package(space, grid);
+			context.add(p);
+			cc.getLisOfPackage().add(p);
 		}
 		// creation of warehouse
 		// get de warehouse name parameter
@@ -71,7 +77,7 @@ public class DroneBuilder implements ContextBuilder<Object> {
 		NdPoint pointWareHouse = GlobalParameters.wareHousePostion;
 		space.moveTo( wareHouse, pointWareHouse.getX(), pointWareHouse.getY(), pointWareHouse.getZ());
 		// creation of the City/Street 
-		context = setUpTheCity(context, grid, space);
+		context = setUpTheCity(context, grid, space,cc);
 		
 		
 		//-------------------------------- Positioning of the Agents on the grid system ( Finite system )---------------\\
@@ -85,7 +91,7 @@ public class DroneBuilder implements ContextBuilder<Object> {
 
 		 }
 		
-		CentralController cc = new CentralController(space, grid, context);
+		
 		cc.registerTask();
 		context.add(cc);
 		context.add(cc.getStats());//to allow scheduled calls on the refreshing method of statistics, and to retrieve values from it
@@ -93,7 +99,7 @@ public class DroneBuilder implements ContextBuilder<Object> {
 		return context;
 	}
 	
-	private Context<Object> setUpTheCity( Context<Object> context, Grid<Object> grid, ContinuousSpace<Object> space)
+	private Context<Object> setUpTheCity( Context<Object> context, Grid<Object> grid, ContinuousSpace<Object> space, CentralController cc )
 	{
 		// creation of the Buildings, DockSations and Trees
 				CoordinatedInitialisationUtils coordinatedInitialisationUtils = new CoordinatedInitialisationUtils();
@@ -104,6 +110,7 @@ public class DroneBuilder implements ContextBuilder<Object> {
 					context.add(b);
 					NdPoint coordinated = coordinatedInitialisationUtils.getBuildingCoordinatedAt(i);
 					space.moveTo(b, coordinated.getX(), coordinated.getY(), coordinated.getZ());
+					cc.getLisOfBuilding().add(b);
 				}
 				
 				// 27 Trees

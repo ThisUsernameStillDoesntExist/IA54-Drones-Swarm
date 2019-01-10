@@ -43,25 +43,6 @@ public class Package {
 
 	}
 
-	/*
-	// this function is used to help the package to be deliver following   the drone
-	// and it receives the drone charged to carry the package, so that can it get the drone's position and follow him.
-	public void move(Drone drone)
-	{
-		GridPoint positonDrone = grid.getLocation(drone);
-		if(!positonDrone.equals(grid.getLocation(this)))
-		{
-			NdPoint myPoint = space.getLocation(this);
-			NdPoint otherPoint = new NdPoint( positonDrone.getX(), positonDrone.getY());
-			double angle = SpatialMath.calcAngleFor2DMovement (space,myPoint , otherPoint );
-			space.moveByVector(this, 1, angle,0);
-			myPoint = space.getLocation(this);
-			grid.moveTo ( this ,( int )myPoint.getX (), ( int )myPoint.getY ());	
-		}
-
-	}*/
-
-	
 	
 	public Priority getPriority() {
 		return priority;

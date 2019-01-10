@@ -58,46 +58,6 @@ public class CentralController
 		lisOfPriority.add(Priority.LATER);
 	}
 
-	// event to gather information of drones that have finished work or not
-	/*
-	@Watch(watcheeClassName = "dronesSwarmSimulation.DeliverDrone",
-			watcheeFieldNames = "finishedWorkEvent",
-			query = "colocated",
-			whenToTrigger = WatcherTriggerSchedule.IMMEDIATE)
-	public void log()
-	{
-		// test if all package are in  Delivered
-		int nbPackage = 0;
-		for( Package p : lisOfPackage)
-		{
-			if(p.getIsDelivered()==false)
-				nbPackage++;
-			else
-				nbOfPackageDelivered++;
-		}
-		
-		if(nbPackage > 0)
-		{
-			// Log some informations to the console
-			System.out.println("Task are not finished yet, More " + nbPackage + " Packages to be delivered");
-			// to keep track of drones that have finished their work
-			ArrayList<DeliverDrone> newlisOfDrones = new  ArrayList<DeliverDrone>();
-	
-			//control of drones without task to do
-			if(newlisOfDrones.size() > 0)
-			{
-				System.out.println("New list of drones = " + newlisOfDrones.size());
-			}
-			lisOfPackageNotDelivered = new ArrayList<Package>();
-		}	
-		else
-		{
-			System.out.println("All task Are finished, Stop The simularion");
-		}
-		
-	}  */
-	
-	
 	/**
 	 * distribute packages, dockstations, and assign tasks to drones
 	 */
@@ -114,10 +74,10 @@ public class CentralController
 		for(DeliverDrone d : lisOfDrones)
 		{
 			d.setLisOfDockStation(lisOfDockStation);
-			d.setCentralController(this); // set the company to later extract information from
+			d.setCentralController(this); // set the central controller to later extract information from
 		}
 		
-		// Randomly ordered of building and package, to no be all the same task at the same building
+		//Randomly ordered of building and package, to no be all the same task at the same building
 		//SimUtilities.shuffle(lisOfPackage, RandomHelper.getUniform());
 		//SimUtilities.shuffle(lisOfBuilding, RandomHelper.getUniform());
 
@@ -148,6 +108,7 @@ public class CentralController
 					// Give the the destination of the package, using the building's location
 					lisOfPackage.get(i).setDestinationCoord(buildingLocation);
 					countBuinding++;
+					//System.out.println("building : " + buildingLocation.getX() + " ; " + buildingLocation.getY() +" ; ");
 				}
 	}
 
@@ -158,14 +119,15 @@ public class CentralController
 			for(Package p : lisOfPackage)
 			{
 				// Arrange the priority randomly
-				SimUtilities.shuffle(lisOfPriority, RandomHelper.getUniform());
+				/* decomment this line, if you ramndonmly behavior of priority packages
+				 * 
+				 * SimUtilities.shuffle(lisOfPriority, RandomHelper.getUniform());
+				*/
+				 
 				// assign priority to the packages
 				p.setPriority(lisOfPriority.get(0));
 				// Add the package to the liste
-
 			}
-			
-			
 	}
 	
 	/*
@@ -180,8 +142,12 @@ public class CentralController
 		// search for a where house
 		for(Package pa : lisOfPackage)
 		{
-			// randomly reoder the list to pick one warehouse
-			SimUtilities.shuffle(lisOfWareHouses, RandomHelper.getUniform());
+			// randomly reorder the list to pick one warehouse
+			/*
+			 * decoment this line if you want tha warehouse take package randomly
+			 * SimUtilities.shuffle(lisOfWareHouses, RandomHelper.getUniform());
+			 * 
+			 */
 			
 			/* pick the first position and assign one drone on their list
 			 * the warehouse on the first position might change if there is more than one warehouse
@@ -216,14 +182,15 @@ public class CentralController
 		{
 			//no else if, so an object could belong to more than one list : expected behavior ?
 			
-			if(obj instanceof Package )
-			{
-				lisOfPackage.add((Package)obj);
-			}
 			
 			if(obj instanceof DockStation )
 			{
 				lisOfDockStation.add((DockStation)obj);
+			}
+			/*
+			if(obj instanceof Package )
+			{
+				lisOfPackage.add((Package)obj);
 			}
 			
 			// Create lists of Buildings on the scene
@@ -234,8 +201,9 @@ public class CentralController
 			if(obj instanceof DeliverDrone )
 			{
 				lisOfDrones.add((DeliverDrone)obj);
+				
 			}
-			
+			*/
 			if(obj instanceof WareHouse )
 			{
 				lisOfWareHouses.add((WareHouse)obj);
@@ -248,28 +216,7 @@ public class CentralController
 		stats=new Statistics(lisOfDrones.size(), this);
 	}
 	
-	/**
-	 * place packages in the warehouse
-	 
-	private void placePackages()
-	{
-		NdPoint pointWareHouse  = space.getLocation(lisOfWareHouses.get(0));//Only one warehouse for the moment
-		
-		//put all the packages on the warehouse
-		int pos = -15;
-		for(Package pa : lisOfPackage)
-		{
-			if(pos == 50)
-			{
-				pos = -15;
-			}
-			space.moveTo(pa, (int)pointWareHouse.getX()+pos,(int)pointWareHouse.getY()-7);
-			NdPoint pt = space.getLocation(pa);
-			grid.moveTo(pa,(int)pt.getX(),(int)pt.getY());
-			pos = pos +5;
-		}
-	} 
-	*/
+	
 	
 	void assignTask(ArrayList<Package> lisOfPackage ,ArrayList<DeliverDrone> lisOfDrones)
 	{
@@ -286,7 +233,7 @@ public class CentralController
 		for(int i=0 ; i < lisOfPackage.size(); i++ )
 		{
 			Package p = lisOfPackage.get(i);
-			// reinitialize assign package to the first drone opn the list until the las drone
+			// reinitialize assign package to the first drone on the list until the las drone
 			if(countDrones == lisOfDrones.size())
 			{
 				countDrones =0;
