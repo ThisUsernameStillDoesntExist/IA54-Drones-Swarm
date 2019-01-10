@@ -1,5 +1,6 @@
 package dronesSwarmSimulation;
 
+import dronesSwarmSimulation.utilities.Vect3;
 import repast.simphony.context.Context;
 import repast.simphony.context.space.continuous.ContinuousSpaceFactory;
 import repast.simphony.context.space.continuous.ContinuousSpaceFactoryFinder;
@@ -25,12 +26,13 @@ public class DroneBuilder implements ContextBuilder<Object> {
 		
 		//-------------------------------Creation and limitation of the Screen(Scene) space(Infinite coordinates system) -----------------------------------------------\\
 		ContinuousSpaceFactory spaceFactory = ContinuousSpaceFactoryFinder.createContinuousSpaceFactory(null);
+		Vect3 spacedims=GlobalParameters.spaceDimensions;
 		ContinuousSpace<Object> space = spaceFactory.createContinuousSpace("space", context,
-				new RandomCartesianAdder<Object>(), new repast.simphony.space.continuous.WrapAroundBorders(), 200, 150);
+				new RandomCartesianAdder<Object>(), new repast.simphony.space.continuous.WrapAroundBorders(), spacedims.getX(), spacedims.getY());
 		
 		GridFactory gridFactory = GridFactoryFinder.createGridFactory(null);
 		Grid<Object> grid = gridFactory.createGrid("grid", context, new GridBuilderParameters<Object>(
-				new WrapAroundBorders(), new SimpleGridAdder<Object>(), true, 200, 150));
+				new WrapAroundBorders(), new SimpleGridAdder<Object>(), true, (int)(spacedims.getX()), (int)(spacedims.getY())));
 		
 		//-------------------------------Creation of the Agents setup on the Screen-----------------------------------------------\\
 		Parameters params = RunEnvironment.getInstance().getParameters();

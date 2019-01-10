@@ -50,7 +50,10 @@ public class DroneAI {
 		}
 		
 		Vect3 tarpos=new Vect3(targetPosition);
-		Vect3 propdir=getComputedPropellerDirection(tarpos);
+		
+		//Vect3 propdir=getComputedPropellerDirection(tarpos);
+		Vect3 targetdir=tarpos.getSubstracted(attachedDrone.getPosition());
+		Vect3 propdir=targetdir;
 		
 		propdir.Normalize();
 		
