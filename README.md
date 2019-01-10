@@ -31,6 +31,7 @@ TODO :
 - remove unnecessary getters/setters at the end
 - every hardcoded value should be put in an attribute of a special parameters class (this allow to change every value, and factorize code -> all parameters values can be found in the same class)
 - packages, dockstations and all environment objects should extend Worldobject (and be synchronized with space coords)
+- link charge to real drone battery and support plug to station
 
 
 Technical notes :
