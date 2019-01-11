@@ -25,7 +25,6 @@ public class Drone extends WorldObject {
 	private static int TotalNbOfDrones = 0;// used to generate unique drone id
 
 	protected int id;
-	private int charge;
 	protected ContinuousSpace<Object> space;
 	protected Grid<Object> grid;
 	protected Package task;
@@ -47,16 +46,15 @@ public class Drone extends WorldObject {
 	// All drone to be create and set on the scene( visual system ) need to receive
 	// the space and grid
 	public Drone() {
-		this(null, null, 0, new Vect3());
+		this(null, null, new Vect3());
 	}
 
-	public Drone(ContinuousSpace<Object> space, Grid<Object> grid, int charge, Vect3 initposition) {
+	public Drone(ContinuousSpace<Object> space, Grid<Object> grid, Vect3 initposition) {
 		super();
 		this.position=initposition.copy();
 		this.id=getNewId();
 		this.space = space;
 		this.grid = grid;
-		this.charge = charge;
 		this.charging = false;
 		this.charact = new DroneCharacteristics();
 		this.brain = new DroneAI(this);
@@ -84,13 +82,6 @@ public class Drone extends WorldObject {
 		decide(time);
 	}
 
-	public int getCharge() {
-		return charge;
-	}
-
-	public void setCharge(int charge) {
-		this.charge = charge;
-	}
 
 	// this are just getter and setter
 	public ContinuousSpace<Object> getSpace() {

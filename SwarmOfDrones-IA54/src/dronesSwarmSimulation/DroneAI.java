@@ -32,21 +32,13 @@ public class DroneAI {
 		this.charact=new DroneAIprops();
 		this.throttleLimit=1;
 		
-		initDecisionVars();
+		initHLDModule();
 	}
 	
 	
-	private void initDecisionVars() {
+	private void initHLDModule() {
 
-		hld=new HighLevelDecision();
-		
-		hld.dejaTrouvePackage = false;
-		hld.hasTask = false;
-		hld.tasks = new LinkedList<Package>();
-		hld.tasksNotDelivered = new LinkedList<Package>();
-		hld.tasksDelivered = new  ArrayList<Package>();
-		hld.lisOfDockStation = new ArrayList<DockStation>();
-		
+		hld=new HighLevelDecision(attachedDrone);
 	}
 
 
@@ -230,6 +222,13 @@ public class DroneAI {
 		return;
 		
 	}
+
+
+	public HighLevelDecision getHld() {
+		return hld;
+	}
+	
+	
 	
 	
 	

@@ -74,8 +74,8 @@ public class CentralController
 		// Give list of DockStation to All Drones
 		for(DeliverDrone d : lisOfDrones)
 		{
-			d.setLisOfDockStation(lisOfDockStation);
-			d.setCentralController(this); // set the central controller to later extract information from
+			d.getBrain().getHld().setLisOfDockStation(lisOfDockStation);
+			d.getBrain().getHld().setCentralController(this); // set the central controller to later extract information from
 		}
 		
 		//Randomly ordered of building and package, to no be all the same task at the same building
@@ -240,14 +240,14 @@ public class CentralController
 				countDrones =0;
 			}
 			
-			lisOfDrones.get(countDrones).getTasks().add(p);
-			lisOfDrones.get(countDrones).setTasksNotDelivered(new LinkedList<Package>());
+			lisOfDrones.get(countDrones).getBrain().getHld().getTasks().add(p);
+			lisOfDrones.get(countDrones).getBrain().getHld().setTasksNotDelivered(new LinkedList<Package>());
 			countDrones++; // next drone
 		}
 		
 		for(DeliverDrone d : lisOfDrones)
 		{
-			System.out.println("Mys tasks are " + d.getTasks().size());
+			System.out.println("Mys tasks are " + d.getBrain().getHld().getTasks().size());
 		}
 		
 	}

@@ -22,6 +22,7 @@ import repast.simphony.space.grid.GridPoint;
  * motor management
  * the essential multi-agent part is here, with communication and task management
  * 
+ * 
  * @author Francis
  *
  */
@@ -57,9 +58,9 @@ public class HighLevelDecision {
 	private CentralController centralController;
 	public static int idcontrol = 0;
 	
-	public HighLevelDecision(Drone dronebody, CentralController cc) {
+	public HighLevelDecision(Drone dronebody) {
 		
-		this.centralController=cc;
+		//this.centralController=cc;
 		this.thisDrone=dronebody;
 		
 	    dejaTrouvePackage = false;
@@ -554,6 +555,13 @@ public class HighLevelDecision {
 	{
 		return thisDrone.isInRange(p);
 	}
+
+
+	public void setCentralController(CentralController centralController) {
+		this.centralController = centralController;
+	}
+	
+	
 	
 
 }

@@ -54,7 +54,7 @@ public class DroneBuilder implements ContextBuilder<Object> {
 
 		/*Define the number of DeliverDrone  */
 		for(int i = 0; i < nombreDrone; i++){
-			DeliverDrone d = new DeliverDrone(space, grid,charge, GlobalParameters.initDronePosition);
+			DeliverDrone d = new DeliverDrone(space, grid, GlobalParameters.initDronePosition);
 			context.add(d);
 			cc.getLisOfDrones().add(d);
 		} 

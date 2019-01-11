@@ -25,6 +25,9 @@ import repast.simphony.util.SimUtilities;
 
 public class DeliverDrone extends Drone {
 	
-
+	public DeliverDrone(ContinuousSpace<Object> space, Grid<Object> grid, Vect3 initposition)
+	{
+		super(space, grid, initposition);
+	}
 
 }
