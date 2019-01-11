@@ -170,31 +170,8 @@ public class HighLevelDecision {
 	
 	}
 	
-	/*
-	// method that move the Drone to a desired location on the scene(screen), we just need to give in the location
-	// This method is used to move the to the building where the package will be delivered
-	@Override
-	public void move(GridPoint pt)
-	{
-		if (!pt.equals(grid.getLocation(this )) ) {
-			
-				//turn(pt);
-				NdPoint  myPoint = space.getLocation(this);
-				
-				NdPoint  otherPoint = new  NdPoint(pt.getX(), pt.getY ());
-				
-				double  angle = SpatialMath.calcAngleFor2DMovement(space ,myPoint , otherPoint );
-				
-				space.moveByVector(this , 1, angle , 0);
-				
-				myPoint = space.getLocation(this);
-				
-				grid.moveTo(this , (int)myPoint.getX(), (int)myPoint.getY ());
-			
-		}
-
-	}*/
 	
+	/*
 	//test method
 	// method that move the Drone to a desired location on the scene(screen), we just need to give in the location
 	// This method is used to move the to the building where the package will be delivered
@@ -210,16 +187,7 @@ public class HighLevelDecision {
 		
 		NdPoint  targetpoint = new  NdPoint(pt.getX(), pt.getY (), 100);//arbitrary z
 		
-		Vect3 tarp=UtilityFunctions.NdPointToVect3(targetpoint);
-		//gives the target position to the drone brain (the brain will be improved to find the best path, but for the moment it only computes a direction)
-		this.getBrain().setTargetPosition(tarp);
-		
-		if(this.getId()==1)
-		{
-			System.out.print("Drone "+this.getId());
-		}
-		
-		this.updateMe(time);//make the drone think/decide and update the drone state (battery level, speed...) and position
+		System.out.print("Drone "+thisDrone.getId());
 		
 		Vect3 newDronePos=this.getPosition();
 		
@@ -230,18 +198,17 @@ public class HighLevelDecision {
 		//updates the grid
 		grid.moveTo(this , (int)newDronePoint.getX(), (int)newDronePoint.getY ());
 		
-		if(this.getId()==1)
-		{
-			System.out.print(" targetpos : "+targetpoint);
-			System.out.print(" actualpos : "+newDronePos.toStringLen(30, 3));
-			System.out.print(" batterylevel : "+this.getBatteryLevelRelative());
-			System.out.println("");
-		}
+
+		System.out.print(" targetpos : "+targetpoint);
+		System.out.print(" actualpos : "+newDronePos.toStringLen(30, 3));
+		System.out.print(" batterylevel : "+thisDrone.getBatteryLevelRelative());
+		System.out.println("");
 		
 		
 	
 
-	}
+	}*/
+	
 	
 	/**
 	 * decide to move to a position

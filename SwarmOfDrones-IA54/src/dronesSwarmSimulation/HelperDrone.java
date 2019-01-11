@@ -19,7 +19,7 @@ import repast.simphony.space.grid.GridPoint;
 
 public class HelperDrone extends Drone{
 	
-	
+	/*
 	private int id;
 	private boolean dejaTrouvePackage ;
 	private boolean hasTask;
@@ -146,7 +146,7 @@ public class HelperDrone extends Drone{
 	
 	}
 	
-	/*
+	
 	// method that move the Drone to a desired location on the scene(screen), we just need to give in the location
 	// This method is used to move the to the building where the package will be delivered
 	@Override
@@ -169,7 +169,7 @@ public class HelperDrone extends Drone{
 			
 		}
 
-	}*/
+	}
 	
 	//test method
 	// method that move the Drone to a desired location on the scene(screen), we just need to give in the location
@@ -221,7 +221,7 @@ public class HelperDrone extends Drone{
 	
 
 	
-	/*
+	
 	private boolean hasArrived(GridPoint pt)
 	{
 		GridPoint actualLocation = grid.getLocation(this);
@@ -232,9 +232,9 @@ public class HelperDrone extends Drone{
 		}
 		
 		return false;
-	}*/
+	}
 	
-	/*
+	
 	// method that move the Drone to a desired location on the scene(screen), it used to 
 	// find the package that has been assigned to him, to be delivered
 	public void findPackage(GridPoint pt)
@@ -266,7 +266,7 @@ public class HelperDrone extends Drone{
 			//	dejaTrouvePackage = true;
 			//}
 		}
-	}*/
+	}
 	
 	
 	@Override
@@ -365,9 +365,9 @@ public class HelperDrone extends Drone{
 		
 		
 	}
-	/**
+	*//**
 	 * triggered when a package has been dropped during a delivery
-	 */
+	 *//*
 	@Watch(watcheeClassName = "dronesSwarmSimulation.DeliverDrone",
 			watcheeFieldNames = "nbTaskNotDeliveredEvent",
 			query = "colocated",
@@ -543,25 +543,25 @@ public class HelperDrone extends Drone{
 
 	@Override
 	public void communicate() {
-		/*Communication between 2 or more drone or with other smart things */
+		Communication between 2 or more drone or with other smart things 
 	}
 	
 	@Override
 	public void negociate() {
-		/*negotiate between 2 or more drones */
+		negotiate between 2 or more drones 
 	}
 	
 	
 	
 	@Override
 	public void run() {
-		/*different step of drone*/
+		different step of drone
 	}
 	
 	@Override
 	public GridPoint getGridPosition() {
-		/*return drone position*/
+		return drone position
 		return new GridPoint();
-	}
+	}*/
 
 }

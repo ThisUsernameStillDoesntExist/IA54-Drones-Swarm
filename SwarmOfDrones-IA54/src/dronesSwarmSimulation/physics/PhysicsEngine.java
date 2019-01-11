@@ -1,95 +1,66 @@
 package dronesSwarmSimulation.physics;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import dronesSwarmSimulation.DeliverDrone;
 import dronesSwarmSimulation.Drone;
+import dronesSwarmSimulation.GlobalParameters;
 import dronesSwarmSimulation.physics.collisions.CollisionSortElement;
 import dronesSwarmSimulation.utilities.Vect3;
+import repast.simphony.engine.schedule.ScheduledMethod;
+import repast.simphony.space.continuous.ContinuousSpace;
+import repast.simphony.space.continuous.NdPoint;
+import repast.simphony.space.grid.Grid;
 
 public class PhysicsEngine {
 	
+	private List<WorldObject> wolist;
+	ContinuousSpace<Object> space;
+	Grid<Object> grid;
 	
 	
-	//private Map map;
-	
-	public PhysicsEngine(Map m) {
-		//this.map=m;
-	}
-	
-	//manage only drones collisions at first
-	
-	
-	public void updateWorld(ArrayList<WorldObject> world, double time)
-	{
-		processCollisions(world);
-		
-		for (WorldObject w : world) {
-			
-			w.updateMe(time);
-/*
-			if(w instanceof DeliverDrone)
-			{
-				DeliverDrone d = ((DeliverDrone) w);
-				
-				d.updateMe(time);
-			}*/
-		}
+	public PhysicsEngine(ContinuousSpace<Object> space, Grid<Object> grid, List<WorldObject> l) {
+		this.space=space;
+		this.grid=grid;
+		wolist=l;
 	}
 	
 	/**
-	 * 
-	 * @param obj
-	 * @param world
-	 * @return a new object, located at the position it should have after the collision
+	 * called once per frame to refresh the whole simulation environment
 	 */
-	private void processCollisions(WorldObject obj, ArrayList<WorldObject> world)
+	@ScheduledMethod(start = 1, interval = 1, priority=2)
+	public void repastSimulationRefreshMethod()
 	{
-		double maxCollDist=100000;//dist between objects centers above which collision is not tested (object considered too far from each other)
+		//this test method show how to update a drone position using new physics.
 		
-		//this list will hold couple of (worldobject, distance) to allow further sorting
-		ArrayList<CollisionSortElement> cDistList=new ArrayList<CollisionSortElement>();
+		//retrieve the time that we will provide to the update drone function		
+		double frametime=GlobalParameters.frameTime;
+		//double tickdelay=RunEnvironment.getInstance().getScheduleTickDelay();
+		double time=frametime;
 		
-		//select only close enough objects to take in account a possible collision
-		for(WorldObject w : world)
-		{
-			double distBetweenObjs=w.getPosition().squaredDist(obj.getPosition());//squared dist is faster to compute
-			
-			if(distBetweenObjs<=maxCollDist && w!=obj)
-			{
-				cDistList.add(new CollisionSortElement(w, distBetweenObjs));
-			}
-		}
+		updateWorld(time);
 		
-		//the sort is necessary to process nearest objects collisions first
-		CollisionSortElement.sortInDescendingOrder(cDistList);
-		
-		//process collisions, starting from nearest object to farthest
-		for(CollisionSortElement cse : cDistList)
-		{
-			WorldObject w=cse.obj;
-			
-			obj.collideWith(w);//affect objects only if they collide
-			//if obj has been collided and its position changed, this new position will be taken in account for the next iterations with remaining objects
-			
-			//usually, processing objects from nearest to farthest prevents most of collision disruptions
-		}
-	}
-	
-	//we could improve this by using a copy of the world, which would be used to test collisions, and would not be modified. we could then find matching colliding objects and apply necessary actions
-	private void processCollisions(ArrayList<WorldObject> world)
-	{
-		for(WorldObject w : world)
-		{
-			processCollisions(w, world);
-		}
 	}
 	
 	
-	private void collide(WorldObject w1, WorldObject w2)
+	public void updateWorld(double time)
 	{
 		
+		for (WorldObject w : wolist) {
+			
+			w.updateMe(time);
+			
+			Vect3 newpos=w.getPosition();
+			
+			space.moveTo(w, newpos.getX(), newpos.getY(), newpos.getZ());//3D //update the drone position in the repast continuous space
+			
+			NdPoint newDronePoint = space.getLocation(w);
+			
+			grid.moveTo(this , (int)newDronePoint.getX(), (int)newDronePoint.getY ());//update the grid
+		}
 	}
+	
 
 }
