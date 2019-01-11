@@ -77,7 +77,7 @@ public class HighLevelDecision {
 	public void doTask()
 	{
 	
-		if(charge >= 10)
+		if(thisDrone.getBatteryLevelRelative() > 0.6 )
 		{	
 
 			if(hasTask && !dejaTrouvePackage)
@@ -149,8 +149,12 @@ public class HighLevelDecision {
 			// if the has arrived at the dockstation, charge the drone
 			if(hasArrived(nearestDockPos.getPosition()))
 			{
+				// charge my battery
+				thisDrone.plugToStation(nearestDockPos);
 				
-				charge = 400;
+				// after, we have to unplug from the station
+				thisDrone.unplugFromStation();
+				System.out.println("Pluged and unpluged");
 			}
 			else
 			{
