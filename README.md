@@ -21,11 +21,11 @@ TODO : Francis
 - maybe ignore collisions, and set a boolean when a drone is landed, to stop its motors and consumption
 - clean everything obsolete (including physicsengine class parts)
 - optimize performances (try to remove costly synchronize) 
+- resolve charge conflict with several drones at dockstation (communicate)
 
 - It would be better and more consistent to work only with continuous space, at least to check whether a drone has arrived to a particular location 
 
 TODO :
-- put dotask in droneAI
 - factorize code a lot and move redundant things into subfunctions, thing of a way to integrate the lists of objects into the AI knowledge
 - add delay/deadline to drone deliveries
 - remove unnecessary getters/setters at the end
