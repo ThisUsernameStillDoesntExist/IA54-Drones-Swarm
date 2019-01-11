@@ -40,9 +40,7 @@ public class Package extends WorldObject {
 	// and it receives the drone charged to carry the package, so that can it get the drone's position and follow him.
 	public void move(Drone drone)
 	{
-		NdPoint dronePos = space.getLocation(drone);
-		space.moveTo(this, dronePos.getX(), dronePos.getY(), dronePos.getZ());
-		grid.moveTo(this, (int) (dronePos.getX() + 0.5f), (int) (dronePos.getY() + 0.5f));
+		this.setPosition(drone.getPosition());
 
 	}
 

@@ -53,7 +53,7 @@ public class HighLevelDecision {
 	private  ArrayList<Package> tasksDelivered;
 	private int nbTaskNotDeliveredEvent = 0;
 	private int index = 0;
-	private int charge ;
+	private int charge=400;//temporary, remove this
 	private boolean finishedWorkEvent = false;
 	private CentralController centralController;
 	public static int idcontrol = 0;
@@ -65,7 +65,6 @@ public class HighLevelDecision {
 		
 	    dejaTrouvePackage = false;
 	    this.hasTask = false;
-	    this.charge = charge;
 	    tasks = new LinkedList<Package>();
 	    tasksNotDelivered = new LinkedList<Package>();
 	    tasksDelivered = new  ArrayList<Package>();
@@ -90,7 +89,7 @@ public class HighLevelDecision {
 					else
 					{
 						orderMoveDecision(task.getPosition());
-						charge--;
+						//charge--;
 					}
 			}
 			else
@@ -124,7 +123,7 @@ public class HighLevelDecision {
 						orderMoveDecision(task.getDestinationCoord());
 						//TODO : Do it with position instead of space and grid
 						this.getTask().move(thisDrone);
-						charge--;
+						//charge--;
 				}
 			}
 		}

@@ -16,8 +16,10 @@ public abstract class WorldObject {
 	protected Vect3 speed;
 	protected WorldObjectCharacteristics charact;
 	protected double totalDistanceTravelled;//from beginning of simulation
+	protected boolean fixed;//true if the object should not update its speed (ex : building)
 
 	public WorldObject() {
+		fixed=true;
 		position=new Vect3();
 		speed=new Vect3();
 		collider=createSpecificCollider();
@@ -31,7 +33,8 @@ public abstract class WorldObject {
 	 * @param speed
 	 * @param size
 	 */
-	public WorldObject(Vect3 position, Vect3 speed, Vect3 size, Collider c, WorldObjectCharacteristics wot) {
+	public WorldObject(boolean fixed, Vect3 position, Vect3 speed, Vect3 size, Collider c, WorldObjectCharacteristics wot) {
+		this.fixed=fixed;
 		this.position = position;
 		this.speed = speed;
 		this.collider=c;
@@ -42,6 +45,7 @@ public abstract class WorldObject {
 	//we want a deep copy
 	public WorldObject(WorldObject w) {
 		
+		fixed=w.fixed;
 		position=new Vect3(w.position);
 		speed=new Vect3(w.speed);
 		collider=w.collider.copy();
@@ -92,6 +96,8 @@ public abstract class WorldObject {
 	 */
 	private void updateSpeed(double time)
 	{	
+		if(fixed) return;
+		
 		//so dirty without operator overloading...
 		Vect3 specificAcceleration = getSpecificAcceleration();
 		if(specificAcceleration==null) specificAcceleration=new Vect3();//for auto-implemented getSpecificAcceleration()

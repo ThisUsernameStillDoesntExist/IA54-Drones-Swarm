@@ -49,7 +49,7 @@ public class DroneAI {
 	public void setTargetPosition(Vect3 targetPosition) {
 		if(targetPosition==null && attachedDrone!=null)
 		{
-			targetPosition=new Vect3(attachedDrone.getPosition());
+			targetPosition=new Vect3(attachedDrone.getPosition().copy());
 		}
 		this.targetPosition = targetPosition;
 	}
@@ -70,7 +70,7 @@ public class DroneAI {
 		
 		if(targetPosition==null)
 		{
-			targetPosition=attachedDrone.getPosition().copy();
+			return;
 		}
 		
 		Vect3 tarpos=new Vect3(targetPosition);

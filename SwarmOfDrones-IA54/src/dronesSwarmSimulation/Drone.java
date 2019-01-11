@@ -51,6 +51,7 @@ public class Drone extends WorldObject {
 
 	public Drone(ContinuousSpace<Object> space, Grid<Object> grid, Vect3 initposition) {
 		super();
+		this.fixed=false;
 		this.position=initposition.copy();
 		this.id=getNewId();
 		this.space = space;
