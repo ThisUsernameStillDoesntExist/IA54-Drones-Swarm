@@ -109,4 +109,10 @@ public class DockStation extends WorldObject {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	protected void todoOnAfterUpdate(double time) {
+		// TODO Auto-generated method stub
+		
+	}
 }

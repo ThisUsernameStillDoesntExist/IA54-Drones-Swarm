@@ -1,6 +1,8 @@
 package dronesSwarmSimulation;
 
 import dronesSwarmSimulation.physics.WorldObject;
+import dronesSwarmSimulation.physics.WorldObjectCharacteristics;
+import dronesSwarmSimulation.physics.WorldObjectType;
 import dronesSwarmSimulation.physics.collisions.colliders.Collider;
 import dronesSwarmSimulation.utilities.Vect3;
 import repast.simphony.engine.watcher.Watch;
@@ -27,14 +29,17 @@ public class Package extends WorldObject {
 	private boolean isTaken;
 	private boolean isDelivered;
 	private String wareHouseName;
+	
 	public Package(ContinuousSpace<Object> space, Grid<Object> grid ) {
 		this.space = space;
 		this.grid = grid;
 		this.isTaken = false;
 		isDelivered = false;
+		this.charact=new WorldObjectCharacteristics(WorldObjectType.Package);
 		
 	}
-
+	
+	/*
 	//new method
 	// this function is used to help the package to be deliver following   the drone
 	// and it receives the drone charged to carry the package, so that can it get the drone's position and follow him.
@@ -42,7 +47,7 @@ public class Package extends WorldObject {
 	{
 		this.setPosition(drone.getPosition());
 
-	}
+	}*/
 
 	
 	public Priority getPriority() {
@@ -123,6 +128,12 @@ public class Package extends WorldObject {
 	protected Collider createSpecificCollider() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	protected void todoOnAfterUpdate(double time) {
+		// TODO Auto-generated method stub
+		
 	}
 
 

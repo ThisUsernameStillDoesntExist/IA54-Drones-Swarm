@@ -22,11 +22,23 @@ public class WorldObjectCharacteristics {
 
 	//to be overriden
 	protected void setCharacteristics(WorldObjectType wot) {
-		airDrag=0;
-		frictionDrag=0;
-		radius=1;
+
+		if(wot==WorldObjectType.Package)
+		{
+			airDrag=0;
+			frictionDrag=0;
+			radius=0.5;
+			dryWeight=0.02;//20grams
+		}
+		else//default
+		{
+			airDrag=0;
+			frictionDrag=0;
+			radius=1;
+			dryWeight=1;
+		}
+		
 		setSizeFromRadius();
-		dryWeight=1;
 	}
 	
 	//to simplify things

@@ -88,8 +88,12 @@ public abstract class WorldObject {
 		position=newpos;
 		
 		//this.collider.setSpeed(dspeed);//set the last position variation, to be used for collision processing
+		
+		todoOnAfterUpdate(time);
 	}
 	
+
+
 	/**
 	 * updates speed according to computed acceleration
 	 * @param time
@@ -122,6 +126,8 @@ public abstract class WorldObject {
 	 */
 	protected abstract void todoOnUpdate(double time);
 	
+	protected abstract void todoOnAfterUpdate(double time);
+
 	
 	/**for deep copy
 	 * 

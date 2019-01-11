@@ -28,6 +28,7 @@ public class Drone extends WorldObject {
 	protected ContinuousSpace<Object> space;
 	protected Grid<Object> grid;
 	protected Package task;
+	protected Package pickedPackage;//current loaded package
 	protected DockStation dock;
 	protected boolean charging;
 	protected ArrayList<DockStation> docks;
@@ -73,7 +74,7 @@ public class Drone extends WorldObject {
 	@Override
 	protected void todoOnUpdate(double time) {
 
-
+		
 		if (isPluggedToStation()) {
 			rechargeBattery(time);
 		}
@@ -81,6 +82,16 @@ public class Drone extends WorldObject {
 		dischargeBattery(time);
 
 		decide(time);
+	}
+	
+	@Override
+	protected void todoOnAfterUpdate(double time) {
+
+		if(pickedPackage!=null)
+		{
+			pickedPackage.setPosition(this.getPosition().copy());
+		}
+		
 	}
 
 
@@ -366,6 +377,18 @@ public class Drone extends WorldObject {
 	public boolean isPluggedToStation() {
 		return this.pluggedStation != null;
 	}
+	
+	public void pickPackage(Package pac)
+	{
+		pickedPackage=pac;
+		payload=pac.getTotalWeight();
+	}
+	
+	public void dropPackage()
+	{
+		pickedPackage=null;
+		payload=0;
+	}
 
 	/**
 	 * Perform actions according to environment and drone parameters This is what
@@ -380,6 +403,8 @@ public class Drone extends WorldObject {
 	protected DroneCharacteristics thisCharacteristics() {
 		return (DroneCharacteristics) this.charact;
 	}
+
+
 	
 
 }

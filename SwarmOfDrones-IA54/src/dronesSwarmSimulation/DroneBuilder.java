@@ -111,10 +111,10 @@ public class DroneBuilder implements ContextBuilder<Object> {
 			if(o instanceof WorldObject)
 			{
 				NdPoint p=space.getLocation(o);
-				((WorldObject)o).setPosition(new Vect3(p.getX(), p.getY(), p.getZ()));
+				//((WorldObject)o).setPosition(new Vect3(p.getX(), p.getY(), p.getZ()));
+				((WorldObject)o).setPosition(new Vect3(p.getX(), p.getY(), 100));//test
 			}
 		}
-		
 	}
 
 	private Context<Object> setUpTheCity( Context<Object> context, Grid<Object> grid, ContinuousSpace<Object> space, CentralController cc )

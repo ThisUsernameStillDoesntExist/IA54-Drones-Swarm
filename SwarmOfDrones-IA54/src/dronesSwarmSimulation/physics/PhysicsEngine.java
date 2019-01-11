@@ -30,7 +30,7 @@ public class PhysicsEngine {
 	/**
 	 * called once per frame to refresh the whole simulation environment
 	 */
-	@ScheduledMethod(start = 1, interval = 1, priority=2)//should be different than stats and other agents
+	@ScheduledMethod(start = 1, interval = 1, priority=2)//priority should be different than stats and other agents
 	public void repastSimulationRefreshMethod()
 	{		
 		//retrieve the time that we will provide to the update drone function		

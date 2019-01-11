@@ -42,20 +42,20 @@ public class HighLevelDecision {
 	public boolean finishedWorkEvent = false;
 	public static int idcontrol = 0;*/
 	
-	private Drone thisDrone;//attached drone body
-	private int id;
-	private boolean dejaTrouvePackage ;
-	private boolean hasTask;
-	private Package task;
-	private ArrayList<DockStation> lisOfDockStation;
-	private Queue<Package> tasks;
-	private Queue<Package> tasksNotDelivered;
-	private  ArrayList<Package> tasksDelivered;
-	private int nbTaskNotDeliveredEvent = 0;
-	private int index = 0;
-	private int charge=400;//temporary, remove this
-	private boolean finishedWorkEvent = false;
-	private CentralController centralController;
+	protected Drone thisDrone;//attached drone body
+	protected int id;
+	protected boolean dejaTrouvePackage ;
+	protected boolean hasTask;
+	protected Package task;
+	protected ArrayList<DockStation> lisOfDockStation;
+	protected Queue<Package> tasks;
+	protected Queue<Package> tasksNotDelivered;
+	protected  ArrayList<Package> tasksDelivered;
+	protected int nbTaskNotDeliveredEvent = 0;
+	protected int index = 0;
+	protected int charge=400;//temporary, remove this
+	protected boolean finishedWorkEvent = false;
+	protected CentralController centralController;
 	public static int idcontrol = 0;
 	
 	public HighLevelDecision(Drone dronebody) {
@@ -85,6 +85,7 @@ public class HighLevelDecision {
 					if(hasArrived(task.getPosition()))
 					{
 						dejaTrouvePackage = true;
+						thisDrone.pickPackage(task);
 					}
 					else
 					{
@@ -110,6 +111,7 @@ public class HighLevelDecision {
 
 				if(hasArrived(task.getDestinationCoord()))
 				{
+					thisDrone.dropPackage();
 					// communiquer la centrale pour dire que plus un package delivré
 					task.setIsDelivered(true);
 					// add to list of task delivered
@@ -122,7 +124,7 @@ public class HighLevelDecision {
 				{
 						orderMoveDecision(task.getDestinationCoord());
 						//TODO : Do it with position instead of space and grid
-						this.getTask().move(thisDrone);
+						//this.getTask().move(thisDrone);
 						//charge--;
 				}
 			}
@@ -220,7 +222,7 @@ public class HighLevelDecision {
 	}
 	
 	/*
-	private boolean hasArrived(GridPoint pt)
+	protected boolean hasArrived(GridPoint pt)
 	{
 		GridPoint actualLocation = grid.getLocation(this);
 		double distance = Math.hypot(pt.getX()-actualLocation.getX(), pt.getY()-actualLocation.getY());
@@ -267,7 +269,7 @@ public class HighLevelDecision {
 	}*/
 	
 	
-	private void setTargetPosition(Vect3 tarpos) {
+	protected void setTargetPosition(Vect3 tarpos) {
 		
 		thisDrone.getBrain().setTargetPosition(tarpos);
 		

@@ -78,4 +78,10 @@ public class Building extends WorldObject {
 		return null;
 	}
 
+	@Override
+	protected void todoOnAfterUpdate(double time) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
