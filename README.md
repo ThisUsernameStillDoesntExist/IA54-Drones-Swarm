@@ -23,14 +23,11 @@ TODO : Francis
 - optimize performances (try to remove costly synchronize) 
 - resolve charge conflict with several drones at dockstation (communicate)
 
-- It would be better and more consistent to work only with continuous space, at least to check whether a drone has arrived to a particular location 
 
 TODO :
-- factorize code a lot and move redundant things into subfunctions, thing of a way to integrate the lists of objects into the AI knowledge
-- add delay/deadline to drone deliveries
+- factorize code a lot and move redundant things into subfunctions
 - remove unnecessary getters/setters at the end
 - every hardcoded value should be put in an attribute of a special parameters class (this allow to change every value, and factorize code -> all parameters values can be found in the same class)
-- packages, dockstations and all environment objects should extend Worldobject (and be synchronized with space coords)
 - link charge to real drone battery and support plug to station
 
 
