@@ -77,21 +77,7 @@ public class Package extends WorldObject {
 	public void setTaken(boolean isTaken) {
 		this.isTaken = isTaken;
 	}
-	public ContinuousSpace<Object> getSpace() {
-		return space;
-	}
 
-	public void setSpace(ContinuousSpace<Object> space) {
-		this.space = space;
-	}
-
-	public Grid<Object> getGrid() {
-		return grid;
-	}
-
-	public void setGrid(Grid<Object> grid) {
-		this.grid = grid;
-	}
 	public Vect3 getDestinationCoord() {
 		return destinationCoord;
 	}

@@ -89,7 +89,9 @@ public class Drone extends WorldObject {
 
 		if(pickedPackage!=null)
 		{
+			pickedPackage.setSpeed(new Vect3());
 			pickedPackage.setPosition(this.getPosition().copy());
+			
 		}
 		
 	}

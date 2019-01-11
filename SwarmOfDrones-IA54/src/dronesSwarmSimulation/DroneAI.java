@@ -36,7 +36,7 @@ public class DroneAI {
 	}
 	
 	
-	private void initHLDModule() {
+	protected void initHLDModule() {
 
 		hld=new HighLevelDecision(attachedDrone);
 	}
