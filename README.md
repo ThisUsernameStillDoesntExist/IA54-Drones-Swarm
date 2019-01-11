@@ -21,7 +21,7 @@ TODO : Francis
 - maybe ignore collisions, and set a boolean when a drone is landed, to stop its motors and consumption
 - clean everything obsolete (including physicsengine class parts)
 - optimize performances (try to remove costly synchronize) 
-- resolve charge conflict with 
+- resolve charge conflict with several drones at dockstation (communicate)
 
 - It would be better and more consistent to work only with continuous space, at least to check whether a drone has arrived to a particular location 
 
