@@ -83,7 +83,7 @@ public abstract class WorldObject {
 		
 		position=newpos;
 		
-		this.collider.setSpeed(dspeed);//set the last position variation, to be used for collision processing
+		//this.collider.setSpeed(dspeed);//set the last position variation, to be used for collision processing
 	}
 	
 	/**

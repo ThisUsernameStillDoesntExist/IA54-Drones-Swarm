@@ -95,6 +95,9 @@ public class DroneBuilder implements ContextBuilder<Object> {
 		context.add(cc);
 		context.add(cc.getStats());//to allow scheduled calls on the refreshing method of statistics, and to retrieve values from it
 		
+		
+		cc.createSIMENGINE();//create physics engine
+		
 		return context;
 	}
 	

@@ -6,6 +6,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import dronesSwarmSimulation.physics.PhysicsEngine;
+import dronesSwarmSimulation.physics.WorldObject;
 import dronesSwarmSimulation.utilities.UtilityFunctions;
 import repast.simphony.context.Context;
 import repast.simphony.engine.watcher.Watch;
@@ -38,8 +40,10 @@ public class CentralController
 	private ArrayList<DeliverDrone> lisOfDrones;
 	private ArrayList<WareHouse> lisOfWareHouses;
 	private ArrayList<Priority> lisOfPriority;
+	private ArrayList<WorldObject> lisOfWorldObject;
 	private int   RF = 1; // 1KM de distance
 	private Statistics stats;
+	private PhysicsEngine SIMENGINE;//dont't mess with that, TODO : put this somewhere else, improve architecture
 
 	private Context<Object> context;
 	
@@ -57,6 +61,7 @@ public class CentralController
 		lisOfPriority = new ArrayList<Priority>();
 		lisOfPriority.add(Priority.IMMEDIATE);
 		lisOfPriority.add(Priority.LATER);
+		lisOfWorldObject=new ArrayList<WorldObject>();
 	}
 
 	/**
@@ -209,6 +214,11 @@ public class CentralController
 			{
 				lisOfWareHouses.add((WareHouse)obj);
 			}
+			
+			if(obj instanceof WorldObject)
+			{
+				lisOfWorldObject.add((WorldObject) obj);
+			}
 		}
 	}
 	
@@ -339,6 +349,14 @@ public class CentralController
 	public Statistics getStats() {
 		return stats;
 	}
+
+	public void createSIMENGINE() {
+		if(lisOfWorldObject.size()==0) System.out.println("SIMENGINE : No object to simulate");
+		
+		this.SIMENGINE=new PhysicsEngine(space, grid, lisOfWorldObject);
+		this.context.add(this.SIMENGINE);
+	}
+
 	
 	
 
