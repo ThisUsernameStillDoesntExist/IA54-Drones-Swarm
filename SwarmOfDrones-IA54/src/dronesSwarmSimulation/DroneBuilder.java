@@ -1,5 +1,7 @@
 package dronesSwarmSimulation;
 
+import dronesSwarmSimulation.physics.WorldObject;
+import dronesSwarmSimulation.utilities.UtilityFunctions;
 import dronesSwarmSimulation.utilities.Vect3;
 import repast.simphony.context.Context;
 import repast.simphony.context.space.continuous.ContinuousSpaceFactory;
@@ -95,12 +97,26 @@ public class DroneBuilder implements ContextBuilder<Object> {
 		context.add(cc);
 		context.add(cc.getStats());//to allow scheduled calls on the refreshing method of statistics, and to retrieve values from it
 		
+		fromRepastSpaceToWorldObjectPosition(context, space);//copy the space randomseeded positions into objects positions
 		
 		cc.createSIMENGINE();//create physics engine
 		
 		return context;
 	}
 	
+	private void fromRepastSpaceToWorldObjectPosition(Context<Object> context, ContinuousSpace<Object> space) {
+
+		for(Object o : context.getObjects(WorldObject.class))
+		{
+			if(o instanceof WorldObject)
+			{
+				NdPoint p=space.getLocation(o);
+				((WorldObject)o).setPosition(new Vect3(p.getX(), p.getY(), p.getZ()));
+			}
+		}
+		
+	}
+
 	private Context<Object> setUpTheCity( Context<Object> context, Grid<Object> grid, ContinuousSpace<Object> space, CentralController cc )
 	{
 		// creation of the Buildings, DockSations and Trees
@@ -111,6 +127,7 @@ public class DroneBuilder implements ContextBuilder<Object> {
 					Building b = new Building(space, grid);
 					context.add(b);
 					NdPoint coordinated = coordinatedInitialisationUtils.getBuildingCoordinatedAt(i);
+					//b.setPosition(UtilityFunctions.NdPointToVect3(coordinated));
 					space.moveTo(b, coordinated.getX(), coordinated.getY(), coordinated.getZ());
 					cc.getLisOfBuilding().add(b);
 				}
@@ -120,6 +137,7 @@ public class DroneBuilder implements ContextBuilder<Object> {
 					Tree t = new Tree(space, grid);
 					context.add(t);
 					NdPoint coordinated = coordinatedInitialisationUtils.getTreeCoordinatedAt(i);
+					//t.setPosition(UtilityFunctions.NdPointToVect3(coordinated));
 					space.moveTo(t, coordinated.getX(), coordinated.getY(), coordinated.getZ());
 				}
 				Parameters params = RunEnvironment.getInstance().getParameters();
@@ -132,6 +150,7 @@ public class DroneBuilder implements ContextBuilder<Object> {
 					DockStation d = new DockStation(space, grid);
 					context.add(d);
 					NdPoint coordinated = coordinatedInitialisationUtils.getDockstationCoordinatedAt(i);
+					//d.setPosition(UtilityFunctions.NdPointToVect3(coordinated));
 					space.moveTo(d, coordinated.getX()+50, coordinated.getY(), coordinated.getZ());
 				}
 				

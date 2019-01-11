@@ -63,10 +63,14 @@ public class DroneAI {
 	 * @param time
 	 */
 	public void decide(double time) {
-		// TODO Auto-generated method stub
+		
+		hld.doTask();//high level thinking, will set targetposition
+		
+		System.out.println("tarpos : "+targetPosition);
+		
 		if(targetPosition==null)
 		{
-			return;
+			targetPosition=attachedDrone.getPosition().copy();
 		}
 		
 		Vect3 tarpos=new Vect3(targetPosition);

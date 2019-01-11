@@ -57,6 +57,11 @@ public class PhysicsEngine {
 			NdPoint newDronePoint = space.getLocation(w);
 			
 			grid.moveTo(this , (int)newDronePoint.getX(), (int)newDronePoint.getY ());//update the grid
+			
+			if(w instanceof Drone)
+			{
+				System.out.println(w.getClass()+" updated "+newpos);
+			}
 		}
 	}
 	

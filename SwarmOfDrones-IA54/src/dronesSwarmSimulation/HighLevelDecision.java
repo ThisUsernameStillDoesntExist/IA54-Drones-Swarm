@@ -217,6 +217,7 @@ public class HighLevelDecision {
 	 */
 	public void orderMoveDecision(Vect3 pt)
 	{
+		setTargetPosition(pt.copy());
 	}
 	
 	/*
@@ -267,6 +268,13 @@ public class HighLevelDecision {
 	}*/
 	
 	
+	private void setTargetPosition(Vect3 tarpos) {
+		
+		thisDrone.getBrain().setTargetPosition(tarpos);
+		
+	}
+
+
 	public DockStation findDockStation()
 	{
 
