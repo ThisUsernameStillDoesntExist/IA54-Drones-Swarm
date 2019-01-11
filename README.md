@@ -26,7 +26,6 @@ TODO : Francis
 - It would be better and more consistent to work only with continuous space, at least to check whether a drone has arrived to a particular location 
 
 TODO :
-- put dotask in droneAI
 - factorize code a lot and move redundant things into subfunctions, thing of a way to integrate the lists of objects into the AI knowledge
 - add delay/deadline to drone deliveries
 - remove unnecessary getters/setters at the end
