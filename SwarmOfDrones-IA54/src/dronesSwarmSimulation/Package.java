@@ -1,5 +1,8 @@
 package dronesSwarmSimulation;
 
+import dronesSwarmSimulation.physics.WorldObject;
+import dronesSwarmSimulation.physics.collisions.colliders.Collider;
+import dronesSwarmSimulation.utilities.Vect3;
 import repast.simphony.engine.watcher.Watch;
 import repast.simphony.engine.watcher.WatcherTriggerSchedule;
 import repast.simphony.space.SpatialMath;
@@ -15,12 +18,12 @@ import repast.simphony.space.grid.GridPoint;
  * This class represent the package or the product to be deliver in one exact point, which
  * can be a building
  */
-public class Package {
+public class Package extends WorldObject {
 	private ContinuousSpace<Object> space;
 	private Grid<Object> grid;
 	//priority 
 	private Priority priority ;
-	private NdPoint destinationCoord; // destination to deliver the package
+	private Vect3 destinationCoord; // destination to deliver the package
 	private boolean isTaken;
 	private boolean isDelivered;
 	private String wareHouseName;
@@ -86,12 +89,42 @@ public class Package {
 	public void setGrid(Grid<Object> grid) {
 		this.grid = grid;
 	}
-	public NdPoint getDestinationCoord() {
+	public Vect3 getDestinationCoord() {
 		return destinationCoord;
 	}
 
-	public void setDestinationCoord(NdPoint destinationCoord) {
+	public void setDestinationCoord(Vect3 destinationCoord) {
 		this.destinationCoord = destinationCoord;
+	}
+
+	@Override
+	public boolean collideWith(WorldObject w) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	protected Vect3 getSpecificAcceleration() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	protected void todoOnUpdate(double time) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public WorldObject copy() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	protected Collider createSpecificCollider() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 

@@ -1,5 +1,9 @@
 package dronesSwarmSimulation;
 
+import java.util.ArrayList;
+import java.util.LinkedList;
+import java.util.Queue;
+
 import org.apache.ivy.core.report.DownloadReport;
 
 import dronesSwarmSimulation.utilities.UtilityFunctions;
@@ -18,15 +22,34 @@ public class DroneAI {
 	protected Drone attachedDrone;
 	protected Vect3 targetPosition;
 	protected double throttleLimit;// max limit of throttle for energy saving, should be set by AI if necessary to use less battery
+	protected HighLevelDecision hld;
+	
+	
 	
 	public DroneAI(Drone attacheddrone)
 	{
 		this.attachedDrone=attacheddrone;
 		this.charact=new DroneAIprops();
 		this.throttleLimit=1;
+		
+		initDecisionVars();
 	}
 	
 	
+	private void initDecisionVars() {
+
+		hld=new HighLevelDecision();
+		
+		hld.dejaTrouvePackage = false;
+		hld.hasTask = false;
+		hld.tasks = new LinkedList<Package>();
+		hld.tasksNotDelivered = new LinkedList<Package>();
+		hld.tasksDelivered = new  ArrayList<Package>();
+		hld.lisOfDockStation = new ArrayList<DockStation>();
+		
+	}
+
+
 	public Vect3 getTargetPosition() {
 		return targetPosition;
 	}

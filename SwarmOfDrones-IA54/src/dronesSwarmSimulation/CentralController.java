@@ -6,6 +6,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import dronesSwarmSimulation.utilities.UtilityFunctions;
 import repast.simphony.context.Context;
 import repast.simphony.engine.watcher.Watch;
 import repast.simphony.engine.watcher.WatcherTriggerSchedule;
@@ -106,7 +107,7 @@ public class CentralController
 					// Get the location of a building
 					NdPoint buildingLocation = space.getLocation(lisOfBuilding.get(countBuinding));
 					// Give the the destination of the package, using the building's location
-					lisOfPackage.get(i).setDestinationCoord(buildingLocation);
+					lisOfPackage.get(i).setDestinationCoord(UtilityFunctions.NdPointToVect3(buildingLocation));
 					countBuinding++;
 					//System.out.println("building : " + buildingLocation.getX() + " ; " + buildingLocation.getY() +" ; ");
 				}

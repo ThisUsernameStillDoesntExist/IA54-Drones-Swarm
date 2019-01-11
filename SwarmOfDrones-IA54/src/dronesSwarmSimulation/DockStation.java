@@ -1,10 +1,13 @@
 package dronesSwarmSimulation;
 
+import dronesSwarmSimulation.physics.WorldObject;
+import dronesSwarmSimulation.physics.collisions.colliders.Collider;
+import dronesSwarmSimulation.utilities.Vect3;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.grid.Grid;
 import repast.simphony.space.grid.GridPoint;
 
-public class DockStation {
+public class DockStation extends WorldObject {
 	private ContinuousSpace<Object> space;
 	private Grid<Object> grid;
 	private boolean busy;
@@ -75,5 +78,35 @@ public class DockStation {
 	
 	public boolean isPluggedToDrone() {
 		return pluggedDrone!=null;
+	}
+
+	@Override
+	public boolean collideWith(WorldObject w) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	protected Vect3 getSpecificAcceleration() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	protected void todoOnUpdate(double time) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public WorldObject copy() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	protected Collider createSpecificCollider() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

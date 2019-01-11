@@ -94,6 +94,7 @@ public abstract class WorldObject {
 	{	
 		//so dirty without operator overloading...
 		Vect3 specificAcceleration = getSpecificAcceleration();
+		if(specificAcceleration==null) specificAcceleration=new Vect3();//for auto-implemented getSpecificAcceleration()
 		Vect3 dragAcceleration = speed.getMultipliedBy(speed.norm() * charact.getAirDrag() / getTotalWeight()); ////drag proportional to squared speed
 		Vect3 linearFrictionAcceleration = speed.getMultipliedBy(charact.getFrictionDrag() / getTotalWeight()); //drag proportional to speed
 		Vect3 acceleration = specificAcceleration.getAdded(Constants.Gravity).substract(dragAcceleration).substract(linearFrictionAcceleration);

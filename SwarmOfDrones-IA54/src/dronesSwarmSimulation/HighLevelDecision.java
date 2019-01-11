@@ -2,7 +2,6 @@ package dronesSwarmSimulation;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
-import java.util.List;
 import java.util.Queue;
 
 import dronesSwarmSimulation.physics.WorldObject;
@@ -13,17 +12,36 @@ import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.engine.watcher.Watch;
 import repast.simphony.engine.watcher.WatcherTriggerSchedule;
 import repast.simphony.parameter.Parameters;
-import repast.simphony.query.space.grid.GridCell;
-import repast.simphony.query.space.grid.GridCellNgh;
-import repast.simphony.random.RandomHelper;
-import repast.simphony.space.SpatialMath;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
 import repast.simphony.space.grid.Grid;
 import repast.simphony.space.grid.GridPoint;
-import repast.simphony.util.SimUtilities;
 
-public class DeliverDrone extends Drone {
+/**
+ * regroup vars and process used in high level decision making, as opposed to propeller and
+ * motor management
+ * the essential multi-agent part is here, with communication and task management
+ * 
+ * @author Francis
+ *
+ */
+public class HighLevelDecision {
+	
+	//TODO : maybe refactor this, and create separate modules, this is a fast adaptation
+
+	/*public boolean dejaTrouvePackage;
+	public boolean hasTask;
+	public Package task;
+	public ArrayList<DockStation> lisOfDockStation;
+	public Queue<Package> tasks;
+	public Queue<Package> tasksNotDelivered;
+	public ArrayList<Package> tasksDelivered;
+	public int nbTaskNotDeliveredEvent = 0;
+	public int index = 0;
+	public boolean finishedWorkEvent = false;
+	public static int idcontrol = 0;*/
+	
+	private Drone thisDrone;//attached drone body
 	private int id;
 	private boolean dejaTrouvePackage ;
 	private boolean hasTask;
@@ -36,10 +54,14 @@ public class DeliverDrone extends Drone {
 	private int index = 0;
 	private int charge ;
 	private boolean finishedWorkEvent = false;
+	private CentralController centralController;
 	public static int idcontrol = 0;
 	
-	public DeliverDrone(ContinuousSpace<Object> space, Grid<Object> grid, int charge, Vect3 initposition) {
-		super(space, grid, charge, initposition);
+	public HighLevelDecision(Drone dronebody, CentralController cc) {
+		
+		this.centralController=cc;
+		this.thisDrone=dronebody;
+		
 	    dejaTrouvePackage = false;
 	    this.hasTask = false;
 	    this.charge = charge;
@@ -48,12 +70,10 @@ public class DeliverDrone extends Drone {
 	    tasksDelivered = new  ArrayList<Package>();
 	    lisOfDockStation = new ArrayList<DockStation>(); 
 	    
+	    
 	}
-	public DeliverDrone() {super();};
-	// method that implement the functional behavior of the drone
-	// it is called each 1 second
-	@Override
-	@ScheduledMethod(start = 1, interval = 1, priority=10)
+
+	
 	public void doTask()
 	{
 	
@@ -62,13 +82,13 @@ public class DeliverDrone extends Drone {
 
 			if(hasTask && !dejaTrouvePackage)
 			{
-					if(hasArrived(space.getLocation(task)))
+					if(hasArrived(task.getPosition()))
 					{
 						dejaTrouvePackage = true;
 					}
 					else
 					{
-						move(space.getLocation(task));
+						orderMoveDecision(task.getPosition());
 						charge--;
 					}
 			}
@@ -100,8 +120,9 @@ public class DeliverDrone extends Drone {
 				}
 				else
 				{
-						move(task.getDestinationCoord());
-						this.getTask().move(this);
+						orderMoveDecision(task.getDestinationCoord());
+						//TODO : Do it with position instead of space and grid
+						this.getTask().move(thisDrone);
 						charge--;
 				}
 			}
@@ -124,7 +145,7 @@ public class DeliverDrone extends Drone {
 			//Get the nearest dockstation position
 			DockStation nearestDockPos = findDockStation(); 
 			// if the has arrived at the dockstation, charge the drone
-			if(hasArrived(space.getLocation(nearestDockPos)))
+			if(hasArrived(nearestDockPos.getPosition()))
 			{
 				
 				charge = 400;
@@ -132,7 +153,7 @@ public class DeliverDrone extends Drone {
 			else
 			{
 				// if not arrived at the dockstation, continue looking for the dockstation
-				move(space.getLocation(nearestDockPos));
+				orderMoveDecision(nearestDockPos.getPosition());
 			}	
 		}
 		
@@ -222,7 +243,13 @@ public class DeliverDrone extends Drone {
 
 	}
 	
-
+	/**
+	 * decide to move to a position
+	 * @param pt
+	 */
+	public void orderMoveDecision(Vect3 pt)
+	{
+	}
 	
 	/*
 	private boolean hasArrived(GridPoint pt)
@@ -272,24 +299,24 @@ public class DeliverDrone extends Drone {
 	}*/
 	
 	
-	@Override
 	public DockStation findDockStation()
 	{
 
 		double nearest=Double.MAX_VALUE;
-		NdPoint nearestPos = new NdPoint();
+		Vect3 nearestPos = new Vect3();
 		DockStation dock = lisOfDockStation.get(0);
-		NdPoint actualLocation = space.getLocation(this);
+		Vect3 actualLocation = thisDrone.getPosition();
 		double distance;
 		
 		for(DockStation ds : lisOfDockStation )
 		{ 
 			
-			NdPoint pt = space.getLocation(ds);
-			distance =  Math.hypot(pt.getX()-actualLocation.getX(), pt.getY()-actualLocation.getY());
+			Vect3 pt=ds.getPosition();
+			distance =  actualLocation.dist(pt);
 			
 			if(!ds.isBusy())
 			{
+				//TODO : use dedicated method for that, factorize
 				if(nearest > distance )
 				{
 					nearest = distance;
@@ -346,15 +373,16 @@ public class DeliverDrone extends Drone {
 	Package closeEstPackage(Queue<Package> listTask )
 	{
 		double nearest=1000.00;
-		GridPoint nearestPos = new GridPoint();
-		GridPoint actualLocation = grid.getLocation(this);
+		Vect3 nearestPos = new Vect3();
+		Vect3 actualLocation = this.thisDrone.getPosition();
 		double distance;
 		Package closestPackage = null;
 		for(Package pc : listTask )
 		{
-			GridPoint pt = grid.getLocation(pc);
-			distance =  Math.hypot(pt.getX()-actualLocation.getX(), pt.getY()-actualLocation.getY());
+			Vect3 pt = pc.getPosition();
+			distance =  actualLocation.dist(pt);
 			
+			//TODO : use dedicated method for that
 			if(nearest > distance )
 			{
 				nearest = distance;
@@ -524,47 +552,41 @@ public class DeliverDrone extends Drone {
 		this.lisOfDockStation = lisOfDockStation;
 	}
 	
-	@Override
-	public ContinuousSpace<Object> getSpace() {
-		return space;
-	}
 
-	@Override
-	public void setSpace(ContinuousSpace<Object> space) {
-		this.space = space;
-	}
 
-	@Override
-	public Grid<Object> getGrid() {
-		return grid;
-	}
-
-	@Override
-	public void setGrid(Grid<Object> grid) {
-		this.grid = grid;
-	}
-
-	@Override
 	public void communicate() {
 		/*Communication between 2 or more drone or with other smart things */
 	}
 	
-	@Override
 	public void negociate() {
 		/*negotiate between 2 or more drones */
 	}
 	
-	
-	
-	@Override
-	public void run() {
-		/*different step of drone*/
+	public CentralController getCentralController() {
+		return centralController;
 	}
 	
-	@Override
-	public GridPoint getGridPosition() {
-		/*return drone position*/
-		return new GridPoint();
+	/**
+	 * true if the drone arrived to another object
+	 * @param w
+	 * @return
+	 */
+	protected boolean hasArrived(WorldObject w)
+	{
+		return thisDrone.isOver(w);
+
+		//System.out.println("Arrivé au Building");
 	}
+	
+	/**
+	 * true if the drone has arrived to this point
+	 * @param ndp
+	 * @return
+	 */
+	protected boolean hasArrived(Vect3 p)
+	{
+		return thisDrone.isInRange(p);
+	}
+	
 
 }

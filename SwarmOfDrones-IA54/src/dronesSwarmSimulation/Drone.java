@@ -389,28 +389,5 @@ public class Drone extends WorldObject {
 		return (DroneCharacteristics) this.charact;
 	}
 	
-	
-	/**
-	 * true if the drone arrived to another object
-	 * @param w
-	 * @return
-	 */
-	protected boolean hasArrived(WorldObject w)
-	{
-		return this.isOver(w);
-
-		//System.out.println("Arrivé au Building");
-	}
-	
-	/**
-	 * true if the drone has arrived to this point
-	 * @param ndp
-	 * @return
-	 */
-	protected boolean hasArrived(NdPoint ndp)
-	{
-		Vect3 p=UtilityFunctions.NdPointToVect3(ndp);
-		return this.isInRange(p);
-	}
 
 }
