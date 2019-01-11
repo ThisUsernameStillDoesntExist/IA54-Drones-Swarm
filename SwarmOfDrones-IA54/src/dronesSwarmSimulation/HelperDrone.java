@@ -19,6 +19,11 @@ import repast.simphony.space.grid.GridPoint;
 
 public class HelperDrone extends Drone{
 	
+	public HelperDrone(ContinuousSpace<Object> space, Grid<Object> grid, Vect3 initposition)
+	{
+		super(space, grid, initposition);
+	}
+	
 	/*
 	private int id;
 	private boolean dejaTrouvePackage ;
