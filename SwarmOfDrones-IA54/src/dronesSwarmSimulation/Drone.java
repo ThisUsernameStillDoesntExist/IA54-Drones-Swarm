@@ -196,14 +196,26 @@ public class Drone extends WorldObject {
 		return id;
 	}
 
+	/**
+	 * get battery level in W.h
+	 * @return
+	 */
 	public double getBatteryLevel() {
 		return batteryLevel;
 	}
 
+	/**
+	 * get battery level in normalized percentage (0=0%, 1=100%)
+	 * @return
+	 */
 	public double getBatteryLevelRelative() {
 		return batteryLevel / thisCharacteristics().getBatteryCapacity();
 	}
 
+	/**
+	 * get charge carried by drone
+	 * @return
+	 */
 	public double getPayload() {
 		return payload;
 	}
@@ -213,6 +225,10 @@ public class Drone extends WorldObject {
 		this.motorThrottle = CollisionTools.limit(motorThrottle, 0, 1);
 	}
 
+	/**
+	 * get motor throttle between 0 (no power) and 1 (full power)
+	 * @return
+	 */
 	public double getMotorThrottle() {
 		return motorThrottle;
 	}
@@ -236,13 +252,21 @@ public class Drone extends WorldObject {
 		return charact.getDryWeight() + payload;
 	}
 
+	/**
+	 * in W, mechanical output
+	 * @return
+	 */
 	public double getMotorOutputPower() {
 		return getMotorConsumption() * thisCharacteristics().getMotorEfficiency();
 	} // W
 
+	/**
+	 * in W, electricity power consumed
+	 * @return
+	 */
 	public double getMotorConsumption() {
 		return batteryState() * motorThrottle * thisCharacteristics().getMotorMaxConsumption();
-	} // W
+	}
 
 	/**
 	 * should be used by physics update call only
@@ -354,7 +378,10 @@ public class Drone extends WorldObject {
 		}
 	}
 
-	
+	/**
+	 * connect drone to station for recharging
+	 * @param st
+	 */
 	public void plugToStation(DockStation st) {
 		this.unplugFromStation();
 		
@@ -367,6 +394,9 @@ public class Drone extends WorldObject {
 		}
 	}
 
+	/**
+	 * disconnect drone from station
+	 */
 	public void unplugFromStation() {
 		if (this.pluggedStation != null) {
 			this.pluggedStation.unplugFromDrone();
