@@ -367,7 +367,7 @@ public class HighLevelDecision {
 	/**
 	 * triggered when a package has been dropped during a delivery
 	 */
-	@Watch(watcheeClassName = "dronesSwarmSimulation.DeliverDrone",
+	@Watch(watcheeClassName = "dronesSwarmSimulation.HighLevelDecision",
 			watcheeFieldNames = "nbTaskNotDeliveredEvent",
 			query = "colocated",
 			whenToTrigger = WatcherTriggerSchedule.IMMEDIATE)
@@ -412,7 +412,7 @@ public class HighLevelDecision {
 	}
 	
 	
-	@Watch(watcheeClassName = "dronesSwarmSimulation.DeliverDrone",
+	@Watch(watcheeClassName = "dronesSwarmSimulation.HighLevelDecision",
 			watcheeFieldNames = "finishedWorkEvent",
 			query = "colocated",
 			whenToTrigger = WatcherTriggerSchedule.IMMEDIATE)
