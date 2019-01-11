@@ -3,7 +3,12 @@ package dronesSwarmSimulation.physics;
 import dronesSwarmSimulation.physics.collisions.colliders.Collider;
 import dronesSwarmSimulation.utilities.Vect3;
 
-//put position, speed and size in the collider only ?
+/**
+ * describe every object in the environment, even stationary ones like buildings
+ * be careful, getters on vectors return a reference on the vector and not a copy. This can be changed if we have time ().
+ * @author Francis
+ *
+ */
 public abstract class WorldObject {
 	
 	protected Collider collider;//colliding box (sphere or cuboid)

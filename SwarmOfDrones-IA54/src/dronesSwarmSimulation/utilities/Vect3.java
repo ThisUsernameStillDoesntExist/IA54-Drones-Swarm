@@ -12,6 +12,7 @@ import dronesSwarmSimulation.physics.collisions.CollisionTools;
 public class Vect3 {
 	
 	private static final Vect3 ZeroVect3=new Vect3(0,0,0);
+	private static final Vect3 UpVector=new Vect3(0,0,1);
 	
 	private double x,y,z;
 	
@@ -117,6 +118,24 @@ public class Vect3 {
 		}
 		
 		return this.multiplyBy(1/norm);
+	}
+	
+	/**
+	 * return one orthogonal vector to this, no constraints given
+	 * FIXME : use another algorithm
+	 * @return
+	 */
+	public Vect3 getAnOrthogonalVector()
+	{
+		if(this.equals(UpVector))
+		{
+			return new Vect3(-z,0,x);
+		}
+		else
+		{
+			return new Vect3(-y,x,0);
+		}
+		
 	}
 	
 	public Vect3 reverse()
@@ -252,6 +271,7 @@ public class Vect3 {
 		
 		return this;
 	}
+	
 	
 	/**
 	 * 

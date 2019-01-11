@@ -14,6 +14,10 @@ public class DroneCommandValues {
 	private boolean commandSuccess=true;
 	
 	
+	/**
+	 * get the propeller direction, not necessarily normalized
+	 * @return
+	 */
 	public Vect3 getPropellerDirection() {
 		return propellerDirection;
 	}

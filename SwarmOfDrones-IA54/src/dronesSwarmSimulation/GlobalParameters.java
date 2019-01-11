@@ -16,6 +16,8 @@ public final class GlobalParameters {
 
 	public static final Vect3 spaceDimensions=new Vect3(200, 150, 400);
 	
+	
+	
 	//repast parameters	
 	public static int nbChargingStations=0;
 	public static double frameTime=0;

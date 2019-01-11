@@ -14,6 +14,7 @@ import dronesSwarmSimulation.utilities.Vect3;
  */
 public class DroneAI {
 	
+	protected DroneAIprops charact;
 	protected Drone attachedDrone;
 	protected Vect3 targetPosition;
 	protected double throttleLimit;// max limit of throttle for energy saving, should be set by AI if necessary to use less battery
@@ -21,6 +22,7 @@ public class DroneAI {
 	public DroneAI(Drone attacheddrone)
 	{
 		this.attachedDrone=attacheddrone;
+		this.charact=new DroneAIprops();
 		this.throttleLimit=1;
 	}
 	
@@ -104,9 +106,12 @@ public class DroneAI {
 		Vect3 targetdir=tarpos.getSubstracted(attachedDrone.getPosition());
 		Vect3 propdir;
 		
+		DCV.setPropellerDirection(targetdir);
+		
 		double tht=attachedDrone.getCounterGravityThrottle();
 		
-		DCV.setPropellerDirection(targetdir);
+		adjustDirection(DCV, targetdir, tarpos);
+		
 		anticipateBraking(DCV, targetdir, throttleLimit-tht);//modify dcv.propellerdirection
 		Vect3 modtargetdir=DCV.getPropellerDirection();
 		
@@ -129,6 +134,37 @@ public class DroneAI {
 		return DCV;
 		
 	}
+	
+	/**
+	 * reduce error in speed when targeting a position, to avoid drone turning around objective
+	 * works like a servitude system
+	 * Only 2D, should be improved with vector math
+	 * @param dcv
+	 * @param targetdir
+	 * @param availableBrakingThrottle
+	 */
+	private void adjustDirection(DroneCommandValues dcv, Vect3 targetdir, Vect3 tarpos) {
+		
+		targetdir=targetdir.copy();//in case we change this vector, we don't touch the original
+		
+		
+		Vect3 tardirN=targetdir.getNormalized();
+		Vect3 speed=attachedDrone.getSpeed().copy();
+		Vect3 speedN=speed.getNormalized();
+		
+		/*
+		Vect3 normalSpeedN=new Vect3(-speedN.getY(), speedN.getX(), 0);
+		double orthogonalComponentOfSpeed=normalSpeedN.dotProduct(tardirN);
+		*/
+		Vect3 colinearComponentOfSpeed=speed.getMultipliedBy(speedN.dotProduct(tardirN));
+		
+		//substract speed to target pos to get propeller dir
+		Vect3 orthogonalComponentOfSpeed=speed.getSubstracted(colinearComponentOfSpeed);
+		Vect3 newtarpos=tarpos.getSubstracted(orthogonalComponentOfSpeed.getMultipliedBy(this.charact.directionCorrectionFactor));
+		Vect3 newtardir=newtarpos.getSubstracted(attachedDrone.getPosition());
+		
+		dcv.setPropellerDirection(newtardir);
+	}
 
 	/**
 	 * brake if necessary to approach target position with a reasonable speed
@@ -139,7 +175,7 @@ public class DroneAI {
 	private void anticipateBraking(DroneCommandValues dcv, Vect3 targetdir, double availableBrakingThrottle) {
 
 		
-		targetdir=targetdir.copy();//work with a duplicate vector
+		targetdir=targetdir.copy();//work with a duplicate vector, this is necessary due to the lack of structs in java
 		Vect3 actualspeed=attachedDrone.getSpeed().copy();//=new Vect3(attachedDrone.getSpeed())
 		double cosdirs=targetdir.getAngleCosSafe(actualspeed);
 		double speedTowardTarget=cosdirs*actualspeed.norm();//amount of speed directed toward target

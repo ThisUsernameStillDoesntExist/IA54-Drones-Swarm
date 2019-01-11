@@ -79,7 +79,6 @@ public class DroneBuilder implements ContextBuilder<Object> {
 		// creation of the City/Street 
 		context = setUpTheCity(context, grid, space,cc);
 		
-		
 		//-------------------------------- Positioning of the Agents on the grid system ( Finite system )---------------\\
 		// counter to allow the package/drone to take the location of just one building at time
 		//int nbBuildingToDeliver = 0; 
