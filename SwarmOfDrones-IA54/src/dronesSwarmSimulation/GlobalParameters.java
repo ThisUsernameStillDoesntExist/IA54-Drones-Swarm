@@ -15,7 +15,8 @@ import repast.simphony.space.continuous.NdPoint;
 public final class GlobalParameters {
 
 	public static final Vect3 spaceDimensions=new Vect3(200, 150, 400);
-	
+	public static final int nbOfBuildings = 17;
+	public static final int nbOfTrees = 27;
 	
 	
 	//repast parameters	
@@ -29,8 +30,7 @@ public final class GlobalParameters {
 	public static int nbDockstations=0;
 	public static NdPoint wareHousePostion =  null;
 	public static Vect3 initDronePosition = new Vect3(0,0,100);
-	public static int nbOfBuildings = 17;
-	public static int nbOfTrees = 27;
+
 	
 	/**
 	 * should be called on each simulation init

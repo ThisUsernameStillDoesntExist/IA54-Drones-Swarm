@@ -38,7 +38,7 @@ public class DroneAI {
 	
 	protected void initHLDModule() {
 
-		hld=new HighLevelDecision(attachedDrone);
+		hld=new HighLevelDecision(attachedDrone, this);
 	}
 
 
@@ -112,7 +112,7 @@ public class DroneAI {
 	private double getComputedThrottle(Vect3 tarpos)
 	{
 		//motor at full power
-		return 1;
+		return throttleLimit;
 	}
 
 	private DroneCommandValues getComputedCommandValues(Vect3 tarpos) {
@@ -232,7 +232,9 @@ public class DroneAI {
 		return hld;
 	}
 	
-	
+	public DroneAIprops getCharact() {
+		return charact;
+	}
 	
 	
 	

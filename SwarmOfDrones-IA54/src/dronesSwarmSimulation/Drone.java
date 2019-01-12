@@ -31,6 +31,7 @@ public class Drone extends WorldObject {
 	protected Package pickedPackage;//current loaded package
 	protected DockStation dock;
 	protected boolean charging;
+	protected boolean landed;//true if the drone is landed and does not use energy
 	protected ArrayList<DockStation> docks;
 	protected CentralController centralController;
 	protected DroneAI brain;
@@ -61,6 +62,7 @@ public class Drone extends WorldObject {
 		this.charact = new DroneCharacteristics();
 		this.brain = new DroneAI(this);
 		this.batteryLevel = getCharacteristics().getBatteryCapacity();
+		this.landed=false;
 		setPropellerDirection(new Vect3(0, 0, 0));
 	}
 
@@ -265,7 +267,7 @@ public class Drone extends WorldObject {
 	 * @return
 	 */
 	public double getMotorConsumption() {
-		return batteryState() * motorThrottle * thisCharacteristics().getMotorMaxConsumption();
+		return motorsRunning() * batteryState() * motorThrottle * thisCharacteristics().getMotorMaxConsumption();
 	}
 
 	/**
@@ -436,7 +438,42 @@ public class Drone extends WorldObject {
 		return (DroneCharacteristics) this.charact;
 	}
 
-
+	/**
+	 * land somewhere, which result in no energy spent while landed, and no movement
+	 * TODO : check that landing is possible
+	 */
+	public void land()
+	{
+		this.setSpeed(new Vect3());
+		this.landed=true;
+		this.fixed=true;
+	}
+	
+	/**
+	 * take-off and start motors again, which allows movement
+	 */
+	public void takeOff()
+	{
+		this.fixed=false;
+		this.landed=false;
+	}
+	
+	/**
+	 * true if landed on the ground, or any station
+	 * @return
+	 */
+	public boolean isLanded()
+	{
+		return this.landed;
+	}
+	
+	protected double motorsRunning() {
+		if (isLanded()) {
+			return 0;
+		} else {
+			return 1;
+		}
+	}
 	
 
 }

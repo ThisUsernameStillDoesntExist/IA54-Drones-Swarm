@@ -23,7 +23,6 @@ import repast.simphony.space.grid.GridPoint;
  * the essential multi-agent part is here, with communication and task management
  * 
  * 
- * @author Francis
  *
  */
 public class HighLevelDecision {
@@ -43,6 +42,7 @@ public class HighLevelDecision {
 	public static int idcontrol = 0;*/
 	
 	protected Drone thisDrone;//attached drone body
+	protected DroneAI thisAI;//attached drone AI
 	protected int id;
 	protected boolean dejaTrouvePackage ;
 	protected boolean hasTask;
@@ -53,15 +53,16 @@ public class HighLevelDecision {
 	protected  ArrayList<Package> tasksDelivered;
 	protected int nbTaskNotDeliveredEvent = 0;
 	protected int index = 0;
-	protected int charge=400;//temporary, remove this
+	//protected int charge=400;//temporary, remove this
 	protected boolean finishedWorkEvent = false;
 	protected CentralController centralController;
 	public static int idcontrol = 0;
 	
-	public HighLevelDecision(Drone dronebody) {
+	public HighLevelDecision(Drone dronebody, DroneAI dai) {
 		
 		//this.centralController=cc;
 		this.thisDrone=dronebody;
+		this.thisAI=dai;
 		
 	    dejaTrouvePackage = false;
 	    this.hasTask = false;
@@ -76,8 +77,20 @@ public class HighLevelDecision {
 	
 	public void doTask()
 	{
-	
-		if(thisDrone.getBatteryLevelRelative() > 0.6 )
+		if(thisDrone.isPluggedToStation())
+		{
+			if(thisDrone.getBatteryLevelRelative() > thisAI.getCharact().batteryEndChargeRelativeThreshold)
+			{
+				// after, we have to unplug from the station
+				thisDrone.unplugFromStation();
+				thisDrone.takeOff();//motors starts and movement is possible
+			}
+			else
+			{
+				return;//do nothing but charge
+			}			
+		}
+		if(thisDrone.getBatteryLevelRelative() >  thisAI.getCharact().batteryBeginChargeRelativeThreshold)
 		{	
 
 			if(hasTask && !dejaTrouvePackage)
@@ -149,12 +162,13 @@ public class HighLevelDecision {
 			// if the has arrived at the dockstation, charge the drone
 			if(hasArrived(nearestDockPos.getPosition()))
 			{
+				
+				thisDrone.land();//motor stopped and battery do not discharge
 				// charge my battery
 				thisDrone.plugToStation(nearestDockPos);
 				
-				// after, we have to unplug from the station
-				thisDrone.unplugFromStation();
-				System.out.println("Pluged and unpluged");
+				
+				//System.out.println("Pluged and unpluged");
 			}
 			else
 			{

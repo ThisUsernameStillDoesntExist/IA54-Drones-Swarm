@@ -10,7 +10,7 @@ public class DeliveryDroneAI extends DroneAI {
 	@Override
 	protected void initHLDModule() {
 
-		hld=new HighLevelDecisionDeliveryDrone(attachedDrone);
+		hld=new HighLevelDecisionDeliveryDrone(attachedDrone, this);
 	}
 
 }
