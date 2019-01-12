@@ -66,7 +66,7 @@ public class DroneAI {
 		
 		hld.doTask();//high level thinking, will set targetposition
 		
-		System.out.println("tarpos : "+targetPosition);
+		//System.out.println("tarpos : "+targetPosition);
 		
 		if(targetPosition==null)
 		{
@@ -213,7 +213,7 @@ public class DroneAI {
 		{
 			//slow down
 			Vect3 propdir=UtilityFunctions.getReversedOnXYPlane(actualspeed);
-			System.out.print(" Braking");
+			//System.out.print(" Braking");
 			
 			dcv.setPropellerDirection(propdir);
 			

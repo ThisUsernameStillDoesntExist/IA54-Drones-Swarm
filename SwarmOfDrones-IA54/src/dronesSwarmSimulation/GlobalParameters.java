@@ -13,7 +13,7 @@ import repast.simphony.space.continuous.NdPoint;
  *
  */
 public final class GlobalParameters {
-
+	
 	public static final Vect3 spaceDimensions=new Vect3(200, 150, 400);
 	public static final int nbOfBuildings = 17;
 	public static final int nbOfTrees = 27;
@@ -35,7 +35,7 @@ public final class GlobalParameters {
 	 * should be called on each simulation init
 	 */
 	public static void initParamsFromRepast()
-	{
+	{		
 		Parameters RP=RunEnvironment.getInstance().getParameters();		
 		frameTime=RP.getDouble("frametime");
 		swarmActivated=RP.getBoolean("swarm");

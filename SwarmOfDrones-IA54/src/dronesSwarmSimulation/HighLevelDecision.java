@@ -100,8 +100,9 @@ public class HighLevelDecision {
 			{
 				return;//do nothing but charge
 			}			
+			
 		}
-		if(thisDrone.getBatteryLevelRelative() >  thisAI.getCharact().batteryBeginChargeRelativeThreshold || nearestDockPos==null)
+		else if(thisDrone.getBatteryLevelRelative() >  thisAI.getCharact().batteryBeginChargeRelativeThreshold || nearestDockPos==null)
 		{	
 			searchingForStation=false;
 			if(hasTask && !dejaTrouvePackage)
@@ -119,7 +120,7 @@ public class HighLevelDecision {
 			}
 			else
 			{	
-
+				
 				if(!tasks.isEmpty() && !hasTask)
 				{
 					//task = tasks.remove();
@@ -128,6 +129,7 @@ public class HighLevelDecision {
 					hasTask = true;
 					System.out.println("nouveau package, priority = " + task.getPriority());
 				}
+				
 			}
 			
 			if(dejaTrouvePackage)
@@ -189,6 +191,7 @@ public class HighLevelDecision {
 				// if not arrived at the dockstation, continue looking for the dockstation
 				orderMoveDecision(nearestDockPos.getPosition());
 			}	
+			
 		}
 		
 		if(tasks.size() <=0)

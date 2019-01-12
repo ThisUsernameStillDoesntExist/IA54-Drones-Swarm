@@ -60,7 +60,7 @@ public class PhysicsEngine {
 			
 			if(w instanceof Drone)
 			{
-				System.out.println(w.getClass()+" updated "+newpos);
+				//System.out.println(w.getClass()+" updated "+newpos);
 			}
 		}
 	}
