@@ -96,7 +96,12 @@ public class HighLevelDecision {
 			{
 				// after, we have to unplug from the station
 				thisDrone.unplugFromStation();
-				thisDrone.takeOff();//motors starts and movement is possible
+				
+				if(tasks.size() > 0)//if remaining tasks to do
+				{
+					thisDrone.takeOff();//motors starts and movement is possible
+				}
+				
 			}
 			else
 			{
@@ -104,7 +109,7 @@ public class HighLevelDecision {
 			}			
 			
 		}
-		else if(thisDrone.getBatteryLevelRelative() >  thisAI.getCharact().batteryBeginChargeRelativeThreshold || nearestDockPos==null)
+		else if(thisDrone.getBatteryLevelRelative() >  thisAI.getCharact().batteryBeginChargeRelativeThreshold /*|| nearestDockPos==null*/)
 		{	
 			searchingForStation=false;
 			if(hasTask && !dejaTrouvePackage)
@@ -178,22 +183,24 @@ public class HighLevelDecision {
 			//Get the nearest dockstation position
 			
 			// if the has arrived at the dockstation, charge the drone
-			
-			if(hasArrived(nearestDockPos.getPosition()))
+			if(nearestDockPos!=null)
 			{
-				
-				thisDrone.land();//motor stopped and battery do not discharge
-				// charge my battery
-				thisDrone.plugToStation(nearestDockPos);
-				
-				
-				//System.out.println("Pluged and unpluged");
+				if(hasArrived(nearestDockPos.getPosition()))
+				{
+					
+					thisDrone.land();//motor stopped and battery do not discharge
+					// charge my battery
+					thisDrone.plugToStation(nearestDockPos);
+					
+					
+					//System.out.println("Pluged and unpluged");
+				}
+				else
+				{
+					// if not arrived at the dockstation, continue looking for the dockstation
+					orderMoveDecision(nearestDockPos.getPosition());
+				}	
 			}
-			else
-			{
-				// if not arrived at the dockstation, continue looking for the dockstation
-				orderMoveDecision(nearestDockPos.getPosition());
-			}	
 			
 		}
 		
@@ -544,20 +551,20 @@ public class HighLevelDecision {
 			ArrayList<Package> lisOfPackage = companyInfo.getLisOfPackage();
 			//Chercher les drones without task to do
 			synchronized(this)
-			{
-						if(getTasksNotDelivered().size() > 0 && getTasks().size() <=0)
+			{				
+					if(getTasksNotDelivered().size() > 0 && getTasks().size() <=0)
+					{
+						
+						for( Package p: lisOfPackage)
 						{
-							
-							for( Package p: lisOfPackage)
+							//!tasksNotDelivered.contains(p) &&
+							if( !p.isTaken() && !p.getIsDelivered() && !tasks.contains(p))
 							{
-								//!tasksNotDelivered.contains(p) &&
-								if( !p.isTaken() && !p.getIsDelivered() && !tasks.contains(p))
-								{
-									p.setTaken(true);
-									tasks.add(p);
-								}
+								p.setTaken(true);
+								tasks.add(p);
 							}
-						}	
+						}
+					}	
 			}
 		}
 		else
