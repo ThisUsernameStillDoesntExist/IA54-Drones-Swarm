@@ -66,6 +66,9 @@ public class DroneCharacteristics extends WorldObjectCharacteristics {
 			dryWeight = 0.3;
 			batteryCapacity = 17;
 			batteryRechargingRate = 29;
+			
+			batteryCapacity = 2;//unrealistic, only to accelerate tests
+			batteryRechargingRate = 200;//unrealistic
 			break;
 		case HelperDrone:// based on DJI S900
 			propellerLift = 0.04;
