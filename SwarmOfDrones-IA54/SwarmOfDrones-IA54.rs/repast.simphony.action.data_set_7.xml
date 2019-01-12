@@ -1,5 +1,5 @@
 <repast.simphony.data2.engine.DataSetDescriptor simphonyVersion="2.5.0">
-  <name>Current Speed of Drones</name>
+  <name>current electricity consumption</name>
   <type>AGGREGATE</type>
   <inclTick>true</inclTick>
   <inclBatchRun>false</inclBatchRun>
@@ -11,16 +11,16 @@
     <pType>LAST</pType>
     <duration>-1.0</duration>
     <frequency>REPEAT</frequency>
-    <hashCode>-1788823691</hashCode>
+    <hashCode>634555144</hashCode>
   </scheduleParams>
   <atEnd>false</atEnd>
   <methodDataSources class="linked-hash-map">
     <entry>
-      <string>Current Speed of Drones</string>
+      <string>current electricity consumption</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Current Speed of Drones</id>
+        <id>current electricity consumption</id>
         <className>dronesSwarmSimulation.Statistics</className>
-        <methodName>getDroneCurrentSpeed</methodName>
+        <methodName>getCurrentElectricityConsumption</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>

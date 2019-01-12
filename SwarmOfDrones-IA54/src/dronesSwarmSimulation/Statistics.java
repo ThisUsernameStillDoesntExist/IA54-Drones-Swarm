@@ -1,5 +1,6 @@
 package dronesSwarmSimulation;
 
+import dronesSwarmSimulation.physics.Constants;
 import repast.simphony.context.Context;
 import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.engine.schedule.ScheduledMethod;
@@ -23,7 +24,8 @@ public class Statistics {
 	private double droneAvgSpeed;//=distance travelled per s
 	private double droneCurrentSpeed;//mean speed of all drones
 	private double totalTimeElapsed;
-	//add total electricity used
+	private double currentElectricityConsumption;//current power output of all drones
+	private double totalElectricityConsumption;//since the beginning
 	
 	
 	
@@ -44,6 +46,8 @@ public class Statistics {
 		droneAvgSpeed=0;
 		droneCurrentSpeed=0;
 		totalTimeElapsed=0;
+		currentElectricityConsumption=0;
+		totalElectricityConsumption=0;
 	}
 
 
@@ -76,16 +80,19 @@ public class Statistics {
 	 */
 	private void updateStatsPerDrone() {
 		
-		//update total distance, mean current speed
+		//update total distance, mean current speed, current elec cons
 		double tdt=0;
 		double mcs=0;
+		double cec=0;
 		for(Drone d : centralController.getLisOfDrones())
 		{
 			tdt+=d.getTotalDistanceTravelled();
 			mcs+=d.getSpeed().norm();
+			cec+=d.getMotorConsumption();
 		}
 		
 		
+		currentElectricityConsumption=cec;
 		totalDistanceTravelledByDrones=tdt;
 		if(centralController.getLisOfDrones().size()>0)
 		{
@@ -106,6 +113,8 @@ public class Statistics {
 		{
 			droneAvgSpeed=0;
 		}
+		
+		totalElectricityConsumption+=currentElectricityConsumption*GlobalParameters.frameTime*Constants.WsToWh;
 		
 		
 	}
@@ -132,6 +141,17 @@ public class Statistics {
 	public double getTotalTimeElapsed() {
 		return totalTimeElapsed;
 	}
+
+
+	public double getCurrentElectricityConsumption() {
+		return currentElectricityConsumption;
+	}
+
+
+	public double getTotalElectricityConsumption() {
+		return totalElectricityConsumption;
+	}
+	
 	
 	
 	

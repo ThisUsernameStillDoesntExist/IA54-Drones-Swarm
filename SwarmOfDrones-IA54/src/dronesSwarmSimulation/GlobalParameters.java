@@ -21,7 +21,7 @@ public final class GlobalParameters {
 	
 	//repast parameters	
 	public static int nbChargingStations=0;
-	public static double frameTime=0;
+	public static double frameTime=0;//s
 	public static boolean swarmActivated=false;
 	public static int nbDeliveryDrones=0;
 	public static int initialCharge=0;
