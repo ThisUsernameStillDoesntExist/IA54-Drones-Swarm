@@ -1,45 +1,27 @@
 <repast.simphony.data2.engine.DataSetDescriptor simphonyVersion="2.5.0">
-  <name>Drone charge</name>
+  <name>Time Elapsed</name>
   <type>AGGREGATE</type>
   <inclTick>true</inclTick>
   <inclBatchRun>false</inclBatchRun>
   <inclRandomSeed>false</inclRandomSeed>
   <scheduleParams>
     <start>1.0</start>
-    <interval>2.0</interval>
+    <interval>3.0</interval>
     <priority>-Infinity</priority>
     <pType>LAST</pType>
     <duration>-1.0</duration>
     <frequency>REPEAT</frequency>
-    <hashCode>506444210</hashCode>
+    <hashCode>1910395170</hashCode>
   </scheduleParams>
   <atEnd>false</atEnd>
   <methodDataSources class="linked-hash-map">
     <entry>
-      <string>Drone mean charge</string>
+      <string>Time Elapsed</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Drone mean charge</id>
-        <className>dronesSwarmSimulation.Drone</className>
-        <methodName>getBatteryLevelRelative</methodName>
-        <aggType>MEAN</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Drone max charge</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Drone max charge</id>
-        <className>dronesSwarmSimulation.Drone</className>
-        <methodName>getBatteryLevelRelative</methodName>
-        <aggType>MAX</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Drone min charge</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Drone min charge</id>
-        <className>dronesSwarmSimulation.Drone</className>
-        <methodName>getBatteryLevelRelative</methodName>
-        <aggType>MIN</aggType>
+        <id>Time Elapsed</id>
+        <className>dronesSwarmSimulation.Statistics</className>
+        <methodName>getTotalTimeElapsed</methodName>
+        <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
   </methodDataSources>

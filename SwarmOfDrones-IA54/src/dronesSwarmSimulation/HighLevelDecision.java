@@ -54,6 +54,7 @@ public class HighLevelDecision {
 	protected ArrayList<Drone> lisOfDrones;
 	protected Queue<Package> tasks;
 	protected Queue<Package> tasksNotDelivered;
+	protected int nbOfDroppedPackages;
 	protected  ArrayList<Package> tasksDelivered;
 	protected int index = 0;
 	protected DockStation targetDockStation;//where we want to recharge, null when no need to recharge
@@ -79,6 +80,7 @@ public class HighLevelDecision {
 	    tasksNotDelivered = new LinkedList<Package>();
 	    tasksDelivered = new  ArrayList<Package>();
 	    lisOfDockStation = new ArrayList<DockStation>(); 
+	    nbOfDroppedPackages=0;
 	    
 	    
 	}
@@ -168,6 +170,7 @@ public class HighLevelDecision {
 				task = null;
 				hasTask=false;
 				dejaTrouvePackage = false;
+				nbOfDroppedPackages++;
 			}
 			
 			searchingForStation=true;
@@ -722,6 +725,12 @@ public class HighLevelDecision {
 				
 	}
 
+
+	public int getNbOfDroppedPackages() {
+		return nbOfDroppedPackages;
+	}
+
+	
 	
 
 }

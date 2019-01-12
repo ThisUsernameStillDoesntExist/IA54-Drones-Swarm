@@ -475,5 +475,14 @@ public class Drone extends WorldObject {
 		}
 	}
 	
+	/**
+	 * nb of dropped packages while delivering (to go charging for example)
+	 * @return
+	 */
+	public int getNbOfDroppedPackages()
+	{
+		return this.getBrain().getHld().getNbOfDroppedPackages();
+	}
+	
 
 }

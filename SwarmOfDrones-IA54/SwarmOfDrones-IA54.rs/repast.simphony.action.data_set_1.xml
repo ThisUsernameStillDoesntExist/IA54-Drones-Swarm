@@ -1,35 +1,26 @@
 <repast.simphony.data2.engine.DataSetDescriptor simphonyVersion="2.5.0">
-  <name>Distance Travelled</name>
+  <name>Package Delivered Data Set</name>
   <type>AGGREGATE</type>
   <inclTick>true</inclTick>
   <inclBatchRun>false</inclBatchRun>
   <inclRandomSeed>false</inclRandomSeed>
   <scheduleParams>
     <start>1.0</start>
-    <interval>2.0</interval>
+    <interval>30.0</interval>
     <priority>-Infinity</priority>
     <pType>LAST</pType>
     <duration>-1.0</duration>
     <frequency>REPEAT</frequency>
-    <hashCode>-1544665884</hashCode>
+    <hashCode>-499043911</hashCode>
   </scheduleParams>
   <atEnd>true</atEnd>
   <methodDataSources class="linked-hash-map">
     <entry>
-      <string>total distance of drones</string>
+      <string>NombrePackages</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>total distance of drones</id>
-        <className>dronesSwarmSimulation.Statistics</className>
-        <methodName>getTotalDistanceTravelledByDrones</methodName>
-        <aggType>SUM</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>distance per drone</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>distance per drone</id>
-        <className>dronesSwarmSimulation.Statistics</className>
-        <methodName>getDistanceTravelledPerDrone</methodName>
+        <id>NombrePackages</id>
+        <className>dronesSwarmSimulation.Package</className>
+        <methodName>getIsDelivered</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
