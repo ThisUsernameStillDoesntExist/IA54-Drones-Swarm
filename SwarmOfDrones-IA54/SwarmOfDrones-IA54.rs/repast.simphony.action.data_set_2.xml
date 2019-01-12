@@ -1,5 +1,5 @@
 <repast.simphony.data2.engine.DataSetDescriptor simphonyVersion="2.5.0">
-  <name>Distance Travelled</name>
+  <name>Average Speed of Drones</name>
   <type>AGGREGATE</type>
   <inclTick>true</inclTick>
   <inclBatchRun>false</inclBatchRun>
@@ -11,25 +11,16 @@
     <pType>LAST</pType>
     <duration>-1.0</duration>
     <frequency>REPEAT</frequency>
-    <hashCode>-1544665884</hashCode>
+    <hashCode>-1788823691</hashCode>
   </scheduleParams>
-  <atEnd>true</atEnd>
+  <atEnd>false</atEnd>
   <methodDataSources class="linked-hash-map">
     <entry>
-      <string>total distance of drones</string>
+      <string>Average Speed of Drones</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>total distance of drones</id>
+        <id>Average Speed of Drones</id>
         <className>dronesSwarmSimulation.Statistics</className>
-        <methodName>getTotalDistanceTravelledByDrones</methodName>
-        <aggType>SUM</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>distance per drone</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>distance per drone</id>
-        <className>dronesSwarmSimulation.Statistics</className>
-        <methodName>getDistanceTravelledPerDrone</methodName>
+        <methodName>getDroneAvgSpeed</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
