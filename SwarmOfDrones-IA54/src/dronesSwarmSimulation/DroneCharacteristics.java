@@ -4,6 +4,11 @@ import dronesSwarmSimulation.physics.WorldObjectCharacteristics;
 import dronesSwarmSimulation.physics.WorldObjectType;
 import dronesSwarmSimulation.utilities.Vect3;
 
+/**
+ * Holds all the physical properties of the drone, such as batterycapacity, weight, airdrag
+ * @author Francis
+ *
+ */
 public class DroneCharacteristics extends WorldObjectCharacteristics {
 	
 	// maxspeed is now a function of drag, propeller lift and motor power

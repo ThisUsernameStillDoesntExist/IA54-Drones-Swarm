@@ -2,6 +2,11 @@ package dronesSwarmSimulation.physics;
 
 import dronesSwarmSimulation.utilities.Vect3;
 
+/**
+ * stores physical properties of worlobjects
+ * @author Francis
+ *
+ */
 public class WorldObjectCharacteristics {
 
 	
