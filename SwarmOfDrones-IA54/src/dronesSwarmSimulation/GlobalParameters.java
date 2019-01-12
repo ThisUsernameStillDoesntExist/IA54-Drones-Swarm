@@ -17,6 +17,7 @@ public final class GlobalParameters {
 	public static final Vect3 spaceDimensions=new Vect3(200, 150, 400);
 	public static final int nbOfBuildings = 17;
 	public static final int nbOfTrees = 27;
+	public static final double initBatteryInterval = 0.8;
 	
 	
 	//repast parameters	

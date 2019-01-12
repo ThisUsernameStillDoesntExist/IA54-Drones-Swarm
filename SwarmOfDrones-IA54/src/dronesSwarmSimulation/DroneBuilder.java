@@ -65,12 +65,12 @@ public class DroneBuilder implements ContextBuilder<Object> {
 
 		/*Define the number of DeliverDrone  */
 		for(int i = 0; i < nombreDrone; i++){
-			double rg=1;
+			double rg=0;
 			if(GlobalParameters.differentInitBatteryLevels)
 			{
-				rg=0.5;
+				rg=GlobalParameters.initBatteryInterval;
 			}
-			double randbatterylevel=(1-rg)*(1-Math.random())+rg;
+			double randbatterylevel=rg*(1-Math.random())+(1-rg);
 			DeliverDrone d = new DeliverDrone(space, grid, GlobalParameters.initDronePosition, randbatterylevel);
 			context.add(d);
 			cc.getLisOfDrones().add(d);
