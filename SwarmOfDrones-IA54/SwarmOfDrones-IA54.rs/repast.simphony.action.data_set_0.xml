@@ -1,26 +1,26 @@
 <repast.simphony.data2.engine.DataSetDescriptor simphonyVersion="2.5.0">
-  <name>Current Speed of Drones</name>
+  <name>Package Delivered Data Set</name>
   <type>AGGREGATE</type>
   <inclTick>true</inclTick>
   <inclBatchRun>false</inclBatchRun>
   <inclRandomSeed>false</inclRandomSeed>
   <scheduleParams>
     <start>1.0</start>
-    <interval>2.0</interval>
+    <interval>30.0</interval>
     <priority>-Infinity</priority>
     <pType>LAST</pType>
     <duration>-1.0</duration>
     <frequency>REPEAT</frequency>
-    <hashCode>-1788823691</hashCode>
+    <hashCode>-499043911</hashCode>
   </scheduleParams>
-  <atEnd>false</atEnd>
+  <atEnd>true</atEnd>
   <methodDataSources class="linked-hash-map">
     <entry>
-      <string>Current Speed of Drones</string>
+      <string>NombrePackages</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Current Speed of Drones</id>
-        <className>dronesSwarmSimulation.Statistics</className>
-        <methodName>getDroneCurrentSpeed</methodName>
+        <id>NombrePackages</id>
+        <className>dronesSwarmSimulation.Package</className>
+        <methodName>getIsDelivered</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>

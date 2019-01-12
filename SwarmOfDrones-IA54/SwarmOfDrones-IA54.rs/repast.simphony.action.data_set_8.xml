@@ -1,27 +1,45 @@
 <repast.simphony.data2.engine.DataSetDescriptor simphonyVersion="2.5.0">
-  <name>total electricity consumption</name>
+  <name>Drones action</name>
   <type>AGGREGATE</type>
   <inclTick>true</inclTick>
   <inclBatchRun>false</inclBatchRun>
   <inclRandomSeed>false</inclRandomSeed>
   <scheduleParams>
     <start>1.0</start>
-    <interval>4.0</interval>
+    <interval>2.0</interval>
     <priority>-Infinity</priority>
     <pType>LAST</pType>
     <duration>-1.0</duration>
     <frequency>REPEAT</frequency>
-    <hashCode>1807911688</hashCode>
+    <hashCode>1253720983</hashCode>
   </scheduleParams>
-  <atEnd>true</atEnd>
+  <atEnd>false</atEnd>
   <methodDataSources class="linked-hash-map">
     <entry>
-      <string>total electricity consumption</string>
+      <string>nb drone landed</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>total electricity consumption</id>
-        <className>dronesSwarmSimulation.Statistics</className>
-        <methodName>getTotalElectricityConsumption</methodName>
+        <id>nb drone landed</id>
+        <className>dronesSwarmSimulation.Drone</className>
+        <methodName>isLanded</methodName>
         <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>nb drone plugged</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>nb drone plugged</id>
+        <className>dronesSwarmSimulation.Drone</className>
+        <methodName>isPluggedToStation</methodName>
+        <aggType>SUM</aggType>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>mean throttle</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>mean throttle</id>
+        <className>dronesSwarmSimulation.Drone</className>
+        <methodName>getMotorThrottle</methodName>
+        <aggType>MEAN</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
   </methodDataSources>
