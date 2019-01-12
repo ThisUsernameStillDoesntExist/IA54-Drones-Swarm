@@ -29,6 +29,7 @@ public final class GlobalParameters {
 	public static int nbDockstations=0;
 	public static NdPoint wareHousePostion =  null;
 	public static Vect3 initDronePosition = new Vect3(0,0,100);
+	public static boolean differentInitBatteryLevels=false;//drones start with different battery levels
 
 	
 	/**
@@ -44,6 +45,7 @@ public final class GlobalParameters {
 		nbPackages=RP.getInteger("package");
 		warehouseName=RP.getString("warehousenames");
 		nbDockstations=RP.getInteger("dockstation");
+		differentInitBatteryLevels=RP.getBoolean("differentDroneInitBatteryLevels");
 		
 		String[]  whPositions =  RP.getString("warehouspositon").split(",");
 		if( whPositions.length < 3)

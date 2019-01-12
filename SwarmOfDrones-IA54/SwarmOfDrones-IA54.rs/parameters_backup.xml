@@ -42,10 +42,16 @@
 						converter="repast.simphony.parameter.StringConverterFactory$StringStringConverter"
 									
 		/>
-				<parameter name="frametime" displayName="Frame Time" type="double" 
+				<parameter name="frametime" displayName="Frame Time Per Tick" type="double" 
 						defaultValue="0.1" 
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter"
+									
+		/>
+				<parameter name="differentDroneInitBatteryLevels" displayName="Different Drone Init Battery Levels" type="boolean" 
+						defaultValue="false" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$BooleanConverter"
 									
 		/>
 				<parameter name="dockstation" displayName="Dockstation Count" type="int" 

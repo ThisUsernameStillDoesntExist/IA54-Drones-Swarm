@@ -48,10 +48,10 @@ public class Drone extends WorldObject {
 	// All drone to be create and set on the scene( visual system ) need to receive
 	// the space and grid
 	public Drone() {
-		this(null, null, new Vect3());
+		this(null, null, new Vect3(), 1);
 	}
 
-	public Drone(ContinuousSpace<Object> space, Grid<Object> grid, Vect3 initposition) {
+	public Drone(ContinuousSpace<Object> space, Grid<Object> grid, Vect3 initposition, double batterylevelrelative) {
 		super();
 		this.fixed=false;
 		this.position=initposition.copy();
@@ -61,7 +61,7 @@ public class Drone extends WorldObject {
 		this.charging = false;
 		this.charact = new DroneCharacteristics();
 		this.brain = new DroneAI(this);
-		this.batteryLevel = getCharacteristics().getBatteryCapacity();
+		this.batteryLevel = getCharacteristics().getBatteryCapacity()*CollisionTools.limit(batterylevelrelative, 0, 1);
 		this.landed=false;
 		setPropellerDirection(new Vect3(0, 0, 0));
 	}
