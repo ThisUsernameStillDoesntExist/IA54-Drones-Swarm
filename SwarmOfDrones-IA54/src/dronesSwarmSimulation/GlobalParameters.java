@@ -20,7 +20,6 @@ public final class GlobalParameters {
 	
 	
 	//repast parameters	
-	public static int nbChargingStations=0;
 	public static double frameTime=0;//s
 	public static boolean swarmActivated=false;
 	public static int nbDeliveryDrones=0;
@@ -38,7 +37,6 @@ public final class GlobalParameters {
 	public static void initParamsFromRepast()
 	{
 		Parameters RP=RunEnvironment.getInstance().getParameters();		
-		nbChargingStations=RP.getInteger("nbChargingStations");
 		frameTime=RP.getDouble("frametime");
 		swarmActivated=RP.getBoolean("swarm");
 		nbDeliveryDrones=RP.getInteger("deliver_drone");

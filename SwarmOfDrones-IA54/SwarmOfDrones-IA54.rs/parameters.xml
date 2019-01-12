@@ -1,13 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <parameters>
-				   <parameter name="randomSeed" displayName="Default Random Seed" type="int" 
+					<parameter name="randomSeed" displayName="Default Random Seed" type="int" 
 						defaultValue="890670801" 
-						isReadOnly="false" 
-						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
-									
-		/> 
-				<parameter name="nbChargingStations" displayName="Charging stations count" type="int" 
-						defaultValue="1" 
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
 									
@@ -22,6 +16,12 @@
 						defaultValue="800" 
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
+									
+		/>
+				<parameter name="warehouspositon" displayName="WareHouse Position" type="java.lang.String" 
+						defaultValue="140,130,100" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$StringStringConverter"
 									
 		/>
 				<parameter name="deliver_drone" displayName="Deliver drone Count" type="int" 
@@ -54,14 +54,6 @@
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
 									
 		/>
-		
-		
-				<parameter name="warehouspositon" displayName="WareHouse Position" type="java.lang.String" 
-						defaultValue="140,130,100" 
-						isReadOnly="false" 
-						converter="repast.simphony.parameter.StringConverterFactory$StringStringConverter"
-									
-				/>
 		</parameters>
 
 

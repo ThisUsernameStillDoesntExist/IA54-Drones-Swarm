@@ -6,22 +6,22 @@
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
 									
 		/>
-				<parameter name="nbChargingStations" displayName="Charging stations count" type="int" 
-						defaultValue="1" 
-						isReadOnly="false" 
-						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
-									
-		/>
 				<parameter name="package" displayName="Package Count" type="int" 
-						defaultValue="7" 
+						defaultValue="15" 
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
 									
 		/>
 				<parameter name="charge" displayName="Charge value" type="int" 
-						defaultValue="150" 
+						defaultValue="800" 
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
+									
+		/>
+				<parameter name="warehouspositon" displayName="WareHouse Position" type="java.lang.String" 
+						defaultValue="140,130,100" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$StringStringConverter"
 									
 		/>
 				<parameter name="deliver_drone" displayName="Deliver drone Count" type="int" 
