@@ -109,7 +109,7 @@ public class HighLevelDecision {
 			}			
 			
 		}
-		else if(thisDrone.getBatteryLevelRelative() >  thisAI.getCharact().batteryBeginChargeRelativeThreshold /*|| nearestDockPos==null*/)
+		else if(thisDrone.getBatteryLevelRelative() >  thisAI.getCharact().batteryBeginChargeRelativeThreshold || nearestDockPos==null)
 		{	
 			searchingForStation=false;
 			if(hasTask && !dejaTrouvePackage)
