@@ -72,6 +72,7 @@ public class Statistics {
 		{
 			RunEnvironment.getInstance().endRun();
 		}
+		
 		//temp
 		System.out.println("Tec : "+this.getTotalElectricityConsumption());
 		System.out.println("Dt : "+this.distanceTravelledPerDrone);
