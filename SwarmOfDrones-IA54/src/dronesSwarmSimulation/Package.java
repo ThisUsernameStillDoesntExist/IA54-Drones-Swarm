@@ -14,23 +14,21 @@ import repast.simphony.space.grid.Grid;
 import repast.simphony.space.grid.GridPoint;
 
 
-/**
+
+/*
  * 
- * @author adilson
- * 
- *This class represent the package or the product to be deliver in one exact point, which
+ * This class represent the package or the product to be deliver in one exact point, which
  * can be a building
  */
-
 public class Package extends WorldObject {
 	private ContinuousSpace<Object> space;
 	private Grid<Object> grid;
 	//priority 
 	private Priority priority ;
 	private Vect3 destinationCoord; // destination to deliver the package
-	private boolean isTaken; // to know when the package has been taken by other drone
-	private boolean isDelivered; // to jnow is was deliovered or not
-	private String wareHouseName; // which ware house belongs to
+	private boolean isTaken;
+	private boolean isDelivered;
+	private String wareHouseName;
 	
 	public Package(ContinuousSpace<Object> space, Grid<Object> grid ) {
 		this.space = space;

@@ -10,10 +10,7 @@ import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.grid.Grid;
 
 /**
- * 
- * @author adilson
- * 
- *This class the trees that are on the environment
+ *  
  *
  */
 public class Tree extends WorldObject {

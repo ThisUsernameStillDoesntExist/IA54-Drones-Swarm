@@ -26,6 +26,7 @@ import repast.simphony.space.grid.GridBuilderParameters;
 import repast.simphony.space.grid.SimpleGridAdder;
 
 public class DroneBuilder implements ContextBuilder<Object> {
+
 /**
  * This method serve as the setup function of the simulation, all the object main to the resuts, all the parameters are recuperated here 
  * @author adilson 
@@ -33,28 +34,27 @@ public class DroneBuilder implements ContextBuilder<Object> {
  */
 	@Override
 	public Context build(Context<Object> context) {
-		//Context of the current simulation
 		context.setId("SwarmOfDrones-IA54");
-		// initialize the global parameters that will be used for the simulation'(
+		
 		GlobalParameters.initParamsFromRepast();
 		
-		//-------------------------------Creation and limitation of the Screen(Scene) and  representation of the environment grid, space(Infinite coordinates system) -----------------------------------------------\\
+		//-------------------------------Creation and limitation of the Screen(Scene) space(Infinite coordinates system) -----------------------------------------------\\
 		ContinuousSpaceFactory spaceFactory = ContinuousSpaceFactoryFinder.createContinuousSpaceFactory(null);
 		
 		Vect3 spacedims=GlobalParameters.spaceDimensions;
 		PointTranslator ptranslator=new repast.simphony.space.continuous.InfiniteBorders<>();
 		ptranslator.init(new Dimensions(spacedims.getX(), spacedims.getY(), spacedims.getZ()));
-		// creation of the continuos space to reprersent the space where drones will move, to get real results
+		
 		ContinuousSpace<Object> space = spaceFactory.createContinuousSpace("space", context,
 				new RandomCartesianAdder<Object>(), ptranslator, spacedims.getX(), spacedims.getY(), spacedims.getZ());
-		// creation of another space of type Grid, to help us do neighborhood between agents of thge same type
+		
 		GridFactory gridFactory = GridFactoryFinder.createGridFactory(null);
 		Grid<Object> grid = gridFactory.createGrid("grid", context, new GridBuilderParameters<Object>(
 				new WrapAroundBorders(), new SimpleGridAdder<Object>(), true, (int)(spacedims.getX()), (int)(spacedims.getY())));
 		
 		//-------------------------------Creation of the Agents setup on the Screen-----------------------------------------------\\
 		CentralController cc = new CentralController(space, grid, context);
-		// get an object representing  the parameters set on the user interface
+		
 		Parameters params = RunEnvironment.getInstance().getParameters();
 		
 		
@@ -96,7 +96,7 @@ public class DroneBuilder implements ContextBuilder<Object> {
 		
 		//-------------------------------- Positioning of the Agents on the grid system ( Finite system )---------------\\
 		// counter to allow the package/drone to take the location of just one building at time
-		// put all the object on the grid to do neighborhood
+		//int nbBuildingToDeliver = 0; 
 		for( Object obj : context )
 		{
 			NdPoint pt = space.getLocation ( obj );
@@ -105,7 +105,7 @@ public class DroneBuilder implements ContextBuilder<Object> {
 
 		 }
 		
-		// register all the object on the context to do mesure and statistcs, and assign task to drones
+		
 		cc.registerTask();
 		context.add(cc);
 		context.add(cc.getStats());//to allow scheduled calls on the refreshing method of statistics, and to retrieve values from it
@@ -117,10 +117,6 @@ public class DroneBuilder implements ContextBuilder<Object> {
 		return context;
 	}
 	
-	/**
-	 * this function transform all the the object on the context to objectwith caracteristiscs like in a real word ( 3D word)
-	 * @return
-	 */
 	private void fromRepastSpaceToWorldObjectPosition(Context<Object> context, ContinuousSpace<Object> space) {
 
 		for(Object o : context.getObjects(WorldObject.class))
@@ -133,16 +129,7 @@ public class DroneBuilder implements ContextBuilder<Object> {
 			}
 		}
 	}
-	
-	/**
-	 * This method serve as the initializer os the concrete environment, with buildings, trees station etc
-	 * 
-	 * @param context the current context of the simulation with all objects
-	 * @param grid 
-	 * @param space
-	 * @param cc
-	 * @return
-	 */
+
 	private Context<Object> setUpTheCity( Context<Object> context, Grid<Object> grid, ContinuousSpace<Object> space, CentralController cc )
 	{
 		// creation of the Buildings, DockSations and Trees

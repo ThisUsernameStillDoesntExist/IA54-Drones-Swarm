@@ -14,14 +14,6 @@ import repast.simphony.space.grid.Grid;
  * 
  */
 
-/**
- * 
- * @author adilson
- * 
- * Class that represent the building put on the envrionment, where package has to be delivered
- *
- */
-
 public class Building extends WorldObject {
 	private ContinuousSpace<Object> space;
 	private Grid<Object> grid;
