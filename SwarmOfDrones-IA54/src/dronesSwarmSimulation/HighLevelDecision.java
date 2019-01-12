@@ -51,12 +51,16 @@ public class HighLevelDecision {
 	protected Queue<Package> tasks;
 	protected Queue<Package> tasksNotDelivered;
 	protected  ArrayList<Package> tasksDelivered;
-	protected int nbTaskNotDeliveredEvent = 0;
 	protected int index = 0;
 	//protected int charge=400;//temporary, remove this
-	protected boolean finishedWorkEvent = false;
+	
 	protected CentralController centralController;
 	public static int idcontrol = 0;
+	
+	protected int nbTaskNotDeliveredEvent = 0;
+	protected boolean finishedWorkEvent = false;
+	protected boolean searchingForStation = false;
+	
 	
 	public HighLevelDecision(Drone dronebody, DroneAI dai) {
 		
@@ -92,7 +96,7 @@ public class HighLevelDecision {
 		}
 		if(thisDrone.getBatteryLevelRelative() >  thisAI.getCharact().batteryBeginChargeRelativeThreshold)
 		{	
-
+			searchingForStation=false;
 			if(hasTask && !dejaTrouvePackage)
 			{
 					if(hasArrived(task.getPosition()))
@@ -156,6 +160,8 @@ public class HighLevelDecision {
 				hasTask=false;
 				dejaTrouvePackage = false;
 			}
+			
+			searchingForStation=true;
 			// find Dockstation to charge
 			//Get the nearest dockstation position
 			DockStation nearestDockPos = findDockStation(); 
@@ -391,6 +397,19 @@ public class HighLevelDecision {
 		
 		
 	}
+	
+	@Watch(watcheeClassName = "dronesSwarmSimulation.HighLevelDecision",
+			watcheeFieldNames = "searchingForStation",
+			query = "colocated",
+			whenToTrigger = WatcherTriggerSchedule.IMMEDIATE)
+	public void searchingForStation()
+	{
+		if(!searchingForStation) return;
+		
+		
+	}
+	
+	
 	/**
 	 * triggered when a package has been dropped during a delivery
 	 */
