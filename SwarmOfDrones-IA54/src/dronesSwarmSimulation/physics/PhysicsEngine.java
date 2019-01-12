@@ -8,6 +8,7 @@ import dronesSwarmSimulation.DeliverDrone;
 import dronesSwarmSimulation.Drone;
 import dronesSwarmSimulation.GlobalParameters;
 import dronesSwarmSimulation.physics.collisions.CollisionSortElement;
+import dronesSwarmSimulation.utilities.UtilityFunctions;
 import dronesSwarmSimulation.utilities.Vect3;
 import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.space.continuous.ContinuousSpace;
@@ -60,7 +61,7 @@ public class PhysicsEngine {
 			
 			if(w instanceof Drone)
 			{
-				//System.out.println(w.getClass()+" updated "+newpos);
+				UtilityFunctions.printConsoleLn(w.getClass()+" updated "+newpos);
 			}
 		}
 	}

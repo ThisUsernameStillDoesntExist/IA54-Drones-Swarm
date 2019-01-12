@@ -117,7 +117,7 @@ public class CentralController
 					// Give the the destination of the package, using the building's location
 					lisOfPackage.get(i).setDestinationCoord(UtilityFunctions.NdPointToVect3(buildingLocation));
 					countBuinding++;
-					//System.out.println("building : " + buildingLocation.getX() + " ; " + buildingLocation.getY() +" ; ");
+					//UtilityFunctions.printConsoleLn("building : " + buildingLocation.getX() + " ; " + buildingLocation.getY() +" ; ");
 				}
 	}
 
@@ -260,7 +260,7 @@ public class CentralController
 		
 		for(Drone d : lisOfDrones)
 		{
-			System.out.println("Mys tasks are " + d.getBrain().getHld().getTasks().size());
+			UtilityFunctions.printConsoleLn("Mys tasks are " + d.getBrain().getHld().getTasks().size());
 		}
 		
 	}
@@ -359,7 +359,7 @@ public class CentralController
 	}
 
 	public void createSIMENGINE() {
-		if(lisOfWorldObject.size()==0) System.out.println("SIMENGINE : No object to simulate");
+		if(lisOfWorldObject.size()==0) UtilityFunctions.printConsoleLn("SIMENGINE : No object to simulate");
 		
 		this.SIMENGINE=new PhysicsEngine(space, grid, lisOfWorldObject);
 		this.context.add(this.SIMENGINE);
@@ -368,7 +368,7 @@ public class CentralController
 	
 	public boolean finishedDeliveries()
 	{
-		//System.out.println("nbOfPackageDelivered"+getNbOfPackageDelivered());
+		//UtilityFunctions.printConsoleLn("nbOfPackageDelivered"+getNbOfPackageDelivered());
 		return getNbOfPackageDelivered()>=GlobalParameters.nbPackages;
 		
 	}

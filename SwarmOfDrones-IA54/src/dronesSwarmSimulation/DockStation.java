@@ -2,6 +2,7 @@ package dronesSwarmSimulation;
 
 import dronesSwarmSimulation.physics.WorldObject;
 import dronesSwarmSimulation.physics.collisions.colliders.Collider;
+import dronesSwarmSimulation.utilities.UtilityFunctions;
 import dronesSwarmSimulation.utilities.Vect3;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.grid.Grid;
@@ -68,7 +69,7 @@ public class DockStation extends WorldObject {
 		}		
 		else
 		{
-			System.out.println("Can't accept this drone, already plugged to another drone.");
+			UtilityFunctions.printConsoleLn("Can't accept this drone, already plugged to another drone.");
 		}
 	}
 	

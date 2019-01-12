@@ -1,5 +1,6 @@
 package dronesSwarmSimulation.utilities;
 
+import dronesSwarmSimulation.GlobalParameters;
 import repast.simphony.space.continuous.NdPoint;
 
 public class UtilityFunctions {
@@ -33,6 +34,32 @@ public class UtilityFunctions {
 	public static Vect3 getReversedOnXYPlane(Vect3 v)
 	{
 		return new Vect3(-v.getX(),-v.getY(),v.getZ());
+	}
+	
+	/**
+	 * print to console if a variable is set
+	 * @param text
+	 * @return
+	 */
+	public static void printConsole(String text)
+	{
+		if(GlobalParameters.consoleDisplay)
+		{
+			System.out.print(text);
+		}
+	}
+	
+	/**
+	 * print to console if a variable is set
+	 * @param text
+	 * @return
+	 */
+	public static void printConsoleLn(String text)
+	{
+		if(GlobalParameters.consoleDisplay)
+		{
+			System.out.println(text);
+		}
 	}
 
 }

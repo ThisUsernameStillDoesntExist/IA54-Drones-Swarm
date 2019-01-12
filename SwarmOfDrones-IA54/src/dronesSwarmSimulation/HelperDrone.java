@@ -83,7 +83,7 @@ public class HelperDrone extends Drone{
 					task = getNewTask();
 					task.setTaken(true);
 					hasTask = true;
-					System.out.println("nouveau package, priority = " + task.getPriority());
+					UtilityFunctions.printConsoleLn("nouveau package, priority = " + task.getPriority());
 				}
 			}
 			
@@ -117,7 +117,7 @@ public class HelperDrone extends Drone{
 				nbTaskNotDeliveredEvent++;
 				task.setIsDelivered(false);
 				task.setTaken(false);
-				//System.out.println("Triger l'evenement package");
+				//UtilityFunctions.printConsoleLn("Triger l'evenement package");
 				task = null;
 				hasTask=false;
 				dejaTrouvePackage = false;
@@ -142,7 +142,7 @@ public class HelperDrone extends Drone{
 		{
 			// notify all drones that I have finished with my tasks
 			finishedWorkEvent = true;
-			System.out.println("Fire event task finished");
+			UtilityFunctions.printConsoleLn("Fire event task finished");
 		}
 		// Test if all the task are done
 			// Fire the finishedWorkEvent to the task controller
@@ -197,7 +197,7 @@ public class HelperDrone extends Drone{
 		
 		if(this.getId()==1)
 		{
-			System.out.print("Drone "+this.getId());
+			UtilityFunctions.printConsole("Drone "+this.getId());
 		}
 		
 		this.updateMe(time);//make the drone think/decide and update the drone state (battery level, speed...) and position
@@ -213,10 +213,10 @@ public class HelperDrone extends Drone{
 		
 		if(this.getId()==1)
 		{
-			System.out.print(" targetpos : "+targetpoint);
-			System.out.print(" actualpos : "+newDronePos.toStringLen(30, 3));
-			System.out.print(" batterylevel : "+this.getBatteryLevelRelative());
-			System.out.println("");
+			UtilityFunctions.printConsole(" targetpos : "+targetpoint);
+			UtilityFunctions.printConsole(" actualpos : "+newDronePos.toStringLen(30, 3));
+			UtilityFunctions.printConsole(" batterylevel : "+this.getBatteryLevelRelative());
+			UtilityFunctions.printConsoleLn("");
 		}
 		
 		
@@ -232,7 +232,7 @@ public class HelperDrone extends Drone{
 		GridPoint actualLocation = grid.getLocation(this);
 		double distance = Math.hypot(pt.getX()-actualLocation.getX(), pt.getY()-actualLocation.getY());
 		if(distance <= 2 && distance >=0)	{
-			//System.out.println("Arrivé au Building");
+			//UtilityFunctions.printConsoleLn("Arrivé au Building");
 			return true;
 		}
 		
@@ -267,7 +267,7 @@ public class HelperDrone extends Drone{
 			//GridPoint actualLocation = grid.getLocation(this);
 			//double distance = Math.hypot(pt.getX()-actualLocation.getX(), pt.getY()-actualLocation.getY());
 			//if(distance < 1)	{
-			//	System.out.println("Arrivé au Package");
+			//	UtilityFunctions.printConsoleLn("Arrivé au Package");
 			//	dejaTrouvePackage = true;
 			//}
 		}
@@ -297,7 +297,7 @@ public class HelperDrone extends Drone{
 					nearest = distance;
 					nearestPos = pt;
 					dock = ds;
-					//System.out.println("Distance " + distance);
+					//UtilityFunctions.printConsoleLn("Distance " + distance);
 				}
 			}
 		}
@@ -362,7 +362,7 @@ public class HelperDrone extends Drone{
 				nearest = distance;
 				nearestPos = pt;
 				closestPackage = pc;
-				//System.out.println("Distance " + distance);
+				//UtilityFunctions.printConsoleLn("Distance " + distance);
 			}
 		}
 		
@@ -385,7 +385,7 @@ public class HelperDrone extends Drone{
 		if(swarm)
 		{
 			//chercher les package non delivr�, et les mettres dans une liste
-			System.out.println("Queue not delivered changed");
+			UtilityFunctions.printConsoleLn("Queue not delivered changed");
 			CentralController companyInfo = this.getCentralController();
 			ArrayList<Package> lisOfPackage = companyInfo.getLisOfPackage();
 			//Chercher les drones without task to do
@@ -429,7 +429,7 @@ public class HelperDrone extends Drone{
 		// test if all package are in  mode isDelivered=true
 		if(swarm)
 		{
-			System.out.println("Queue not delivered changed");
+			UtilityFunctions.printConsoleLn("Queue not delivered changed");
 			CentralController companyInfo = this.getCentralController();
 			ArrayList<Package> lisOfPackage = companyInfo.getLisOfPackage();
 			//Chercher les drones without task to do

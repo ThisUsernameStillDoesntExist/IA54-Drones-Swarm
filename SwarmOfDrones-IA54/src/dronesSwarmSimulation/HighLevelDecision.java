@@ -134,7 +134,7 @@ public class HighLevelDecision {
 					task = getNewTask();
 					task.setTaken(true);
 					hasTask = true;
-					System.out.println("nouveau package, priority = " + task.getPriority());
+					UtilityFunctions.printConsoleLn("nouveau package, priority = " + task.getPriority());
 				}
 				
 			}
@@ -171,7 +171,7 @@ public class HighLevelDecision {
 				nbTaskNotDeliveredEvent++;
 				task.setIsDelivered(false);
 				task.setTaken(false);
-				//System.out.println("Triger l'evenement package");
+				//UtilityFunctions.printConsoleLn("Triger l'evenement package");
 				task = null;
 				hasTask=false;
 				dejaTrouvePackage = false;
@@ -193,7 +193,7 @@ public class HighLevelDecision {
 					thisDrone.plugToStation(nearestDockPos);
 					
 					
-					//System.out.println("Pluged and unpluged");
+					//UtilityFunctions.printConsoleLn("Pluged and unpluged");
 				}
 				else
 				{
@@ -208,7 +208,7 @@ public class HighLevelDecision {
 		{
 			// notify all drones that I have finished with my tasks
 			finishedWorkEvent = true;
-			System.out.println("Fire event task finished");
+			UtilityFunctions.printConsoleLn("Fire event task finished");
 		}
 		// Test if all the task are done
 			// Fire the finishedWorkEvent to the task controller
@@ -234,7 +234,7 @@ public class HighLevelDecision {
 		
 		NdPoint  targetpoint = new  NdPoint(pt.getX(), pt.getY (), 100);//arbitrary z
 		
-		System.out.print("Drone "+thisDrone.getId());
+		UtilityFunctions.printConsole("Drone "+thisDrone.getId());
 		
 		Vect3 newDronePos=this.getPosition();
 		
@@ -246,10 +246,10 @@ public class HighLevelDecision {
 		grid.moveTo(this , (int)newDronePoint.getX(), (int)newDronePoint.getY ());
 		
 
-		System.out.print(" targetpos : "+targetpoint);
-		System.out.print(" actualpos : "+newDronePos.toStringLen(30, 3));
-		System.out.print(" batterylevel : "+thisDrone.getBatteryLevelRelative());
-		System.out.println("");
+		UtilityFunctions.printConsole(" targetpos : "+targetpoint);
+		UtilityFunctions.printConsole(" actualpos : "+newDronePos.toStringLen(30, 3));
+		UtilityFunctions.printConsole(" batterylevel : "+thisDrone.getBatteryLevelRelative());
+		UtilityFunctions.printConsoleLn("");
 		
 		
 	
@@ -290,7 +290,7 @@ public class HighLevelDecision {
 		GridPoint actualLocation = grid.getLocation(this);
 		double distance = Math.hypot(pt.getX()-actualLocation.getX(), pt.getY()-actualLocation.getY());
 		if(distance <= 2 && distance >=0)	{
-			//System.out.println("Arrivé au Building");
+			//UtilityFunctions.printConsoleLn("Arrivé au Building");
 			return true;
 		}
 		
@@ -325,7 +325,7 @@ public class HighLevelDecision {
 			//GridPoint actualLocation = grid.getLocation(this);
 			//double distance = Math.hypot(pt.getX()-actualLocation.getX(), pt.getY()-actualLocation.getY());
 			//if(distance < 1)	{
-			//	System.out.println("Arrivé au Package");
+			//	UtilityFunctions.printConsoleLn("Arrivé au Package");
 			//	dejaTrouvePackage = true;
 			//}
 		}
@@ -400,7 +400,7 @@ public class HighLevelDecision {
 					nearest = distance;
 					nearestPos = pt;
 					dock = ds;
-					//System.out.println("Distance " + distance);
+					//UtilityFunctions.printConsoleLn("Distance " + distance);
 				}
 			}
 		}
@@ -466,7 +466,7 @@ public class HighLevelDecision {
 				nearest = distance;
 				nearestPos = pt;
 				closestPackage = pc;
-				//System.out.println("Distance " + distance);
+				//UtilityFunctions.printConsoleLn("Distance " + distance);
 			}
 		}
 		
@@ -502,7 +502,7 @@ public class HighLevelDecision {
 		if(swarm)
 		{
 			//chercher les package non delivr�, et les mettres dans une liste
-			System.out.println("Queue not delivered changed");
+			UtilityFunctions.printConsoleLn("Queue not delivered changed");
 			CentralController companyInfo = this.getCentralController();
 			ArrayList<Package> lisOfPackage = companyInfo.getLisOfPackage();
 			//Chercher les drones without task to do
@@ -546,7 +546,7 @@ public class HighLevelDecision {
 		// test if all package are in  mode isDelivered=true
 		if(swarm)
 		{
-			System.out.println("Queue not delivered changed");
+			UtilityFunctions.printConsoleLn("Queue not delivered changed");
 			CentralController companyInfo = this.getCentralController();
 			ArrayList<Package> lisOfPackage = companyInfo.getLisOfPackage();
 			//Chercher les drones without task to do
@@ -676,7 +676,7 @@ public class HighLevelDecision {
 	{
 		return thisDrone.isOver(w);
 
-		//System.out.println("Arrivé au Building");
+		//UtilityFunctions.printConsoleLn("Arrivé au Building");
 	}
 	
 	/**

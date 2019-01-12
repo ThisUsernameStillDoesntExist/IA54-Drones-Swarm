@@ -326,7 +326,7 @@ public class Drone extends WorldObject {
 	private void adjustPropellerDirection() {
 		Vect3 propDir = new Vect3(propellerDirection);
 		if (propDir.getZ() <= 0) {
-			System.out.println("Invalid propellerDirection. Did nothing.");
+			UtilityFunctions.printConsoleLn("Invalid propellerDirection. Did nothing.");
 			// motorThrottle=0;//we could stop motors if drone is flipped over
 
 			// in this case leaning angle is exceeded and the drone can go in any unwanted

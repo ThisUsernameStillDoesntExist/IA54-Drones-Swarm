@@ -18,6 +18,7 @@ public final class GlobalParameters {
 	public static final int nbOfBuildings = 17;
 	public static final int nbOfTrees = 27;
 	public static final double initBatteryInterval = 0.8;
+	public static final boolean consoleDisplay = false;
 	
 	
 	//repast parameters	
@@ -31,6 +32,7 @@ public final class GlobalParameters {
 	public static NdPoint wareHousePostion =  null;
 	public static Vect3 initDronePosition = new Vect3(0,0,100);
 	public static boolean differentInitBatteryLevels=false;//drones start with different battery levels
+	public static int nbPackDeliveredToStopSim=0;//stops simulation when this nb of packages is delivered
 
 	
 	/**
@@ -47,6 +49,7 @@ public final class GlobalParameters {
 		warehouseName=RP.getString("warehousenames");
 		nbDockstations=RP.getInteger("dockstation");
 		differentInitBatteryLevels=RP.getBoolean("differentDroneInitBatteryLevels");
+		nbPackDeliveredToStopSim=RP.getInteger("nbPackDeliveredToStopSim");
 		
 		String[]  whPositions =  RP.getString("warehouspositon").split(",");
 		if( whPositions.length < 3)

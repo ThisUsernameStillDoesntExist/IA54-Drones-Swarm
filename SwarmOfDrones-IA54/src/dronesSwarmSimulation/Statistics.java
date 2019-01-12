@@ -1,6 +1,7 @@
 package dronesSwarmSimulation;
 
 import dronesSwarmSimulation.physics.Constants;
+import dronesSwarmSimulation.utilities.UtilityFunctions;
 import repast.simphony.context.Context;
 import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.engine.schedule.ScheduledMethod;
@@ -65,7 +66,7 @@ public class Statistics {
 		updateStandardStats();
 		updateStatsPerDrone();
 		
-		System.out.println("Statistics updated");
+		UtilityFunctions.printConsoleLn("Statistics updated");
 		
 		
 		if(centralController.finishedDeliveries())
@@ -73,11 +74,15 @@ public class Statistics {
 			RunEnvironment.getInstance().endRun();
 		}
 		
-		//temp
-		System.out.println("Tec : "+this.getTotalElectricityConsumption());
-		System.out.println("Dt : "+this.distanceTravelledPerDrone);
-		System.out.println("pck deliv : "+centralController.getNbOfPackageDelivered());
-		System.out.println("pck drop : "+(GlobalParameters.nbPackages-centralController.getNbOfPackageDelivered()));
+		//temp		
+		if(centralController.getNbOfPackageDelivered()>=GlobalParameters.nbPackDeliveredToStopSim)
+		{
+			String sp=GlobalParameters.nbDeliveryDrones+";"+GlobalParameters.nbDockstations+";"+GlobalParameters.nbPackages;
+			String disps=this.getTotalTimeElapsed()+";"+this.getTotalElectricityConsumption()+";"+this.distanceTravelledPerDrone+";"+centralController.getNbOfPackageDelivered()+";"+(GlobalParameters.nbPackages-centralController.getNbOfPackageDelivered());
+			System.out.println(sp+";"+disps);
+			
+			RunEnvironment.getInstance().endRun();
+		}
 		
 	}
 
