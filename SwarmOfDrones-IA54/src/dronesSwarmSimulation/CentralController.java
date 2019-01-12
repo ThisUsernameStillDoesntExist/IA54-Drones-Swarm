@@ -37,7 +37,7 @@ public class CentralController
 	private int  nbOfPackageDelivered=0;
 	private ArrayList<Building> lisOfBuilding;
 	private ArrayList<DockStation> lisOfDockStation;
-	private ArrayList<DeliverDrone> lisOfDrones;
+	private ArrayList<Drone> lisOfDrones;
 	private ArrayList<WareHouse> lisOfWareHouses;
 	private ArrayList<Priority> lisOfPriority;
 	private ArrayList<WorldObject> lisOfWorldObject;
@@ -54,7 +54,7 @@ public class CentralController
 		this.context = context;
 		lisOfPackage = new ArrayList<Package>();
 		lisOfBuilding = new ArrayList<Building>();
-		lisOfDrones = new  ArrayList<DeliverDrone>();
+		lisOfDrones = new  ArrayList<Drone>();
 		//lisOfPackageNotDelivered = new ArrayList<Package>();
 		lisOfDockStation = new ArrayList<DockStation>();
 		lisOfWareHouses=new ArrayList<WareHouse>();
@@ -77,9 +77,10 @@ public class CentralController
 		spawnPackages();
 
 		// Give list of DockStation to All Drones
-		for(DeliverDrone d : lisOfDrones)
+		for(Drone d : lisOfDrones)
 		{
 			d.getBrain().getHld().setLisOfDockStation(lisOfDockStation);
+			d.getBrain().getHld().setLisOfDrones(lisOfDrones);
 			d.getBrain().getHld().setCentralController(this); // set the central controller to later extract information from
 		}
 		
@@ -229,7 +230,7 @@ public class CentralController
 	
 	
 	
-	void assignTask(ArrayList<Package> lisOfPackage ,ArrayList<DeliverDrone> lisOfDrones)
+	void assignTask(ArrayList<Package> lisOfPackage ,ArrayList<Drone> lisOfDrones)
 	{
 		// Bug one package assigned to more tha 1 Drone
 			//Solution : Free the list the two queue of Package and give the new one
@@ -255,7 +256,7 @@ public class CentralController
 			countDrones++; // next drone
 		}
 		
-		for(DeliverDrone d : lisOfDrones)
+		for(Drone d : lisOfDrones)
 		{
 			System.out.println("Mys tasks are " + d.getBrain().getHld().getTasks().size());
 		}
@@ -283,7 +284,7 @@ public class CentralController
 		this.lisOfPackageNotDelivered = lisOfPackageNotDelivered;
 	}
 
-	public ArrayList<DeliverDrone> getLisOfDrones() {
+	public ArrayList<Drone> getLisOfDrones() {
 		return lisOfDrones;
 	}
 	
@@ -296,7 +297,7 @@ public class CentralController
 		this.lisOfWareHouses = lisOfWareHouses;
 	}
 
-	public void setLisOfDrones(ArrayList<DeliverDrone> lisOfDrones) {
+	public void setLisOfDrones(ArrayList<Drone> lisOfDrones) {
 		this.lisOfDrones = lisOfDrones;
 	}
 

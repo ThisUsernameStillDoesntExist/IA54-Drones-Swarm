@@ -1,5 +1,6 @@
 package dronesSwarmSimulation.physics;
 
+import java.util.Comparator;
 import dronesSwarmSimulation.physics.collisions.colliders.Collider;
 import dronesSwarmSimulation.utilities.Vect3;
 
@@ -264,6 +265,38 @@ public abstract class WorldObject {
 	public boolean isOver(WorldObject w)
 	{
 		return this.getPosition().dist(w.getPosition())<=w.charact.getRadius();
+	}
+	
+	
+	/**
+	 * distance from a point comparator
+	 * @param point
+	 * @return
+	 */
+	public static Comparator<WorldObject> getCompByDistanceFrom(Vect3 point)
+	{   
+		 Comparator<WorldObject> comp = new Comparator<WorldObject>(){
+		     @Override
+		     public int compare(WorldObject wo1, WorldObject wo2)
+		     {
+		    	 double dist1=wo1.getPosition().squaredDist(point);
+		    	 double dist2=wo2.getPosition().squaredDist(point);
+		    	 
+		         if(dist1>dist2)
+		         {
+		        	 return 1;
+		         }
+		         else if(dist1<dist2)
+		         {
+		        	 return -1;
+		         }
+		         else
+		         {
+		        	 return 0;
+		         }
+		     }        
+		 };
+		 return comp;
 	}
 	
 	

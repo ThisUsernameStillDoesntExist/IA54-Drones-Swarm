@@ -1,7 +1,10 @@
 package dronesSwarmSimulation;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.Queue;
 
 import dronesSwarmSimulation.physics.WorldObject;
@@ -48,10 +51,12 @@ public class HighLevelDecision {
 	protected boolean hasTask;
 	protected Package task;
 	protected ArrayList<DockStation> lisOfDockStation;
+	protected ArrayList<Drone> lisOfDrones;
 	protected Queue<Package> tasks;
 	protected Queue<Package> tasksNotDelivered;
 	protected  ArrayList<Package> tasksDelivered;
 	protected int index = 0;
+	protected DockStation targetDockStation;//where we want to recharge, null when no need to recharge
 	//protected int charge=400;//temporary, remove this
 	
 	protected CentralController centralController;
@@ -81,6 +86,8 @@ public class HighLevelDecision {
 	
 	public void doTask()
 	{
+		DockStation nearestDockPos = findDockStation(); 
+		
 		if(thisDrone.isPluggedToStation())
 		{
 			if(thisDrone.getBatteryLevelRelative() > thisAI.getCharact().batteryEndChargeRelativeThreshold)
@@ -94,7 +101,7 @@ public class HighLevelDecision {
 				return;//do nothing but charge
 			}			
 		}
-		if(thisDrone.getBatteryLevelRelative() >  thisAI.getCharact().batteryBeginChargeRelativeThreshold)
+		if(thisDrone.getBatteryLevelRelative() >  thisAI.getCharact().batteryBeginChargeRelativeThreshold || nearestDockPos==null)
 		{	
 			searchingForStation=false;
 			if(hasTask && !dejaTrouvePackage)
@@ -164,8 +171,9 @@ public class HighLevelDecision {
 			searchingForStation=true;
 			// find Dockstation to charge
 			//Get the nearest dockstation position
-			DockStation nearestDockPos = findDockStation(); 
+			
 			// if the has arrived at the dockstation, charge the drone
+			
 			if(hasArrived(nearestDockPos.getPosition()))
 			{
 				
@@ -235,7 +243,25 @@ public class HighLevelDecision {
 
 	}*/
 	
-	
+	/**
+	 * 
+	 * negociate with other drones for a dock station, and return true if we have the priority 
+	 * @param nearestDockPos
+	 * @return
+	 */
+	protected boolean getNegotiationResultForDockStation(DockStation ds) {
+		
+		double myvalue=getWishValueForDockStation(ds);
+		
+		for(Drone d : lisOfDrones)
+		{
+			if(d.getBrain().getHld().getWishValueForDockStation(ds)>myvalue) return false;
+		}
+
+		return true;//my value is superior to all other drones values
+	}
+
+
 	/**
 	 * decide to move to a position
 	 * @param pt
@@ -300,6 +326,44 @@ public class HighLevelDecision {
 	}
 
 
+	/**
+	 * find the best available dockstation, null if none
+	 * @return
+	 */
+	public DockStation findDockStation()
+	{
+
+		List<DockStation> ads=getAvailableDockstations();
+		
+		Collections.sort(ads, WorldObject.getCompByDistanceFrom(thisDrone.getPosition()));//sorted by distance
+		
+		for(DockStation ds : ads)//browse through dockstation from nearest to farthest till we gain access to one (free station or successfull negotiation)
+		{
+			if(getNegotiationResultForDockStation(ds))//successfull negociation
+			{
+				return ds;
+			}
+		}
+
+		return null;
+	}
+	
+	protected List<DockStation> getAvailableDockstations()
+	{
+		List<DockStation> res=new ArrayList<DockStation>();
+		
+		for(DockStation ds : lisOfDockStation )
+		{ 
+			if(!ds.isBusy())
+			{
+				res.add(ds);
+			}
+		}
+		
+		return res;
+	}
+	
+	/*
 	public DockStation findDockStation()
 	{
 
@@ -330,7 +394,7 @@ public class HighLevelDecision {
 		
 		//return nearestPos;
 		return dock;
-	}
+	}*/
 
 	public Package getNewTask()
 	{
@@ -402,11 +466,11 @@ public class HighLevelDecision {
 			watcheeFieldNames = "searchingForStation",
 			query = "colocated",
 			whenToTrigger = WatcherTriggerSchedule.IMMEDIATE)
-	public void searchingForStation()
-	{
+	public void searchingForStation(DockStation dst)
+	{		
 		if(!searchingForStation) return;
 		
-		
+		//TODO
 	}
 	
 	
@@ -565,7 +629,17 @@ public class HighLevelDecision {
 	public void setLisOfDockStation(ArrayList<DockStation> lisOfDockStation) {
 		this.lisOfDockStation = lisOfDockStation;
 	}
-	
+		
+
+
+	public ArrayList<Drone> getLisOfDrones() {
+		return lisOfDrones;
+	}
+
+
+	public void setLisOfDrones(ArrayList<Drone> lisOfDrones) {
+		this.lisOfDrones = lisOfDrones;
+	}
 
 
 	public void communicate() {
@@ -606,8 +680,45 @@ public class HighLevelDecision {
 	public void setCentralController(CentralController centralController) {
 		this.centralController = centralController;
 	}
-	
-	
+
+
+	public DockStation getTargetDockStation() {
+		return targetDockStation;
+	}
+
+	/**
+	 * return a value defining the priority of this drone to recharge on this station. higher means more chance of winning the negotiation
+	 * @param ds
+	 * @return
+	 */
+	public double getWishValueForDockStation(DockStation ds)
+	{
+		double distfromstation=thisDrone.getPosition().dist(ds.getPosition());
+		double batlevel=thisDrone.getBatteryLevelRelative();
+		double weight=distfromstation*batlevel;
+		
+		double val=10;
+		
+		if(task!=null)
+		{
+			val*=thisAI.getCharact().hasTaskDecisionFactor;
+		
+			if(task.getPriority()==Priority.IMMEDIATE)
+			{
+				val*=thisAI.getCharact().packagePriorityDecisionFactor;
+			}
+		}
+		
+		
+		if(weight==0)
+		{
+			return Double.MAX_VALUE;
+		}
+		
+		return val/weight;
+				
+	}
+
 	
 
 }

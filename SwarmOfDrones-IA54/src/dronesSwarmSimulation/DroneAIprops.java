@@ -15,4 +15,6 @@ public class DroneAIprops {
 	public double batteryBeginChargeRelativeThreshold=0.3;//under this threshold, the drone will search for a dockstation
 	public double batteryEndChargeRelativeThreshold=0.9;//above this threshold, the drone will disconnect from a dockstation
 	
+	public double packagePriorityDecisionFactor=2;//the weight of the package priority in the dockstation negotiation
+	public double hasTaskDecisionFactor=2;
 }
