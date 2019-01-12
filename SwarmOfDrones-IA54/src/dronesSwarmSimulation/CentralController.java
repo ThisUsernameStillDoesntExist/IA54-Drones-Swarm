@@ -21,11 +21,16 @@ import repast.simphony.space.grid.Grid;
 import repast.simphony.space.grid.GridPoint;
 import repast.simphony.util.SimUtilities;
 
-/* 
- * This class serve as a controller or Central Intelligence on the simulation
+/**
+* 
+* @author adilson
+* 
+* 
+* This class serve as a controller on the simulation
    He register all the building and package created on the scene, and randomly 
- 	attach each package per building
- */
+ 	attach each package per building. He also contais some data to help drw the graphics on the simulation
+*/
+
 
 
 public class CentralController
@@ -66,14 +71,15 @@ public class CentralController
 
 	/**
 	 * distribute packages, dockstations, and assign tasks to drones
+	 * @return 
 	 */
 	public void registerTask()
 	{
-		// Create lists 
+		// Create lists of object put on the environment
 		populateLists(this.context);
-		
+		//do some statistics
 		createStatistics();
-		
+		// create list of packages and assign priority
 		spawnPackages();
 
 		// Give list of DockStation to All Drones
@@ -88,7 +94,7 @@ public class CentralController
 		//SimUtilities.shuffle(lisOfPackage, RandomHelper.getUniform());
 		//SimUtilities.shuffle(lisOfBuilding, RandomHelper.getUniform());
 
-		//placePackages(); WareHouse now they know how to place their packages 
+		// WareHouse now they know how to place their packages 
 		assignPackageToWareHouse(lisOfPackage);
 		
 		assignPackagesToBuildings();
@@ -228,7 +234,12 @@ public class CentralController
 		stats=new Statistics(lisOfDrones.size(), this);
 	}
 	
-	
+	/**
+	 * equally assign packages to drones to be delivered, just once, after running the simulation
+	 * drone know how to drop and recuperate another package if needed
+	 * @param ArrayList<Package> lisOfPackage ,ArrayList<Drone> lisOfDrones 
+	 * List of packages set by parameters simulator, and the list with all the drones on the ware house
+	 */
 	
 	void assignTask(ArrayList<Package> lisOfPackage ,ArrayList<Drone> lisOfDrones)
 	{
@@ -250,12 +261,13 @@ public class CentralController
 			{
 				countDrones =0;
 			}
-			
+			// add package to the list of the current drone
 			lisOfDrones.get(countDrones).getBrain().getHld().getTasks().add(p);
 			lisOfDrones.get(countDrones).getBrain().getHld().setTasksNotDelivered(new LinkedList<Package>());
 			countDrones++; // next drone
 		}
 		
+		// some log to see on console
 		for(Drone d : lisOfDrones)
 		{
 			System.out.println("Mys tasks are " + d.getBrain().getHld().getTasks().size());

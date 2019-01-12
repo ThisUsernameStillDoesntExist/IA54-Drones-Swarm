@@ -16,7 +16,13 @@ import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.NdPoint;
 import repast.simphony.space.grid.Grid;
 import repast.simphony.space.grid.GridPoint;
-
+/**
+ * 
+ * 
+ * @author adilson 
+ *TODO : impelent the behavior of a helperDrone
+ *    He need to control the packages when a delivery drone drop the package on the street while he goes to the station to charge
+ */
 public class HelperDrone extends Drone{
 	
 	public HelperDrone(ContinuousSpace<Object> space, Grid<Object> grid, Vect3 initposition)

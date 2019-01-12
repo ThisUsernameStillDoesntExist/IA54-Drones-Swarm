@@ -22,7 +22,12 @@ import repast.simphony.space.continuous.NdPoint;
 import repast.simphony.space.grid.Grid;
 import repast.simphony.space.grid.GridPoint;
 import repast.simphony.util.SimUtilities;
-
+/**
+ * 
+ * @author adilson  e Francis
+ * @class DeliverDrone
+ * The concrete class that impelent the physical behavior of a deliver drone
+ */
 public class DeliverDrone extends Drone {
 	
 	public DeliverDrone(ContinuousSpace<Object> space, Grid<Object> grid, Vect3 initposition)

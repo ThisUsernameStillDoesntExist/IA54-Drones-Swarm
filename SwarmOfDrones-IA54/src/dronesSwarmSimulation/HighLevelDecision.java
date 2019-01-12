@@ -43,34 +43,108 @@ public class HighLevelDecision {
 	public int index = 0;
 	public boolean finishedWorkEvent = false;
 	public static int idcontrol = 0;*/
-	
+	/**
+	 * attached Drone physical Body
+	 * @param thisDrone
+	 */
 	protected Drone thisDrone;//attached drone body
+	/**
+	 * attached Drone Intelligence
+	 * @param thisAI
+	 */
 	protected DroneAI thisAI;//attached drone AI
+	/**
+	 *unique id of the drone
+	 * @param id
+	 */
 	protected int id;
+	/**
+	 * state to know when the drone found the package
+	 * @param dejaTrouvePackage
+	 */
 	protected boolean dejaTrouvePackage ;
+	/**
+	 * state to know  if the drone has a package
+	 * @param hasTask
+	 */
 	protected boolean hasTask;
+	/**
+	 * the current task that Drone is delivering
+	 * @param task
+	 */
 	protected Package task;
+	/**
+	 * List of Dockstation and positon on the environnment
+	 * @param lisOfDockStation
+	 */
 	protected ArrayList<DockStation> lisOfDockStation;
+	/**
+	 * List to put drones in conflic's resolution
+	 * @param lisOfDrones
+	 */
 	protected ArrayList<Drone> lisOfDrones;
+	/**
+	 * list of task assigned to this drone
+	 * @param tasks
+	 */
 	protected Queue<Package> tasks;
+	/**
+	 * list to conatins all package not delivered
+	 * @param tasksNotDelivered
+	 */
 	protected Queue<Package> tasksNotDelivered;
+	/**
+	 * Number of package dropped by the drone used in graph mesure, when he has to charge
+	 * @param nbOfDroppedPackages
+	 */
 	protected int nbOfDroppedPackages;
+	/**
+	 * list to conatins all delivered packages
+	 * @param tasksDelivered
+	 */
 	protected  ArrayList<Package> tasksDelivered;
+	/**
+	 * 
+	 * @param index
+	 */
 	protected int index = 0;
-	protected DockStation targetDockStation;//where we want to recharge, null when no need to recharge
+	/**
+	 * The current dockstation that the drone his charging at 
+	 * @param  targetDockStation
+	 */
+	protected DockStation targetDockStation;
 	//protected int charge=400;//temporary, remove this
-	
+	/**
+	 * object that has information about the environment
+	 * @param centralController
+	 */
 	protected CentralController centralController;
+	/**
+	 * counter to assign unique id to drones
+	 * @param idcontrol
+	 */
 	public static int idcontrol = 0;
-	
+	/**
+	 * variable to triggered an event when the drone fail to deliver a package
+	 * @param nbTaskNotDeliveredEvent
+	 */
 	protected int nbTaskNotDeliveredEvent = 0;
+	/**
+	 *  variable to triggered an event when the drone has finished his task
+	 * @param finishedWorkEvent
+	 */
 	protected boolean finishedWorkEvent = false;
+	/**
+	 * state to know  if the drone is searching for dosckstaion
+	 * @param searchingForStation
+	 */
 	protected boolean searchingForStation = false;
 	
 	
 	public HighLevelDecision(Drone dronebody, DroneAI dai) {
 		
-		//this.centralController=cc;
+		//Initialize all the property of drone
+		
 		this.thisDrone=dronebody;
 		this.thisAI=dai;
 		
@@ -84,14 +158,19 @@ public class HighLevelDecision {
 	    
 	    
 	}
-
+	
+	/**
+	 * function that implement the fundamental behavior of a DeliveryDrone
+	 * @method  doTask
+	 */
 	
 	public void doTask()
 	{
 		DockStation nearestDockPos = findDockStation(); 
-		
+		// test to know if the drone is plugued in station charging
 		if(thisDrone.isPluggedToStation())
 		{
+			//
 			if(thisDrone.getBatteryLevelRelative() > thisAI.getCharact().batteryEndChargeRelativeThreshold)
 			{
 				// after, we have to unplug from the station
@@ -105,46 +184,58 @@ public class HighLevelDecision {
 			
 		}
 		else if(thisDrone.getBatteryLevelRelative() >  thisAI.getCharact().batteryBeginChargeRelativeThreshold || nearestDockPos==null)
-		{	
+		{	// if the drone has charge, them do not look for dosckstation
 			searchingForStation=false;
+			
 			if(hasTask && !dejaTrouvePackage)
-			{
+			{	
+				// if found the task 
 					if(hasArrived(task.getPosition()))
 					{
+						//take the package 
 						dejaTrouvePackage = true;
 						thisDrone.pickPackage(task);
 					}
 					else
 					{
+						//go search the task
 						orderMoveDecision(task.getPosition());
 						//charge--;
 					}
 			}
 			else
 			{	
-				
+				// if the list of the tasks is not empty and there isn't a current task
 				if(!tasks.isEmpty() && !hasTask)
 				{
 					//task = tasks.remove();
+					// get new task from the list 
 					task = getNewTask();
+					// change the state of the task, so that others drone don't bother with that task
 					task.setTaken(true);
+					// change thge state, to say that he has a new task
 					hasTask = true;
-					System.out.println("nouveau package, priority = " + task.getPriority());
 				}
 				
 			}
-			
+			// test if his has found the package
 			if(dejaTrouvePackage)
 			{
 
 				if(hasArrived(task.getDestinationCoord()))
 				{
+					/*
+					 *  if he has found the building were the package has to be delivered 
+					 *  them he drop the package close to the building
+					 */
 					thisDrone.dropPackage();
-					// communiquer la centrale pour dire que plus un package delivré
+					/*
+					 *  change the state of the task, to know that the task has been delivered
+					 */
 					task.setIsDelivered(true);
 					// add to list of task delivered
 					tasksDelivered.add(task);
-					// trouver un autre package
+					// change the states to find another task
 					hasTask = false;
 					dejaTrouvePackage = false;	
 				}
@@ -402,6 +493,10 @@ public class HighLevelDecision {
 		return dock;
 	}*/
 
+	/**
+	 * find the most important package to be delivered based on priority, distance etc
+	 * @return
+	 */
 	public Package getNewTask()
 	{
 		Package p = closeEstPackage(tasks);
@@ -428,9 +523,15 @@ public class HighLevelDecision {
 		//return tasks.remove();
 	}
 
+	/**
+	 * get the lists of high priority package if there is one or more
+	 * @param Queue<Package> listTask
+	 * @return Queue<Package>
+	 */
 	Queue<Package> getListHighPrioriotyPackage(Queue<Package> listTask)
 	{
 		Queue<Package>  results = new LinkedList<Package>();
+		// find all package with priority immediate
 		for(Package p : tasks)
 		{
 			if((p.getPriority() == Priority.IMMEDIATE) )
@@ -440,14 +541,22 @@ public class HighLevelDecision {
 		}
 		return results;
 	}
-	// funcion to search for the closest package
+	/**
+	 * get the closest package to the current drone 
+	 * @param Queue<Package> listTask
+	 * @return Queue<Package>
+	 */
 	Package closeEstPackage(Queue<Package> listTask )
 	{
+		// we suppose the nearest package is infinite distance
 		double nearest=1000.00;
 		Vect3 nearestPos = new Vect3();
+		// get the actual location os the drone
 		Vect3 actualLocation = this.thisDrone.getPosition();
+		// variable to locate the shortest current distance
 		double distance;
 		Package closestPackage = null;
+		// find the package with the shortest distance
 		for(Package pc : listTask )
 		{
 			Vect3 pt = pc.getPosition();
@@ -467,7 +576,11 @@ public class HighLevelDecision {
 		
 		
 	}
-	
+	/**
+	 * event  triggered  when the drone is looking for DockSation
+	 * @param DockStation dst
+	 * @return 
+	 */
 	@Watch(watcheeClassName = "dronesSwarmSimulation.HighLevelDecision",
 			watcheeFieldNames = "searchingForStation",
 			query = "colocated",
@@ -490,23 +603,25 @@ public class HighLevelDecision {
 	public void taskNotDeliveredEvent()
 	{
 		Parameters params = RunEnvironment.getInstance().getParameters();
+		// recuperate the swarm mode from the parameters
 		boolean swarm =GlobalParameters.swarmActivated;
-		// test if all package are in  mode isDelivered=true
+		
+		// if the swam mode is activated them an algorithm of collaboration is executed
 		if(swarm)
 		{
 			//chercher les package non delivr�, et les mettres dans une liste
 			System.out.println("Queue not delivered changed");
 			CentralController companyInfo = this.getCentralController();
 			ArrayList<Package> lisOfPackage = companyInfo.getLisOfPackage();
-			//Chercher les drones without task to do
+			//search for drones without task to do
 			synchronized(this)
-			{
+			{			
 						if(getTasksNotDelivered().size() > 0 && getTasks().size() <=0)
 						{
 							
 							for( Package p: lisOfPackage)
 							{
-								//!tasksNotDelivered.contains(p) &&
+								
 								if( !p.isTaken() && !p.getIsDelivered() && !tasks.contains(p))
 								{
 									p.setTaken(true);
@@ -517,8 +632,14 @@ public class HighLevelDecision {
 				
 			}
 		}
+		
 		else
 		{
+
+			/*
+			 *  if the swam mode is not  activated the drone has just to take all task not delivered and 
+			 *  add to the list of tasks to be delivered
+			 */
 			synchronized(this)
 			{
 				tasks.addAll(getTasksNotDelivered());
@@ -527,7 +648,9 @@ public class HighLevelDecision {
 		}
 	}
 	
-	
+	/**
+	 * triggered when a drone has finished all task, to go find others drone that have not finished yet
+	 */
 	@Watch(watcheeClassName = "dronesSwarmSimulation.HighLevelDecision",
 			watcheeFieldNames = "finishedWorkEvent",
 			query = "colocated",
@@ -535,14 +658,15 @@ public class HighLevelDecision {
 	public void taskFinishedEvent()
 	{
 		Parameters params = RunEnvironment.getInstance().getParameters();
+		// recuperate the swarm mode from the parameters
 		boolean swarm =GlobalParameters.swarmActivated;
-		// test if all package are in  mode isDelivered=true
+		// if the swam mode is activated them an algorithm of collaboration is executed
 		if(swarm)
 		{
 			System.out.println("Queue not delivered changed");
 			CentralController companyInfo = this.getCentralController();
 			ArrayList<Package> lisOfPackage = companyInfo.getLisOfPackage();
-			//Chercher les drones without task to do
+			//search for drones without task to do
 			synchronized(this)
 			{
 						if(getTasksNotDelivered().size() > 0 && getTasks().size() <=0)
