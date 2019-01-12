@@ -28,8 +28,8 @@ import repast.simphony.space.grid.SimpleGridAdder;
 public class DroneBuilder implements ContextBuilder<Object> {
 /**
  * This method serve as the setup function of the simulation, all the object main to the resuts, all the parameters are recuperated here 
- * @author adilson
- * @return Context containing all the object on the simulation to be run by the system
+ * @author adilson 
+ * @return Context containing all the object on the simulation to be run by the system( repast)
  */
 	@Override
 	public Context build(Context<Object> context) {
