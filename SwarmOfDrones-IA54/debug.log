@@ -1,0 +1,16 @@
+INFO  [AWT-EventQueue-0] 2019-01-12 19:55:26,505 repast.simphony.batch.gui.BatchConfigMediator - Writing batch run config file to: B:\Utilisateurs\FRANCIS\Documents\UTBM\GI07\IA54\projet\GITKRAKEN\IA54-Drones-Swarm\SwarmOfDrones-IA54\output\config.props
+INFO  [AWT-EventQueue-0] 2019-01-12 19:55:27,177 repast.simphony.batch.gui.BatchConfigMediator - Unrolling batch parameter file:
+	B:\Utilisateurs\FRANCIS\Documents\UTBM\GI07\IA54\projet\GITKRAKEN\IA54-Drones-Swarm\SwarmOfDrones-IA54\batch\batch_params.xml to
+	C:\Users\Francis\AppData\Local\Temp\unrolledParamFile.txt
+INFO  [SwingWorker-pool-2-thread-1] 2019-01-12 19:56:48,616 repast.simphony.batch.ssh.LocalSession - 
+	Copying locally C:\Users\Francis\AppData\Local\Temp\Francis_localhost11102591428134579.zip to 
+C:\Users\Francis\AppData\Local\Temp\simphony_model_1547319401950 ...
+INFO  [SwingWorker-pool-2-thread-1] 2019-01-12 19:56:48,682 repast.simphony.batch.ssh.LocalSession - Copying Finished.
+INFO  [SwingWorker-pool-2-thread-1] 2019-01-12 19:56:48,690 repast.simphony.batch.ssh.SessionsDriver - Initialization Time: 0,1122
+INFO  [SwingWorker-pool-2-thread-1] 2019-01-12 19:56:48,691 repast.simphony.batch.ssh.LocalSession - Unzipping model C:\Users\Francis\AppData\Local\Temp\simphony_model_1547319401950\Francis_localhost11102591428134579.zip
+INFO  [SwingWorker-pool-2-thread-1] 2019-01-12 19:56:52,097 repast.simphony.batch.ssh.LocalSession - Running model on localhost ...
+INFO  [Thread-7] 2019-01-12 19:57:08,654 repast.simphony.batch.ssh.LocalSession - ERROR [main] 19:57:08,647 repast.simphony.batch.InstanceRunner - Error while running model
+INFO  [Thread-7] 2019-01-12 19:57:08,655 repast.simphony.batch.ssh.LocalSession - java.lang.ArrayIndexOutOfBoundsException: 1
+INFO  [Thread-7] 2019-01-12 19:57:08,655 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.batch.parameter.ParameterLineParser.parse(ParameterLineParser.java:55)
+INFO  [Thread-7] 2019-01-12 19:57:08,655 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.batch.InstanceRunner.run(InstanceRunner.java:193)
+INFO  [Thread-7] 2019-01-12 19:57:08,655 repast.simphony.batch.ssh.LocalSession - 	at repast.simphony.batch.InstanceRunner.main(InstanceRunner.java:217)

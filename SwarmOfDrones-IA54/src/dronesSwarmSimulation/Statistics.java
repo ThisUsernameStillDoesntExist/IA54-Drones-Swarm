@@ -66,6 +66,18 @@ public class Statistics {
 		updateStatsPerDrone();
 		
 		System.out.println("Statistics updated");
+		
+		
+		if(centralController.finishedDeliveries())
+		{
+			RunEnvironment.getInstance().endRun();
+		}
+		//temp
+		System.out.println("Tec : "+this.getTotalElectricityConsumption());
+		System.out.println("Dt : "+this.distanceTravelledPerDrone);
+		System.out.println("pck deliv : "+centralController.getNbOfPackageDelivered());
+		System.out.println("pck drop : "+(GlobalParameters.nbPackages-centralController.getNbOfPackageDelivered()));
+		
 	}
 
 	private void updateStandardStats() {

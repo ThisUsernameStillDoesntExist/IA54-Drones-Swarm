@@ -1,0 +1,9 @@
+model.archive = B:/Utilisateurs/FRANCIS/Documents/UTBM/GI07/IA54/projet/GITKRAKEN/IA54-Drones-Swarm/SwarmOfDrones-IA54/output/complete_model.jar
+batch.params.file = scenario.rs/batch_params.xml
+ssh.key_dir = C:/Users/Francis/.ssh
+poll.frequency = 60.0
+model.output = B:/Utilisateurs/FRANCIS/Documents/UTBM/GI07/IA54/projet/GITKRAKEN/IA54-Drones-Swarm/SwarmOfDrones-IA54/output
+
+vm.arguments = -Xmx512M
+local.0.instances = 2
+local.0.working_directory = C:/Users/Francis/AppData/Local/Temp/

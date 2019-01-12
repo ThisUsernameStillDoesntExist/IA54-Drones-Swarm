@@ -1,30 +1,20 @@
 <repast.simphony.data2.engine.DataSetDescriptor simphonyVersion="2.5.0">
-  <name>Dropped Package Failure</name>
+  <name>FinalVars</name>
   <type>AGGREGATE</type>
   <inclTick>true</inclTick>
   <inclBatchRun>false</inclBatchRun>
   <inclRandomSeed>false</inclRandomSeed>
   <scheduleParams>
     <start>1.0</start>
-    <interval>10.0</interval>
+    <interval>1.0</interval>
     <priority>-Infinity</priority>
     <pType>LAST</pType>
     <duration>-1.0</duration>
     <frequency>REPEAT</frequency>
-    <hashCode>-2070454485</hashCode>
+    <hashCode>87443790</hashCode>
   </scheduleParams>
-  <atEnd>true</atEnd>
-  <methodDataSources class="linked-hash-map">
-    <entry>
-      <string>Dropped Package Failure</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Dropped Package Failure</id>
-        <className>dronesSwarmSimulation.Drone</className>
-        <methodName>getNbOfDroppedPackages</methodName>
-        <aggType>SUM</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-  </methodDataSources>
+  <atEnd>false</atEnd>
+  <methodDataSources class="linked-hash-map"/>
   <countSources class="linked-hash-map"/>
   <customNADataSources class="linked-hash-map"/>
   <customAggDataSources class="linked-hash-map"/>

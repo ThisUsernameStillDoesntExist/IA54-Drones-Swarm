@@ -1,5 +1,5 @@
 <repast.simphony.data2.engine.DataSetDescriptor simphonyVersion="2.5.0">
-  <name>Average Speed of Drones</name>
+  <name>Current Speed of Drones</name>
   <type>AGGREGATE</type>
   <inclTick>true</inclTick>
   <inclBatchRun>false</inclBatchRun>
@@ -16,11 +16,11 @@
   <atEnd>false</atEnd>
   <methodDataSources class="linked-hash-map">
     <entry>
-      <string>Average Speed of Drones</string>
+      <string>Current Speed of Drones</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Average Speed of Drones</id>
+        <id>Current Speed of Drones</id>
         <className>dronesSwarmSimulation.Statistics</className>
-        <methodName>getDroneAvgSpeed</methodName>
+        <methodName>getDroneCurrentSpeed</methodName>
         <aggType>SUM</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>

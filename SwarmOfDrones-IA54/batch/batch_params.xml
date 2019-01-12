@@ -1,3 +1,1 @@
-<?xml version="1.0"?>
-<sweep runs="1">
-</sweep>
+<?xml version="1.0" ?><sweep runs="1"><parameter name="package" type="constant" constant_type="int" value="15"></parameter><parameter name="charge" type="constant" constant_type="int" value="800"></parameter><parameter name="warehouspositon" type="constant" constant_type="java.lang.String" value="140,130,100"></parameter><parameter name="deliver_drone" type="constant" constant_type="int" value="3"></parameter><parameter name="swarm" type="constant" constant_type="boolean" value="true"></parameter><parameter name="warehousenames" type="constant" constant_type="java.lang.String" value="IA54"></parameter><parameter name="frametime" type="constant" constant_type="double" value="0.1"></parameter><parameter name="differentDroneInitBatteryLevels" type="constant" constant_type="boolean" value="false"></parameter><parameter name="dockstation" type="constant" constant_type="int" value="5"></parameter></sweep>

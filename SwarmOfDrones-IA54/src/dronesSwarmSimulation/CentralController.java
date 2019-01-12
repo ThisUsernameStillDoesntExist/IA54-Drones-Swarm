@@ -6,6 +6,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
+import com.sun.xml.internal.bind.v2.runtime.reflect.Lister.Pack;
+
 import dronesSwarmSimulation.physics.PhysicsEngine;
 import dronesSwarmSimulation.physics.WorldObject;
 import dronesSwarmSimulation.utilities.UtilityFunctions;
@@ -34,7 +36,7 @@ public class CentralController
 	protected Grid<Object> grid;
 	private ArrayList<Package> lisOfPackage;
 	private ArrayList<Package> lisOfPackageNotDelivered;
-	private int  nbOfPackageDelivered=0;
+	private int nbOfPackageDelivered=0;
 	private ArrayList<Building> lisOfBuilding;
 	private ArrayList<DockStation> lisOfDockStation;
 	private ArrayList<Drone> lisOfDrones;
@@ -267,12 +269,17 @@ public class CentralController
 	
 
 	public int getNbOfPackageDelivered() {
-		return nbOfPackageDelivered;
+		int count=0;
+		for(Package p : lisOfPackage)
+		{
+			if(p.getIsDelivered())
+			{
+				count++;
+			}
+		}
+		return count;
 	}
 
-	public void setNbOfPackageDelivered(int nbOfPackageDelivered) {
-		this.nbOfPackageDelivered = nbOfPackageDelivered;
-	}
 	
 	
 	
@@ -359,7 +366,12 @@ public class CentralController
 	}
 
 	
-	
+	public boolean finishedDeliveries()
+	{
+		//System.out.println("nbOfPackageDelivered"+getNbOfPackageDelivered());
+		return getNbOfPackageDelivered()>=GlobalParameters.nbPackages;
+		
+	}
 
 	
 
