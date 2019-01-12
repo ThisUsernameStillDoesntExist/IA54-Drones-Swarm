@@ -1,0 +1,1 @@
+"Drone mean charge","Drone max charge","Drone min charge","tick"
