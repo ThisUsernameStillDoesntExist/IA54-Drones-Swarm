@@ -48,6 +48,12 @@
 						converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter"
 									
 		/>
+				<parameter name="differentDroneInitBatteryLevels" displayName="Different Drone Init Battery Levels" type="boolean" 
+						defaultValue="false" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$BooleanConverter"
+									
+		/>
 				<parameter name="dockstation" displayName="Dockstation Count" type="int" 
 						defaultValue="5" 
 						isReadOnly="false" 

@@ -1,5 +1,7 @@
 package dronesSwarmSimulation;
 
+import com.jcraft.jsch.jce.Random;
+
 import dronesSwarmSimulation.physics.WorldObject;
 import dronesSwarmSimulation.utilities.UtilityFunctions;
 import dronesSwarmSimulation.utilities.Vect3;
@@ -61,7 +63,13 @@ public class DroneBuilder implements ContextBuilder<Object> {
 
 		/*Define the number of DeliverDrone  */
 		for(int i = 0; i < nombreDrone; i++){
-			DeliverDrone d = new DeliverDrone(space, grid, GlobalParameters.initDronePosition);
+			double rg=1;
+			if(GlobalParameters.differentInitBatteryLevels)
+			{
+				rg=0.5;
+			}
+			double randbatterylevel=(1-rg)*(1-Math.random())+rg;
+			DeliverDrone d = new DeliverDrone(space, grid, GlobalParameters.initDronePosition, randbatterylevel);
 			context.add(d);
 			cc.getLisOfDrones().add(d);
 		} 
