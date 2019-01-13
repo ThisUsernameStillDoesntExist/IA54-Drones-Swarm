@@ -7,13 +7,13 @@
 									
 		/>
 				<parameter name="nbPackDeliveredToStopSim" displayName="nbPackDeliveredToStopSim" type="int" 
-						defaultValue="30" 
+						defaultValue="60" 
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
 									
 		/>
 				<parameter name="package" displayName="Package Count" type="int" 
-						defaultValue="50" 
+						defaultValue="100" 
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
 									
@@ -31,7 +31,7 @@
 									
 		/>
 				<parameter name="deliver_drone" displayName="Deliver drone Count" type="int" 
-						defaultValue="3" 
+						defaultValue="8" 
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
 									
@@ -61,7 +61,7 @@
 									
 		/>
 				<parameter name="dockstation" displayName="Dockstation Count" type="int" 
-						defaultValue="5" 
+						defaultValue="6" 
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
 									

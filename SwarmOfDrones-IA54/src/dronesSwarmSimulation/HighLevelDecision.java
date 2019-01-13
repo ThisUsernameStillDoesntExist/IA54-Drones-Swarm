@@ -176,6 +176,8 @@ public class HighLevelDecision {
 				hasTask=false;
 				dejaTrouvePackage = false;
 				nbOfDroppedPackages++;
+				
+				thisDrone.dropPackage();
 			}
 			
 			searchingForStation=true;
