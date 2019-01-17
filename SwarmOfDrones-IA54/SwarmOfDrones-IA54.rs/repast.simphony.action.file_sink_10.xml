@@ -1,0 +1,12 @@
+<repast.simphony.data2.engine.FileSinkDescriptor simphonyVersion="2.5.0">
+  <name>Average Speed of Drones</name>
+  <dataSet>Average Speed of Drones</dataSet>
+  <delimiter>;</delimiter>
+  <format>TABULAR</format>
+  <sourceIds class="linked-hash-set">
+    <string>Average Speed of Drones</string>
+    <string>tick</string>
+  </sourceIds>
+  <fileName>fileoutput/Average Speed of Drones.csv</fileName>
+  <addTimeStamp>true</addTimeStamp>
+</repast.simphony.data2.engine.FileSinkDescriptor>

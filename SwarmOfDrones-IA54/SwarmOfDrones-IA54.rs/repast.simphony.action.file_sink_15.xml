@@ -1,0 +1,12 @@
+<repast.simphony.data2.engine.FileSinkDescriptor simphonyVersion="2.5.0">
+  <name>Dropped Package Failure</name>
+  <dataSet>Dropped Package Failure</dataSet>
+  <delimiter>;</delimiter>
+  <format>TABULAR</format>
+  <sourceIds class="linked-hash-set">
+    <string>Dropped Package Failure</string>
+    <string>tick</string>
+  </sourceIds>
+  <fileName>fileoutput/Dropped Package Failure.csv</fileName>
+  <addTimeStamp>true</addTimeStamp>
+</repast.simphony.data2.engine.FileSinkDescriptor>

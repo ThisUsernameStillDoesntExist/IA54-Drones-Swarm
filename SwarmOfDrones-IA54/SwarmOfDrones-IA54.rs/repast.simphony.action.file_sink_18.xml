@@ -1,0 +1,12 @@
+<repast.simphony.data2.engine.FileSinkDescriptor simphonyVersion="2.5.0">
+  <name>current electricity consumption</name>
+  <dataSet>current electricity consumption</dataSet>
+  <delimiter>;</delimiter>
+  <format>TABULAR</format>
+  <sourceIds class="linked-hash-set">
+    <string>current electricity consumption</string>
+    <string>tick</string>
+  </sourceIds>
+  <fileName>fileoutput/current electricity consumption.csv</fileName>
+  <addTimeStamp>true</addTimeStamp>
+</repast.simphony.data2.engine.FileSinkDescriptor>

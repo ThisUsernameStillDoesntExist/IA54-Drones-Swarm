@@ -1,0 +1,12 @@
+<repast.simphony.data2.engine.FileSinkDescriptor simphonyVersion="2.5.0">
+  <name>Current Speed of Drones</name>
+  <dataSet>Current Speed of Drones</dataSet>
+  <delimiter>;</delimiter>
+  <format>TABULAR</format>
+  <sourceIds class="linked-hash-set">
+    <string>Current Speed of Drones</string>
+    <string>tick</string>
+  </sourceIds>
+  <fileName>fileoutput/Current Speed of Drones.csv</fileName>
+  <addTimeStamp>true</addTimeStamp>
+</repast.simphony.data2.engine.FileSinkDescriptor>

@@ -1,0 +1,13 @@
+<repast.simphony.data2.engine.FileSinkDescriptor simphonyVersion="2.5.0">
+  <name>Distance Travelled</name>
+  <dataSet>Distance Travelled</dataSet>
+  <delimiter>;</delimiter>
+  <format>TABULAR</format>
+  <sourceIds class="linked-hash-set">
+    <string>total distance of drones</string>
+    <string>distance per drone</string>
+    <string>tick</string>
+  </sourceIds>
+  <fileName>fileoutput/Distance Travelled.csv</fileName>
+  <addTimeStamp>true</addTimeStamp>
+</repast.simphony.data2.engine.FileSinkDescriptor>

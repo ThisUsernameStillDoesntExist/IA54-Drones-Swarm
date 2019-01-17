@@ -1,0 +1,14 @@
+<repast.simphony.data2.engine.FileSinkDescriptor simphonyVersion="2.5.0">
+  <name>Drones action</name>
+  <dataSet>Drones action</dataSet>
+  <delimiter>;</delimiter>
+  <format>TABULAR</format>
+  <sourceIds class="linked-hash-set">
+    <string>nb drone landed</string>
+    <string>nb drone plugged</string>
+    <string>mean throttle</string>
+    <string>tick</string>
+  </sourceIds>
+  <fileName>fileoutput/Drones action.csv</fileName>
+  <addTimeStamp>true</addTimeStamp>
+</repast.simphony.data2.engine.FileSinkDescriptor>
